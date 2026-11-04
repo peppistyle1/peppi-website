@@ -40,9 +40,8 @@ Settings → Pages → Deploy from a branch → `main`, folder `/docs`. The buil
 
 ## Before launch
 
-- The privacy policy and terms are drafts. Fill in the highlighted items (legal
-  name, address, effective date, governing law, log retention)
-  and have them reviewed by a lawyer, then remove the "Draft" notes.
+- The privacy policy and terms are in effect from November 4, 2026. Have them reviewed by a lawyer
+  before launch, and update the "Last updated" date with every change.
 - Add the prices on the plans page when they're set.
 - Replace the "Coming soon" store badges with real store links.
 
