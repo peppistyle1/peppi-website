@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta name="robots" content="{{robots}}">
+  <link rel="canonical" href="{{canonical}}">
+  <meta name="theme-color" content="#0E1A2C">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Peppi">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:image" content="https://peppi.style/assets/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/img/icon-192.png">
+  <link rel="preload" href="assets/fonts/syne-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/figtree-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/great-vibes-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>document.documentElement.classList.add("js");</script>
+  <script src="assets/js/site.js" defer></script>
+</head>
+<body class="{{body_class}}">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Peppi home">
+        {{hanger}}
+        <span class="brand-name">Peppi</span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><span></span>Menu</button>
+      <nav class="nav" id="site-nav" aria-label="Main">
+          {{nav}}
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+{{content}}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <span class="script">Peppi</span>
+          <p>Outfit ideas for any occasion, weather or vibe, made for you by AI. Named after a woman who always found a way to look and feel her best.</p>
+        </div>
+        <div>
+          <h2>Explore</h2>
+          <ul>
+            <li><a href="index.html#how">How it works</a></li>
+            <li><a href="style-dna.html">Style DNA</a></li>
+            <li><a href="try-on.html">Virtual try-on</a></li>
+            <li><a href="plans.html">Plans</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Peppi</h2>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="support.html">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="privacy.html">Privacy policy</a></li>
+            <li><a href="terms.html">Terms of service</a></li>
+            <li><a href="delete-account.html">Delete your account</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>© {{year}} Peppi. All rights reserved.</span>
+        <span>peppistyle1@gmail.com</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

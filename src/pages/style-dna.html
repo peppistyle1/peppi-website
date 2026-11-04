@@ -1,0 +1,157 @@
+<!--{"title": "Style DNA · Peppi", "description": "Peppi's Style DNA learns your personal style from the looks you save, and uses it in every outfit request.", "nav": "dna"}-->
+    <section class="band band--dna page-hero">
+      <div class="wrap page-hero-grid">
+        <div>
+          <span class="eyebrow">Peppi's Style DNA · Signature and Couture</span>
+          <h1 style="margin-top:20px">Your style, <span class="script">decoded.</span></h1>
+          <p class="lede">Every look you save tells Peppi a little more about you. After 10, it writes your Style DNA: what you lean towards, what you come back to, and how you dress for each kind of day.</p>
+        </div>
+        <div class="dna-card" aria-label="Sample Style DNA">
+          <h3>Style DNA <span>Confidence: Medium</span></h3>
+          <p class="dna-summary">Polished classics with a quiet-luxury finish, in navy, camel and cream.</p>
+          <ul class="bars">
+            <li class="bar"><div class="bar-top"><span>Classic <em>↑ was 74%</em></span><span class="num">82%</span></div><div class="bar-track"><div class="bar-fill" style="--w:82%"></div></div></li>
+            <li class="bar"><div class="bar-top"><span>Quiet Luxury</span><span class="num">64%</span></div><div class="bar-track"><div class="bar-fill" style="--w:64%"></div></div></li>
+            <li class="bar"><div class="bar-top"><span>Smart Casual</span><span class="num">51%</span></div><div class="bar-track"><div class="bar-fill" style="--w:51%"></div></div></li>
+            <li class="bar"><div class="bar-top"><span>Minimalist <em class="down">↓ was 46%</em></span><span class="num">38%</span></div><div class="bar-track"><div class="bar-fill" style="--w:38%"></div></div></li>
+          </ul>
+          <ul class="prefs" aria-label="Preferences">
+            <li><b class="h">High</b> Navy</li>
+            <li><b class="h">High</b> Tailored fit</li>
+            <li><b class="m">Medium</b> Camel</li>
+            <li><b class="m">Medium</b> Solid colors</li>
+          </ul>
+          <p class="sample-note">Sample</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">What's in it</span>
+          <h2>Four parts, one picture of you.</h2>
+        </div>
+        <div class="features">
+          <div class="feature reveal">
+            <div class="feature-icon">{{icon:sparkle}}</div>
+            <h3>Style directions</h3>
+            <p>How strongly your looks lean towards each of 10 directions, as percentages. A look can be both Classic and Quiet Luxury, so the scores don't need to add up to 100.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="feature-icon">{{icon:palette}}</div>
+            <h3>Preferences</h3>
+            <p>The colors, fit, patterns and layering you choose again and again, each marked High, Medium or Low.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="feature-icon">{{icon:hanger}}</div>
+            <h3>Behavior by occasion</h3>
+            <p>How your taste changes with the plan for the day: more formal for interviews, more relaxed at weekends.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="feature-icon">{{icon:face}}</div>
+            <h3>What Peppi learned</h3>
+            <p>A short summary and a few observations in plain words, like "Prefers one statement piece with quiet basics".</p>
+          </div>
+          <div class="feature reveal">
+            <div class="feature-icon">{{icon:shield}}</div>
+            <h3>Confidence</h3>
+            <p>How much the DNA rests on: Low under 15 looks, Medium from 15, High from 30. The page tells you how many more looks reach the next level.</p>
+          </div>
+          <div class="feature reveal">
+            <div class="feature-icon">{{icon:refresh}}</div>
+            <h3>What changed</h3>
+            <p>After each update, the bars show where you moved, such as "↑ was 28%", so you can watch your style evolve.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--tint">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">The 10 directions</span>
+          <h2>A shared language for style.</h2>
+          <p>Each saved look is scored once on these directions, plus its main colors, formality, fit, pattern and layering.</p>
+        </div>
+        <ul class="directions reveal">
+          <li>Classic</li><li>Smart Casual</li><li>Quiet Luxury</li><li>Minimalist</li><li>Sport Elegant</li><li>Streetwear</li><li>Romantic</li><li>Bohemian</li><li>Edgy</li><li>Bold</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap split">
+        <div class="stack-lg reveal">
+          <span class="eyebrow">Recent taste counts most</span>
+          <h2>Your newest looks lead. Older ones still count.</h2>
+          <p>Peppi groups your saved looks in tens, newest first. Each older group counts a little over half as much as the group after it, so your DNA follows how your taste is changing without forgetting where it started.</p>
+          <p>Move the slider to see how much each group counts.</p>
+        </div>
+        <div class="weights reveal">
+          <div class="range" style="max-width:none">
+            <div class="range-top">
+              <label class="field-label" for="looks">Saved looks</label>
+              <span class="range-value" id="looks-out">40 saved looks</span>
+            </div>
+            <input type="range" id="looks" min="10" max="60" step="1" value="40">
+            <div class="range-scale" aria-hidden="true"><span>10</span><span>60</span></div>
+          </div>
+          <ul class="weights-out" id="weights-out" aria-live="polite">
+            <li class="wrow"><span>Newest 10</span><div class="wrow-track"><div class="wrow-fill" style="width:46%"></div></div><span class="num">46.0%</span></li>
+            <li class="wrow"><span>Looks 11-20</span><div class="wrow-track"><div class="wrow-fill" style="width:27.6%"></div></div><span class="num">27.6%</span></li>
+            <li class="wrow"><span>Looks 21-30</span><div class="wrow-track"><div class="wrow-fill" style="width:16.5%"></div></div><span class="num">16.5%</span></li>
+            <li class="wrow"><span>Looks 31-40</span><div class="wrow-track"><div class="wrow-fill" style="width:9.9%"></div></div><span class="num">9.9%</span></li>
+          </ul>
+          <div class="conf">
+            <div>
+              <div class="conf-label" id="conf-label">Confidence: High</div>
+              <div class="small muted" id="conf-next">Well established</div>
+            </div>
+            <div class="conf-scale" id="conf-scale" aria-hidden="true"><span class="on h"></span><span class="on h"></span><span class="on h"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--tint">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">When it updates</span>
+          <h2>It grows with every ten saves.</h2>
+        </div>
+        <dl class="rules reveal">
+          <div><dt>Your first DNA at ten saved looks</dt><dd>Save looks with the heart. The counter on Saved looks shows how many are left.</dd></div>
+          <div><dt>An update after every ten more</dt><dd>Peppi recalculates from all your looks and rewrites the summary, then tells you what changed.</dd></div>
+          <div><dt>Deleting a look takes it out at once</dt><dd>If a look doesn't feel like you, delete it. Your DNA is recalculated straight away without it.</dd></div>
+          <div><dt>Expired photos still count</dt><dd>A saved look's photo is removed after 43 days, but the look keeps counting towards your DNA until you delete it.</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap split split--flip">
+        <div class="stack-lg reveal">
+          <span class="eyebrow">In every request</span>
+          <h2>Two outfits that are you. One that stretches you.</h2>
+          <p>With a Style DNA, the first two outfits follow it and the third goes a little further, so you still discover something new. What you ask for always comes first: the occasion, the weather, the formality, your color rules and any style inspiration you pick.</p>
+          <p>The photos follow your DNA too. Among suitable photos, the ones closest to your style are chosen first.</p>
+        </div>
+        <ul class="behaviors reveal" aria-label="Sample behavior by occasion">
+          <li><strong>Job Interview</strong><span>More formal, leans Quiet Luxury</span></li>
+          <li><strong>Romantic Dinner</strong><span>Leans Romantic</span></li>
+          <li><strong>Travel / Airport</strong><span>More relaxed, leans Sport Elegant</span></li>
+          <li><strong>Family Gathering</strong><span>Close to usual</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="band band--night band--tight">
+      <div class="wrap cta-grid">
+        <div class="stack">
+          <h2 style="font-size:var(--step-3)">Style DNA comes with Signature and Couture.</h2>
+          <p class="muted">Looks you save before choosing a plan are added once you have one.</p>
+        </div>
+        <div class="btns"><a class="btn" href="plans.html">See the plans {{icon:arrow}}</a></div>
+      </div>
+    </section>
