@@ -430,9 +430,11 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; }
 @media (max-width: 860px) { .split { grid-template-columns: 1fr; } .split--flip > :first-child { order: 0; } }
 .split .stack-lg > p { color: var(--muted); max-width: 52ch; }
 .ticks { list-style: none; display: grid; gap: 10px; }
-.ticks li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
-.ticks li::before { content: ""; width: 18px; height: 18px; margin-top: 0.2em; border-radius: 50%; background: currentColor; opacity: 0.18; -webkit-mask: none; }
-.ticks li { position: relative; }
+/* The tick sits in the left padding, so an item's text flows as one
+   paragraph however it's marked up (a grid split "<strong>…</strong> text"
+   into columns and squeezed the text into the tick's). */
+.ticks li { position: relative; padding-left: 32px; }
+.ticks li::before { content: ""; position: absolute; left: 0; top: 0.2em; width: 18px; height: 18px; border-radius: 50%; background: currentColor; opacity: 0.18; -webkit-mask: none; }
 .ticks li::after { content: ""; position: absolute; left: 6px; top: calc(0.2em + 4px); width: 4px; height: 8px; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg); }
 
 /* DNA card (mirrors the app's white cards) */
@@ -611,6 +613,9 @@ input[type="range"] { width: 100%; accent-color: var(--accent); height: 28px; }
 .email { font-family: var(--mono); font-size: clamp(1rem, 0.9rem + 0.8vw, 1.35rem); user-select: all; overflow-wrap: anywhere; }
 .copy-btn { font: 600 0.88rem var(--body); border: 1px solid var(--line); background: var(--paper-2); color: var(--ink); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
 .cards-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+/* A shorter column keeps its content at the top instead of spreading it
+   out to the taller one's height. */
+.cards-2 > .stack { align-content: start; }
 @media (max-width: 760px) { .cards-2 { grid-template-columns: 1fr; } }
 .steps-plain { padding-left: 1.3em; display: grid; gap: 10px; }
 .steps-plain li::marker { font-family: var(--mono); color: var(--gold-text); }
