@@ -330,7 +330,7 @@ ul, ol { margin: 0; padding: 0; }
   .steps li + li { border-top: 1px solid var(--line); }
 }
 
-/* ---------- Demo (try the questions) ---------- */
+/* ---------- Demo (see sample outfits) ---------- */
 .demo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: clamp(28px, 4vw, 56px); align-items: start; }
 @media (max-width: 940px) { .demo { grid-template-columns: 1fr; } }
 .demo-panel { display: grid; gap: 26px; }
