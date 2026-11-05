@@ -34,7 +34,7 @@ In pages, `{{icon:name}}` inserts a line icon and `{{garment:name}}` one of the 
 garment drawings from the app (`tshirt`, `dress`, `trousers`, `heel`, `handbag`,
 `sunglasses`); `{{logo}}` is Peppi's logo (the app icon), colored by the stylesheet.
 A page with `"credits": true` in its JSON comment gets the photo credits in its
-footer; see `build.py`.
+footer; see `build.py`. The home page follows the canvas's look B section by section.
 
 ## Design
 

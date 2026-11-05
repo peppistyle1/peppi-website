@@ -62,9 +62,11 @@
   }
 
   /* ---------- Home: three looks, rotating through 8 occasions ---------- */
-  // The first occasion's photos are in the page; the other seven load once
-  // the page has, then cross-fade every 6 seconds. A dot picks an occasion
-  // (and stops the rotation); with reduced motion nothing turns by itself.
+  // The first occasion's photos are in the page; the other seven load in the
+  // background once the page has, and an occasion only shows once all three
+  // of its photos are ready, so a frame is never blank. They cross-fade every
+  // 6 seconds; a dot picks an occasion (and stops the rotation); with reduced
+  // motion nothing turns by itself.
   function initLooks() {
     const grid = $("#looks");
     const dataEl = $("#looks-data");
@@ -118,8 +120,24 @@
     controls.appendChild(toggle);
     controls.hidden = false;
 
-    function show(n) {
+    // Resolves when all three photos of occasion n can be drawn.
+    const ready = (n) => {
       load(n);
+      return Promise.all(frames.map((stack) => {
+        const img = stack[n];
+        if (img.complete && img.naturalWidth) return null;
+        return new Promise((done) => {
+          img.addEventListener("load", done, { once: true });
+          img.addEventListener("error", done, { once: true });
+        });
+      }));
+    };
+    let wanted = 0;
+    function show(n) {
+      wanted = n;
+      ready(n).then(() => { if (wanted === n) draw(n); });
+    }
+    function draw(n) {
       current = n;
       const set = sets[n];
       frames.forEach((stack, i) => stack.forEach((img, k) => {
@@ -145,7 +163,12 @@
       if (on) timer = setInterval(() => { if (!document.hidden) show((current + 1) % sets.length); }, 6000);
     }
     setPlaying(playing);
-    window.addEventListener("load", () => load(1), { once: true });
+    // After the page: fetch the other occasions one after another.
+    window.addEventListener("load", () => {
+      let n = 1;
+      const next = () => { if (n < sets.length) ready(n++).then(next); };
+      next();
+    }, { once: true });
   }
 
   /* ---------- Style DNA: how much each group of 10 looks counts ---------- */

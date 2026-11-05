@@ -98,7 +98,6 @@ NAV = [
     ("dna", "style-dna.html", "Style DNA"),
     ("tryon", "try-on.html", "Try-on"),
     ("plans", "plans.html", "Plans"),
-    ("about", "about.html", "About"),
     ("faq", "faq.html", "FAQ"),
 ]
 
