@@ -62,7 +62,8 @@ Settings → Pages → Deploy from a branch → `main`, folder `/docs`. The buil
 - The privacy policy and terms are in effect from November 4, 2026. Have them reviewed by a lawyer
   before launch, and update the "Last updated" date with every change.
 - Add the prices on the plans page when they're set.
-- Replace the "Coming soon" store badges with real store links.
+- Replace the "Coming soon" store buttons with real store links: `PLAY_URL` and
+  `APP_STORE_URL` in `build.py` (and the stores' official badges).
 
 ## Fonts
 
