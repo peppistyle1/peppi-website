@@ -18,6 +18,7 @@ src/pages/*.html    one file per page; the first line is a JSON comment with
 src/assets/         stylesheet, script, fonts (with their licenses) and images
 docs/               the built site that GitHub Pages serves (do not edit by hand)
 tools/og-image.html the source of the social-share picture
+tools/photo-record.md where each home page photo comes from
 ```
 
 ## Editing
@@ -31,7 +32,25 @@ tools/og-image.html the source of the social-share picture
 
 In pages, `{{icon:name}}` inserts a line icon and `{{garment:name}}` one of the six
 garment drawings from the app (`tshirt`, `dress`, `trousers`, `heel`, `handbag`,
-`sunglasses`); see `build.py`.
+`sunglasses`); `{{logo}}` is Peppi's logo (the app icon), colored by the stylesheet.
+A page with `"credits": true` in its JSON comment gets the photo credits in its
+footer; see `build.py`.
+
+## Design
+
+The editorial lookbook ("look B" from the Claude Design canvas): paper #F7F6F3 and
+ink #111111, one red #C8361B for emphasis (coral #F08A6E on ink), Bodoni Moda for
+headings and Inter Tight for text, square edges and thin rules. Light and dark
+themes follow the visitor's device.
+
+## Photos
+
+The home page's 24 outfit photos (`src/assets/img/looks/s<set>-<look>.jpg`) are free
+Unsplash photos (Unsplash License, not Unsplash+), downloaded by hand on
+November 5, 2026 and cropped below the face; one house number is blurred. Each
+photographer is credited in the home page's footer (`PHOTOGRAPHERS` in `build.py`);
+`tools/photo-record.md` lists each photo's Unsplash page.
+No brand logos, and never endorsement-style text next to a person.
 
 ## GitHub Pages
 
@@ -47,5 +66,5 @@ Settings → Pages → Deploy from a branch → `main`, folder `/docs`. The buil
 
 ## Fonts
 
-Syne, Figtree, DM Mono and Great Vibes, all under the SIL Open Font License 1.1
-(license files in `src/assets/fonts/`).
+Bodoni Moda and Inter Tight (latin subsets), both under the SIL Open Font License
+1.1 (license files in `src/assets/fonts/`).

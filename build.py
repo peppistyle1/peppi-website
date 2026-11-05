@@ -57,15 +57,46 @@ ICONS = {
     "repeat": '<path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/>',
 }
 
-# The brand mark: a clothes hanger, like the one that swings on the welcome page.
-HANGER_MARK = ('<svg class="hanger" viewBox="0 0 64 64" aria-hidden="true">'
-               '<path d="M32 26v-4.5a6.5 6.5 0 1 1 6.5-6.5"/>'
-               '<path d="M32 26 6.6 44.4c-2 1.5-1 4.6 1.5 4.6h47.8c2.5 0 3.5-3.1 1.5-4.6Z"/></svg>')
+# The logo (the app icon): six garments on a rounded tile, the dress as the
+# accent. Its colors come from the stylesheet (.logo), so it can be inverted.
+LOGO_CELLS = [
+    ("line", '<path d="M22 8 9 14 4 27l9 3 1 24h32l1-24 9-3-5-13-13-6q-8 9-16 0Z"/>'),
+    ("accent", '<path d="M23 5l1 16-13 34q19 4 38 0L36 21l1-16"/>'),
+    ("line", '<path d="M15 6h30l4 49H35l-5-33-5 33H11Z"/>'),
+    ("line", '<path d="M3 49q1-8 12-8 12 0 21-11l9-6q8-2 8 7v6l-2 20h-3l-1-14q-16 4-31 10H7q-5 0-4-4Z"/>'),
+    ("line", '<path d="M10 25h40l4 29H6Z"/><path d="M20 25c0-17 20-17 20 0"/>'),
+    ("line", '<circle cx="17" cy="33" r="11"/><circle cx="43" cy="33" r="11"/><path d="M28 31q2-4 4 0"/>'),
+]
+LOGO = ('<svg class="logo" viewBox="0 0 240 240" aria-hidden="true"><rect class="logo-tile" width="240" height="240" rx="52"/>'
+        + "".join(f'<g class="logo-{kind}" transform="translate({10 + 74 * (i % 3)} {36 + 90 * (i // 3)}) scale(1.2)">{paths}</g>'
+                  for i, (kind, paths) in enumerate(LOGO_CELLS))
+        + "</svg>")
+
+# The home page's outfit photos (free Unsplash photos, cropped below the
+# face), credited in the footer of the pages that show them.
+PHOTOGRAPHERS = [
+    ("McFollis", "thisismcfollis"), ("sammy swae", "sammyswae"), ("K Studios", "kstudios"),
+    ("ALIREZA Pandkhahi", "kroba313"), ("Filip Rankovic Grobgaard", "filipgrobgaard"), ("Ramy Mamdouh", "romba100"),
+    ("Karl Joshua Bernal", "karljosh16"), ("aisvri", "aisvri"), ("Christopher Campbell", "chrisjoelcampbell"),
+    ("Reza Shahriari", "officialthereza"), ("Jon Tyson", "jontyson"), ("Hong bz", "hongbz"),
+    ("David Suarez", "davidprspctive"), ("ST Mathew", "stev3shotit"), ("Sophie Paterson", "patersophie"),
+    ("Marcel Strauß", "martzzl"), ("Megan Ruth", "meganruthphoto"), ("Anton K Wibowo", "antonkwibowo"),
+    ("lhon karwan", "lhonkarwanhamasalih"), ("Allef Vinicius", "seteph"), ("darya kameneva", "kolbert02"),
+    ("Elvis Kaiser", "rmndphoto"), ("Prescott Horn", "prescott3"), ("Good Faces", "goodfacesagency"),
+]
+
+
+def credits_html():
+    links = [f'<a href="https://unsplash.com/@{user}">{name}</a>' for name, user in PHOTOGRAPHERS]
+    names = ", ".join(links[:-1]) + " and " + links[-1]
+    return ('<details class="credits"><summary>Photo credits</summary>'
+            f'<p>Outfit photos by {names} on <a href="https://unsplash.com">Unsplash</a>.</p></details>')
+
 
 NAV = [
     ("how", "index.html#how", "How it works"),
     ("dna", "style-dna.html", "Style DNA"),
-    ("tryon", "try-on.html", "Virtual try-on"),
+    ("tryon", "try-on.html", "Try-on"),
     ("plans", "plans.html", "Plans"),
     ("about", "about.html", "About"),
     ("faq", "faq.html", "FAQ"),
@@ -85,7 +116,7 @@ def render(text):
     text = re.sub(r"\{\{garment:(\w+)\}\}", lambda m: garment(m.group(1)), text)
     text = re.sub(r"\{\{garment-draw:(\w+)\}\}", lambda m: garment(m.group(1), "garment draw"), text)
     text = re.sub(r"\{\{icon:(\w+)\}\}", lambda m: icon(m.group(1)), text)
-    text = text.replace("{{hanger}}", HANGER_MARK)
+    text = text.replace("{{logo}}", LOGO)
     text = text.replace("{{year}}", str(date.today().year))
     return text
 
@@ -95,7 +126,7 @@ def nav_html(active):
     for key, href, label in NAV:
         current = ' aria-current="page"' if key == active else ""
         links.append(f'<a href="{href}"{current}>{label}</a>')
-    links.append('<a class="nav-cta" href="index.html#get">Get Peppi</a>')
+    links.append('<a class="nav-cta" href="index.html#get">Get the app</a>')
     return "\n          ".join(links)
 
 
@@ -133,6 +164,7 @@ def build():
             "nav": nav_html(meta.get("nav", "")),
             "body_class": meta.get("body_class", ""),
             "robots": meta.get("robots", "index, follow"),
+            "credits": credits_html() if meta.get("credits") else "",
             "content": body,
         }.items():
             html = html.replace("{{" + key + "}}", value)

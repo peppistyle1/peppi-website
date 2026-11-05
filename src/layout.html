@@ -7,7 +7,8 @@
   <meta name="description" content="{{description}}">
   <meta name="robots" content="{{robots}}">
   <link rel="canonical" href="{{canonical}}">
-  <meta name="theme-color" content="#0E1A2C">
+  <meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Peppi">
   <meta property="og:title" content="{{title}}">
@@ -18,9 +19,9 @@
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="assets/img/favicon.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/img/icon-192.png">
-  <link rel="preload" href="assets/fonts/syne-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/figtree-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/great-vibes-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bodoni-moda-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/bodoni-moda-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-tight-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/site.css">
   <script>document.documentElement.classList.add("js");</script>
   <script src="assets/js/site.js" defer></script>
@@ -30,7 +31,7 @@
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="index.html" aria-label="Peppi home">
-        {{hanger}}
+        {{logo}}
         <span class="brand-name">Peppi</span>
       </a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav"><span></span>Menu</button>
@@ -48,7 +49,7 @@
     <div class="wrap">
       <div class="footer-grid">
         <div class="footer-about">
-          <span class="script">Peppi</span>
+          <a class="brand brand--footer" href="index.html" aria-label="Peppi home">{{logo}}<span class="brand-name">Peppi</span></a>
           <p>Outfit ideas for any occasion, weather or vibe, made for you by AI. Named after a woman who always found a way to look and feel her best.</p>
         </div>
         <div>
@@ -79,8 +80,9 @@
       </div>
       <div class="footer-base">
         <span>© {{year}} Peppi. All rights reserved.</span>
-        <span>peppistyle1@gmail.com</span>
+        <span>Coming soon to Google Play · peppistyle1@gmail.com</span>
       </div>
+      {{credits}}
     </div>
   </footer>
 </body>

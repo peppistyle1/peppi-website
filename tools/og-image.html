@@ -1,19 +1,22 @@
 <!doctype html>
-<!-- The social-share picture (assets/img/og-image.png). To regenerate: build, copy
-     this file into docs/, serve docs/ locally and screenshot it at 1200 x 630. -->
-<html><head><meta charset="utf-8"><link rel="stylesheet" href="assets/css/site.css">
-<style>html,body{margin:0;width:1200px;height:630px;overflow:hidden}
-.og{width:1200px;height:630px;box-sizing:border-box;padding:72px 80px;display:grid;grid-template-columns:600px 1fr;align-items:center;gap:72px;
-background:radial-gradient(900px 400px at 85% -10%,rgba(230,194,122,.14),transparent 60%),linear-gradient(180deg,#0E1A2C,#15294A);color:#F4F7FC}
-.og h1{font-size:76px;line-height:.95;letter-spacing:-.02em}.og h1 .script{display:block;font-size:1.32em;margin-top:.06em}
-.og p{font-family:var(--mono);color:#E6C27A;letter-spacing:.14em;text-transform:uppercase;font-size:19px;margin-bottom:26px}
-.og .rail{color:#E6C27A;width:100%}.og .rail-grid{gap:10px}.og .rail-item{padding:12%}.og .rail-item::before{display:none}</style></head><body>
-<div class="og"><div><p>Peppi · Your personal AI stylist</p><h1>Your Wardrobe. <span class="script">Perfected.</span></h1></div>
-<div class="rail"><div class="rail-bar"></div><div class="rail-grid">
-<div class="rail-item"><svg class="garment" viewBox="0 0 60 60"><path d="M22 8 9 14 4 27l9 3 1 24h32l1-24 9-3-5-13-13-6q-8 9-16 0Z"/></svg></div>
-<div class="rail-item"><svg class="garment" viewBox="0 0 60 60"><path d="M23 5l1 16-13 34q19 4 38 0L36 21l1-16"/><path d="M23 5q7 8 14 0"/><path d="M24 21q6 3 12 0"/></svg></div>
-<div class="rail-item"><svg class="garment" viewBox="0 0 60 60"><path d="M15 6h30l4 49H35l-5-33-5 33H11Z"/><path d="M15 12h30"/></svg></div>
-<div class="rail-item"><svg class="garment" viewBox="0 0 60 60"><path d="M3 49q1-8 12-8 12 0 21-11l9-6q8-2 8 7v6l-2 20h-3l-1-14q-16 4-31 10H7q-5 0-4-4Z"/><path d="M16 50q15-6 31-10"/></svg></div>
-<div class="rail-item"><svg class="garment" viewBox="0 0 60 60"><path d="M10 25h40l4 29H6Z"/><path d="M20 25c0-17 20-17 20 0"/><path d="M26 34h8"/></svg></div>
-<div class="rail-item"><svg class="garment" viewBox="0 0 60 60"><circle cx="17" cy="33" r="11"/><circle cx="43" cy="33" r="11"/><path d="M28 31q2-4 4 0"/><path d="M6 31 2 24"/><path d="M54 31l4-7"/></svg></div>
-</div></div></div></body></html>
+<!-- The social-share picture (src/assets/img/og-image.png), 1200 x 630.
+     Render it with headless Chrome from this folder:
+     chrome --headless=new --allow-file-access-from-files --hide-scrollbars --force-device-scale-factor=1
+       --window-size=1200,630 --screenshot=../src/assets/img/og-image.png og-image.html -->
+<meta charset="utf-8">
+<style>
+@font-face{font-family:B;src:url(../src/assets/fonts/bodoni-moda-normal.woff2);font-weight:400 900}
+@font-face{font-family:B;font-style:italic;src:url(../src/assets/fonts/bodoni-moda-italic.woff2);font-weight:400 900}
+@font-face{font-family:I;src:url(../src/assets/fonts/inter-tight-normal.woff2);font-weight:400 700}
+body{margin:0;width:1200px;height:630px;background:#F7F6F3;color:#111;font-family:I;display:grid;grid-template-columns:1fr 470px;overflow:hidden}
+.l{padding:56px 0 52px 64px;display:flex;flex-direction:column;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:14px;font-family:B;font-weight:700;font-size:40px;letter-spacing:.06em}
+.logo{width:58px;height:58px}.logo .logo-tile{fill:#111}.logo g{fill:none;stroke-width:7.5;stroke-linecap:round;stroke-linejoin:round}.logo .logo-line{stroke:#F7F6F3}.logo .logo-accent{stroke:#F08A6E}
+h1{font-family:B;font-weight:500;font-size:96px;line-height:.92;letter-spacing:-.03em;margin:0}
+h1 em{color:#C8361B}
+p{margin:0;font-size:17px;letter-spacing:.12em;text-transform:uppercase;color:#5A5650}
+.r{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:40px 40px 40px 0}
+.r img{width:100%;height:100%;object-fit:cover}
+</style>
+<div class="l"><div class="brand"><svg class="logo" viewBox="0 0 240 240" aria-hidden="true"><rect class="logo-tile" width="240" height="240" rx="52"/><g class="logo-line" transform="translate(10 36) scale(1.2)"><path d="M22 8 9 14 4 27l9 3 1 24h32l1-24 9-3-5-13-13-6q-8 9-16 0Z"/></g><g class="logo-accent" transform="translate(84 36) scale(1.2)"><path d="M23 5l1 16-13 34q19 4 38 0L36 21l1-16"/></g><g class="logo-line" transform="translate(158 36) scale(1.2)"><path d="M15 6h30l4 49H35l-5-33-5 33H11Z"/></g><g class="logo-line" transform="translate(10 126) scale(1.2)"><path d="M3 49q1-8 12-8 12 0 21-11l9-6q8-2 8 7v6l-2 20h-3l-1-14q-16 4-31 10H7q-5 0-4-4Z"/></g><g class="logo-line" transform="translate(84 126) scale(1.2)"><path d="M10 25h40l4 29H6Z"/><path d="M20 25c0-17 20-17 20 0"/></g><g class="logo-line" transform="translate(158 126) scale(1.2)"><circle cx="17" cy="33" r="11"/><circle cx="43" cy="33" r="11"/><path d="M28 31q2-4 4 0"/></g></svg> PEPPI</div><h1>What to wear, <em>decided.</em></h1><p>Your personal stylist, in your hand</p></div>
+<div class="r"><img src="../src/assets/img/looks/s1-classic.jpg"><img src="../src/assets/img/looks/s2-bold.jpg"><img src="../src/assets/img/looks/s6-relaxed.jpg"></div>
