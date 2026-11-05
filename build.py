@@ -8,6 +8,7 @@ Each page in src/pages/ starts with a JSON comment:
 and is wrapped in src/layout.html. Tokens such as {{garment:dress}} or
 {{icon:heart}} are replaced with the inline SVGs below. Standard library only.
 """
+import hashlib
 import json
 import re
 import shutil
@@ -139,7 +140,13 @@ def build():
     (css_dir / "site.css").write_text(fonts + "\n" + (SRC / "assets" / "css" / "site.css").read_text())
     (OUT / "assets" / "fonts" / "fonts.css").unlink()
 
+    # Version the stylesheet and script by their content, so a browser never
+    # pairs a new page with an old cached copy (GitHub Pages caches 10 minutes).
+    def version(rel):
+        return hashlib.sha256((OUT / rel).read_bytes()).hexdigest()[:10]
     layout = (SRC / "layout.html").read_text()
+    for rel in ("assets/css/site.css", "assets/js/site.js"):
+        layout = layout.replace(f'"{rel}"', f'"{rel}?v={version(rel)}"')
     urls = []
     for page in sorted((SRC / "pages").glob("*.html")):
         raw = page.read_text()
