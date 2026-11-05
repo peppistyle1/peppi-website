@@ -316,7 +316,6 @@ ul, ol { margin: 0; padding: 0; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 4px 28px; }
 .footer-links a { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding-block: 10px; }
 .footer-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 20px; font-size: 0.82rem; }
-.footer-email { user-select: all; }
 .credits { margin-top: 18px; font-size: 0.82rem; line-height: 1.6; color: #A8A49C; border-top: 1px solid var(--night-line); padding-top: 6px; }
 .credits summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--on-night); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
 .credits p { margin: 4px 0 8px; max-width: 120ch; }
