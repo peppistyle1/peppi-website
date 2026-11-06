@@ -304,8 +304,21 @@
     }));
   }
 
+  /* ---------- Home: "More great values" ---------- */
+  // Open in the page so the text is there without JavaScript; on phones it
+  // starts folded, and it opens again when the window widens past phone size.
+  function initMore() {
+    const more = document.querySelector(".more");
+    if (!more) return;
+    const phone = window.matchMedia("(max-width: 760px)");
+    const sync = () => { more.open = !phone.matches; };
+    sync();
+    phone.addEventListener("change", sync);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     initHeader();
+    initMore();
     initReveal();
     initLooks();
     initWeights();

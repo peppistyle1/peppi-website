@@ -626,7 +626,21 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .masthead h1 { font-size: clamp(3.2rem, 1.2rem + 7vw, 7rem); line-height: 0.92; letter-spacing: -0.03em; }
 .masthead-foot { display: flex; flex-wrap: wrap; gap: 20px 56px; align-items: flex-start; justify-content: space-between; }
 .masthead-foot p { flex: 1 1 420px; min-width: 0; font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem); line-height: 1.55; max-width: 36em; }
-.masthead-foot em { font-family: var(--display); font-style: italic; font-weight: 600; font-size: 1.12em; line-height: 1; color: var(--emph); }
+.masthead-foot em { font-family: var(--display); font-style: italic; font-weight: 600; font-size: 1.12em; line-height: 1; color: var(--emph); white-space: nowrap; }
+.more { flex: 1 1 420px; min-width: 0; max-width: 36em; }
+.more summary { display: none; }
+@media (max-width: 760px) {
+  /* Phones: the second paragraph folds away behind a "More great values" line. */
+  .more summary {
+    display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; list-style: none;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary::after { content: "+"; margin-left: auto; font-size: 1.4rem; font-weight: 400; line-height: 1; color: var(--gold-text); transition: transform 0.3s var(--ease); }
+  .more[open] summary::after { transform: rotate(45deg); }
+  .more[open] p { padding-top: 16px; }
+}
 
 /* ---------- Home: three looks, rotating through 8 occasions ---------- */
 .looks { padding-block: 0 clamp(64px, 9vw, 104px); }
