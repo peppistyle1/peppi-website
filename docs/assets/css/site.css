@@ -624,7 +624,7 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
   border-bottom: 1px solid var(--line); padding-bottom: 14px;
 }
 .masthead h1 { font-size: clamp(3.2rem, 1.2rem + 7vw, 7rem); line-height: 0.92; letter-spacing: -0.03em; }
-.masthead-foot { display: flex; flex-wrap: wrap; gap: 28px 40px; align-items: flex-end; justify-content: space-between; }
+.masthead-foot { display: flex; flex-wrap: wrap; gap: 20px 56px; align-items: flex-start; justify-content: space-between; }
 .masthead-foot p { flex: 1 1 420px; min-width: 0; font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem); line-height: 1.55; max-width: 36em; }
 
 /* ---------- Home: three looks, rotating through 8 occasions ---------- */
