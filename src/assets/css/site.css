@@ -731,3 +731,20 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 @media (max-width: 760px) {
   body { font-variation-settings: "opsz" 18; }
 }
+
+/* ---------- Home: the 32 occasions ---------- */
+.section-head h2 em { font-style: italic; color: var(--emph); }
+.occasions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 48px; }
+.occasions section { min-width: 0; display: grid; gap: 12px; align-content: start; border-top: 1px solid var(--rule); padding-top: 14px; }
+.occasions h3 { font-family: var(--display); font-weight: 500; font-size: 1.5rem; line-height: 1.15; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.occasions h3 span { font-family: var(--body); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; color: var(--gold-text); }
+.occasions ul { list-style: none; display: grid; }
+.occasions li { padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 0.98rem; }
+@media (max-width: 900px) { .occasions { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) {
+  /* Phones: each group's occasions run on as one wrapped line, so 32 rows don't fill the screen. */
+  .occasions { grid-template-columns: 1fr; gap: 28px; }
+  .occasions ul { display: block; line-height: 1.7; }
+  .occasions li { display: inline; padding: 0; border: 0; }
+  .occasions li:not(:last-child)::after { content: " · "; color: var(--muted); }
+}
