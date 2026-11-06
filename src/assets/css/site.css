@@ -711,8 +711,11 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .dedication .script { font-size: clamp(4rem, 2.4rem + 7vw, 8.5rem); line-height: 0.9; }
 .lost .script { font-size: clamp(4rem, 2.4rem + 8vw, 8rem); line-height: 1; }
 
-/* Phones: the accent words are set smaller, so thin strokes carried too little
-   color. A heavier weight keeps them as clear as on a desktop. */
+/* Phones: Bodoni is set smaller here, so its thin strokes looked faint.
+   A heavier weight keeps the headlines and accent words as clear as on a desktop. */
 @media (max-width: 760px) {
+  h1, h2, .teasers h3, .look-name, .dna-summary, .tryon-op, .plan-tagline, .price-value,
+  .compare thead th, .rules dt, .behaviors li strong, .dedication blockquote, .faq summary,
+  .store b, .phone-name strong, .moods li { font-weight: 600; }
   .script, .moods li.is-accent, .roman i, .how-steps i { font-weight: 650; }
 }
