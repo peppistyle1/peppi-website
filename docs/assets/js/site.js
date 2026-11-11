@@ -49,6 +49,136 @@
     });
   }
 
+  /* ---------- Home: the hangers' rail comes down when it's seen ---------- */
+  function initRail() {
+    const rail = $(".rail-art");
+    if (!rail) return;
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      rail.classList.add("is-down");
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        rail.classList.add("is-down");
+        io.disconnect();
+      }
+    }, { rootMargin: "0px 0px -15% 0px" });
+    io.observe(rail);
+  }
+
+  /* ---------- Style DNA: the taste graph's tooltip ---------- */
+  function initTaste() {
+    const svg = $(".taste-svg");
+    const dataEl = $("#taste-data");
+    if (!svg || !dataEl) return;
+    const data = JSON.parse(dataEl.textContent);
+    const tip = $("#taste-tip");
+    const cross = $("#taste-cross");
+    const plot = svg.parentElement;
+    const box = svg.viewBox.baseVal;
+    const left = 46, right = box.width - 48;
+    const n = data.looks.length;
+    const show = (clientX) => {
+      const r = svg.getBoundingClientRect();
+      const x = ((clientX - r.left) / r.width) * box.width;
+      const i = Math.max(0, Math.min(n - 1, Math.round(((x - left) / (right - left)) * (n - 1))));
+      const cx = left + (i * (right - left)) / (n - 1);
+      cross.setAttribute("x1", cx);
+      cross.setAttribute("x2", cx);
+      cross.removeAttribute("hidden");
+      tip.innerHTML = `<strong>After ${data.looks[i]} looks</strong>` + data.series
+        .map((s, k) => `<span class="taste-c${k + 1}"><i></i>${s.name} ${Math.round(s.values[i] * 100)}%</span>`).join("");
+      tip.hidden = false;
+      const px = (cx / box.width) * r.width;
+      const w = tip.offsetWidth;
+      tip.style.left = `${px + 12 + w <= r.width ? px + 12 : Math.max(0, px - 12 - w)}px`;
+    };
+    const hide = () => { tip.hidden = true; cross.setAttribute("hidden", ""); };
+    plot.addEventListener("pointermove", (e) => show(e.clientX));
+    plot.addEventListener("pointerdown", (e) => show(e.clientX));
+    plot.addEventListener("pointerleave", hide);
+  }
+
+  /* ---------- Home: Alternative & Expressive, four sets taking turns ----------
+     Like the outfit grid at the top: each photo crossfades to the next set's,
+     with its caption; dots pick a set, and play/pause. Still with reduced
+     motion (the dots still work). */
+  function initAiLooks() {
+    const grid = $("#ai-looks");
+    const dataEl = $("#ai-data");
+    const controls = $("#ai-controls");
+    if (!grid || !dataEl || !controls) return;
+    const sets = JSON.parse(dataEl.textContent);
+    const firsts = $$("img[data-ai]", grid);
+    const captions = $$(".ai-caption", grid);
+    let playing = !reduceMotion;
+    let timer = null;
+    let current = 0;
+    const frames = firsts.map((first, i) => {
+      const stack = [first];
+      for (let n = 1; n < sets.length; n++) {
+        const img = document.createElement("img");
+        img.alt = sets[n].captions[i].replace(/\.$/, "");
+        img.width = 600; img.height = 800;
+        img.decoding = "async";
+        img.dataset.src = `assets/img/ai/${first.dataset.ai}-${n}.jpg`;
+        img.setAttribute("aria-hidden", "true");
+        first.parentElement.appendChild(img);
+        stack.push(img);
+      }
+      return stack;
+    });
+    const ready = (n) => Promise.all(frames.map((stack) => {
+      const img = stack[n];
+      if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
+      if (img.complete && img.naturalWidth) return null;
+      return new Promise((done) => {
+        img.addEventListener("load", done, { once: true });
+        img.addEventListener("error", done, { once: true });
+      });
+    }));
+    const dots = sets.map((_, n) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "looks-dot";
+      b.setAttribute("aria-label", `Show looks set ${n + 1} of ${sets.length}`);
+      b.setAttribute("aria-pressed", String(n === 0));
+      b.innerHTML = "<span></span>";
+      b.addEventListener("click", () => { setPlaying(false); show(n); });
+      controls.appendChild(b);
+      return b;
+    });
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "looks-toggle";
+    toggle.addEventListener("click", () => setPlaying(!playing));
+    controls.appendChild(toggle);
+    controls.hidden = false;
+    let wanted = 0;
+    function show(n) {
+      wanted = n;
+      ready(n).then(() => { if (wanted === n) draw(n); });
+    }
+    function draw(n) {
+      current = n;
+      frames.forEach((stack) => stack.forEach((img, k) => {
+        img.classList.toggle("is-on", k === n);
+        if (k === n) img.removeAttribute("aria-hidden"); else img.setAttribute("aria-hidden", "true");
+      }));
+      captions.forEach((c, i) => { c.textContent = sets[n].captions[i]; });
+      dots.forEach((d, k) => d.setAttribute("aria-pressed", String(k === n)));
+    }
+    function setPlaying(on) {
+      playing = on;
+      toggle.textContent = on ? "Pause" : "Play";
+      toggle.setAttribute("aria-label", on ? "Pause the looks" : "Play the looks");
+      clearInterval(timer);
+      if (on) timer = setInterval(() => show((current + 1) % sets.length), 6000);
+    }
+    setPlaying(playing);
+    if (playing) ready(1);
+  }
+
   /* ---------- Segmented buttons ---------- */
   function segmented(group, onChange) {
     if (!group) return () => null;
@@ -320,6 +450,9 @@
     initHeader();
     initMore();
     initReveal();
+    initRail();
+    initTaste();
+    initAiLooks();
     initLooks();
     initWeights();
     initMeasurements();

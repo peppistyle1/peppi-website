@@ -22,9 +22,9 @@
   <link rel="preload" href="assets/fonts/bodoni-moda-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/bodoni-moda-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-tight-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=ee2761d3d5">
+  <link rel="stylesheet" href="assets/css/site.css?v=3f48ac62d2">
   <script>document.documentElement.classList.add("js");</script>
-  <script src="assets/js/site.js?v=89b89c49f3" defer></script>
+  <script src="assets/js/site.js?v=2ba07e4bb7" defer></script>
 </head>
 <body class="">
   <a class="skip" href="#main">Skip to content</a>
@@ -66,7 +66,7 @@
           <ul class="prefs" aria-label="Preferences">
             <li><b class="h">High</b> Navy</li>
             <li><b class="h">High</b> Tailored fit</li>
-            <li><b class="m">Medium</b> Camel</li>
+            <li><b class="m">Medium</b> Camel <em class="new">New</em></li>
             <li><b class="m">Medium</b> Solid colors</li>
           </ul>
           <p class="sample-note">Sample</p>
@@ -109,9 +109,70 @@
           <div class="feature reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 21v-5h-5"/></svg></div>
             <h3>What changed</h3>
-            <p>After each update, the bars show where you moved, such as "↑ was 28%", so you can watch your style evolve.</p>
+            <p>After each update, every part shows where you moved: "↑ was 28%" on a direction, a level that changed, a new preference, occasion or insight, and a graph of your taste over time.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap split">
+        <div class="stack-lg reveal">
+          <span class="eyebrow">Your taste over time</span>
+          <h2>Watch your style move.</h2>
+          <p>Peppi keeps every Style DNA update, so you can see where your taste is heading. The graph follows your top three directions across your updates; tap or drag along it to see any update's numbers.</p>
+          <p>Every part of your DNA also shows what changed since the last update: a new preference or occasion, a level that moved, a new insight about you, and how sure Peppi is now.</p>
+        </div>
+        <figure class="taste reveal">
+          <ul class="taste-legend" aria-hidden="true"><li><span class="taste-key taste-c1"></span>Classic <b>82%</b></li><li><span class="taste-key taste-c2"></span>Quiet Luxury <b>64%</b></li><li><span class="taste-key taste-c3"></span>Minimalist <b>38%</b></li></ul>
+          <div class="taste-plot">
+            <svg class="taste-svg" viewBox="0 0 560 270" role="img" aria-labelledby="taste-title taste-desc">
+            <title id="taste-title">How a sample Style DNA changed over six updates</title>
+            <desc id="taste-desc">Classic from 66% to 82%. Quiet Luxury from 48% to 64%. Minimalist from 58% to 38%.</desc>
+            <line class="taste-grid" x1="46" x2="512" y1="236.0" y2="236.0"/><text class="taste-axis" x="38" y="240.0" text-anchor="end">30%</text>
+            <line class="taste-grid" x1="46" x2="512" y1="199.0" y2="199.0"/><text class="taste-axis" x="38" y="203.0" text-anchor="end">40%</text>
+            <line class="taste-grid" x1="46" x2="512" y1="162.0" y2="162.0"/><text class="taste-axis" x="38" y="166.0" text-anchor="end">50%</text>
+            <line class="taste-grid" x1="46" x2="512" y1="125.0" y2="125.0"/><text class="taste-axis" x="38" y="129.0" text-anchor="end">60%</text>
+            <line class="taste-grid" x1="46" x2="512" y1="88.0" y2="88.0"/><text class="taste-axis" x="38" y="92.0" text-anchor="end">70%</text>
+            <line class="taste-grid" x1="46" x2="512" y1="51.0" y2="51.0"/><text class="taste-axis" x="38" y="55.0" text-anchor="end">80%</text>
+            <line class="taste-grid" x1="46" x2="512" y1="14.0" y2="14.0"/><text class="taste-axis" x="38" y="18.0" text-anchor="end">90%</text>
+            <text class="taste-axis" x="46.0" y="258" text-anchor="middle">10 looks</text>
+            <text class="taste-axis" x="139.2" y="258" text-anchor="middle">20 looks</text>
+            <text class="taste-axis" x="232.4" y="258" text-anchor="middle">30 looks</text>
+            <text class="taste-axis" x="325.6" y="258" text-anchor="middle">40 looks</text>
+            <text class="taste-axis" x="418.8" y="258" text-anchor="middle">50 looks</text>
+            <text class="taste-axis" x="512.0" y="258" text-anchor="middle">60 looks</text>
+            <path class="taste-line taste-c1" d="M46.0 102.8 L139.2 88.0 L232.4 73.2 L325.6 65.8 L418.8 54.7 L512.0 43.6"/>
+            <circle class="taste-dot taste-c1" cx="46.0" cy="102.8" r="4"/>
+            <circle class="taste-dot taste-c1" cx="139.2" cy="88.0" r="4"/>
+            <circle class="taste-dot taste-c1" cx="232.4" cy="73.2" r="4"/>
+            <circle class="taste-dot taste-c1" cx="325.6" cy="65.8" r="4"/>
+            <circle class="taste-dot taste-c1" cx="418.8" cy="54.7" r="4"/>
+            <circle class="taste-dot taste-c1" cx="512.0" cy="43.6" r="4"/>
+            <path class="taste-line taste-c2" d="M46.0 169.4 L139.2 154.6 L232.4 132.4 L325.6 136.1 L418.8 121.3 L512.0 110.2"/>
+            <circle class="taste-dot taste-c2" cx="46.0" cy="169.4" r="4"/>
+            <circle class="taste-dot taste-c2" cx="139.2" cy="154.6" r="4"/>
+            <circle class="taste-dot taste-c2" cx="232.4" cy="132.4" r="4"/>
+            <circle class="taste-dot taste-c2" cx="325.6" cy="136.1" r="4"/>
+            <circle class="taste-dot taste-c2" cx="418.8" cy="121.3" r="4"/>
+            <circle class="taste-dot taste-c2" cx="512.0" cy="110.2" r="4"/>
+            <path class="taste-line taste-c3" d="M46.0 132.4 L139.2 143.5 L232.4 165.7 L325.6 176.8 L418.8 195.3 L512.0 206.4"/>
+            <circle class="taste-dot taste-c3" cx="46.0" cy="132.4" r="4"/>
+            <circle class="taste-dot taste-c3" cx="139.2" cy="143.5" r="4"/>
+            <circle class="taste-dot taste-c3" cx="232.4" cy="165.7" r="4"/>
+            <circle class="taste-dot taste-c3" cx="325.6" cy="176.8" r="4"/>
+            <circle class="taste-dot taste-c3" cx="418.8" cy="195.3" r="4"/>
+            <circle class="taste-dot taste-c3" cx="512.0" cy="206.4" r="4"/>
+            <text class="taste-end" x="520" y="47.6">82%</text>
+            <text class="taste-end" x="520" y="114.2">64%</text>
+            <text class="taste-end" x="520" y="210.4">38%</text>
+            <line class="taste-cross" id="taste-cross" x1="0" x2="0" y1="14" y2="236" hidden/>
+            </svg>
+            <div class="taste-tip" id="taste-tip" hidden></div>
+          </div>
+          <figcaption class="small muted">Sample. Your top three directions at each update.</figcaption>
+          <script type="application/json" id="taste-data">{"looks": [10, 20, 30, 40, 50, 60], "series": [{"name": "Classic", "values": [0.66, 0.7, 0.74, 0.76, 0.79, 0.82]}, {"name": "Quiet Luxury", "values": [0.48, 0.52, 0.58, 0.57, 0.61, 0.64]}, {"name": "Minimalist", "values": [0.58, 0.55, 0.49, 0.46, 0.41, 0.38]}]}</script>
+        </figure>
       </div>
     </section>
 

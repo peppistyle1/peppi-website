@@ -712,6 +712,44 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .phone-dots span:first-child { width: 18px; background: #111111; }
 .app-note { max-width: 320px; font-size: 0.82rem; line-height: 1.5; color: var(--muted); text-align: center; }
 
+/* ---------- Home: the hangers' rail from the app's Saved looks ----------
+   Hung from the top of its box on two wires; it comes down (with a little
+   bounce) when it scrolls into view, and the hangers swing, each on its own
+   beat. Still with reduced motion. */
+.app-intro { display: flex; flex-wrap: wrap; gap: 18px 28px; align-items: flex-start; }
+.app-intro > p { flex: 1 1 260px; min-width: 0; font-size: 1.1rem; max-width: 32em; }
+.rail-art { flex: 0 0 auto; width: clamp(200px, 40vw, 270px); height: auto; overflow: hidden; margin-top: -10px; }
+.rail-wire { stroke: var(--muted); stroke-width: 1; fill: none; }
+.rail-ring { fill: none; stroke: var(--ink); stroke-width: 1.4; }
+.rail-bar { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; fill: none; }
+.rail-hanger { fill: #F08A6E; }
+.rail-shirt { fill: #FFFFFF; stroke: #111111; stroke-width: 1.8; stroke-linejoin: round; }
+.rail-shirt-line { fill: none; stroke: #111111; stroke-width: 1.4; stroke-linecap: round; }
+.rail-dress { fill: #FBE0D7; stroke: #C8361B; stroke-width: 1.86; stroke-linejoin: round; }
+.rail-dress-line { fill: none; stroke: #C8361B; stroke-width: 1.5; stroke-linecap: round; }
+.rail-jacket { fill: #111111; stroke: var(--muted); stroke-width: 1.2; stroke-linejoin: round; }
+.rail-jacket-v { fill: #FFFFFF; }
+.rail-jacket-tie { fill: #111111; }
+.rail-jacket-line { fill: none; stroke: #F7F6F3; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.rail-jacket-button { fill: #F7F6F3; }
+.rail-swing { transform-origin: 0 0; animation: rail-swing 2.1s ease-in-out infinite alternate; }
+.rail-swing--1 { animation-duration: 1.9s; animation-delay: -0.4s; }
+.rail-swing--2 { animation-duration: 2.3s; animation-delay: -1.3s; }
+.rail-swing--3 { animation-duration: 2.1s; animation-delay: -0.8s; }
+@keyframes rail-swing { from { transform: rotate(-7deg); } to { transform: rotate(7deg); } }
+.js .rail-art:not(.is-down) .rail-rig { transform: translateY(-140px); }
+.rail-art.is-down .rail-rig { animation: rail-drop 2.4s cubic-bezier(0.22, 0.9, 0.3, 1) both; }
+@keyframes rail-drop {
+  0% { transform: translateY(-140px); }
+  70% { transform: translateY(8px); }
+  85% { transform: translateY(-3px); }
+  100% { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail-swing, .rail-art.is-down .rail-rig { animation: none; }
+  .js .rail-art:not(.is-down) .rail-rig { transform: none; }
+}
+
 /* ---------- Home: how it works (i to iv) ---------- */
 .how-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 16px 40px; margin-bottom: 40px; }
 .how-head p { max-width: 28em; color: var(--muted); }
@@ -812,4 +850,59 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hanger, .hanger svg { animation: none; }
+}
+
+/* ---------- Style DNA: the taste over time ----------
+   Three lines in colours checked together for colour-blind readers and
+   contrast (light and dark); a legend, each line's last value at its end
+   and a tooltip mean identity never rests on colour alone. */
+.taste { display: grid; gap: 12px; background: var(--card); border: 1px solid var(--line); padding: 20px; min-width: 0; }
+.taste-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.9rem; font-weight: 600; }
+.taste-legend li { display: inline-flex; align-items: center; gap: 8px; }
+.taste-legend b { font-weight: 600; color: var(--muted); }
+.taste-key { width: 18px; height: 3px; border-radius: 2px; background: var(--c); }
+.taste-plot { position: relative; touch-action: pan-y; }
+.taste-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.taste-grid { stroke: var(--line); stroke-width: 1; }
+.taste-axis { fill: var(--muted); font-size: 12px; font-family: var(--body); }
+.taste-end { fill: var(--ink); font-size: 12.5px; font-weight: 700; font-family: var(--body); }
+.taste-line { fill: none; stroke: var(--c); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.taste-dot { fill: var(--c); stroke: var(--card); stroke-width: 2; }
+.taste-cross { stroke: var(--muted); stroke-width: 1; }
+.taste-c1 { --c: #2A78D6; } .taste-c2 { --c: #EB6834; } .taste-c3 { --c: #1BAF7A; }
+.taste-tip { position: absolute; top: 4px; padding: 8px 10px; background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow); font-size: 0.82rem; line-height: 1.5; pointer-events: none; white-space: nowrap; }
+.taste-tip strong { display: block; font-weight: 700; }
+.taste-tip span { display: flex; align-items: center; gap: 6px; }
+.taste-tip i { width: 12px; height: 3px; border-radius: 2px; background: var(--c); }
+.prefs .new, .dna-card .new { font-style: normal; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; color: var(--high); margin-left: 4px; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .taste-c1 { --c: #3987E5; }
+  :root:not([data-theme="light"]) .taste-c2 { --c: #D95926; }
+  :root:not([data-theme="light"]) .taste-c3 { --c: #199E70; }
+}
+:root[data-theme="dark"] .taste-c1 { --c: #3987E5; }
+:root[data-theme="dark"] .taste-c2 { --c: #D95926; }
+:root[data-theme="dark"] .taste-c3 { --c: #199E70; }
+
+/* ---------- Home: Alternative & Expressive, made with AI ----------
+   Full length (the people aren't real, and the headpieces are part of the
+   look); the note under the row says they're made with AI. Four sets of
+   seven take turns, like the outfit grid at the top. A row on wide
+   screens, a sideways scroll on phones. */
+.ai-looks { list-style: none; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px; margin-top: 12px; }
+.ai-look { display: grid; gap: 10px; margin: 0; }
+.ai-look-photo { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--paper-2); }
+.ai-look-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.9s ease; }
+.ai-look-photo img.is-on { opacity: 1; }
+.ai-looks-bar { display: flex; justify-content: flex-end; margin-top: 28px; }
+.ai-look figcaption { display: grid; gap: 2px; }
+.ai-look strong { font-family: var(--display); font-weight: 500; font-size: 1.15rem; line-height: 1.15; }
+.ai-occasion { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-text); }
+.ai-caption { font-size: 0.82rem; line-height: 1.45; color: var(--muted); }
+.ai-note { margin-top: 18px; }
+@media (max-width: 1100px) { .ai-looks { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .ai-looks { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 62%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; scrollbar-width: none; }
+  .ai-looks::-webkit-scrollbar { display: none; }
+  .ai-look { scroll-snap-align: start; }
 }

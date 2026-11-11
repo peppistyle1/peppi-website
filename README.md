@@ -52,6 +52,13 @@ photographer is credited in the home page's footer (`PHOTOGRAPHERS` in `build.py
 `tools/photo-record.md` lists each photo's Unsplash page.
 No brand logos, and never endorsement-style text next to a person.
 
+The Alternative & Expressive section (`#expressive`) shows 28 photos made with AI
+(`src/assets/img/ai/<style>-<set>.jpg`, four sets of seven, taking turns like the
+outfit grid): from Peppi's own AI library (the app's alternative-style examples,
+approved by the owner), full length since the people aren't real, with no text in
+the background and no real event or venue. A note under the row says they're made
+with AI; captions are in the page's `ai-data`.
+
 ## GitHub Pages
 
 Settings → Pages → Deploy from a branch → `main`, folder `/docs`. The build writes
