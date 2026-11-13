@@ -224,6 +224,11 @@ def build():
             continue
         urls.append((canonical, last_changed(page)))
 
+    # Files served from the site's root as they are (search engines'
+    # ownership checks, such as Bing's BingSiteAuth.xml).
+    for path in sorted((SRC / "root").glob("*")):
+        if path.is_file():
+            shutil.copy(path, OUT / path.name)
     (OUT / "CNAME").write_text(DOMAIN + "\n")
     (OUT / ".nojekyll").write_text("")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")

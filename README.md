@@ -16,6 +16,7 @@ src/layout.html     the shared page frame: head, header, footer
 src/pages/*.html    one file per page; the first line is a JSON comment with
                     the title, description and active menu item
 src/assets/         stylesheet, script, fonts (with their licenses) and images
+src/root/           files served as they are from the site's root (BingSiteAuth.xml)
 docs/               the built site that GitHub Pages serves (do not edit by hand)
 tools/og-image.html the source of the social-share picture
 tools/photo-record.md where each home page photo comes from
