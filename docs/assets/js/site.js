@@ -226,6 +226,7 @@
     const looks = $$("img[data-look]", grid);
     const captions = $$(".look-caption", grid);
     const context = $("#looks-context");
+    const guideLink = $("#looks-guide");
     const phone = {
       track: $("#phone-track"), context: $("#phone-context"), caption: $("#phone-caption"), credit: $("#phone-credit"),
       look: $("#phone-look"), count: $("#phone-count"), dots: $$("#phone-dots span"),
@@ -307,6 +308,8 @@
       }));
       showCount(n);
       context.textContent = set.context;
+      // The guide for the occasion shown, by its short address.
+      if (guideLink && set.guide) { guideLink.href = `/${set.guide[0]}`; guideLink.textContent = set.guide[1]; }
       if (phone.track) {
         // The new occasion's three photos, back on Classic without sliding.
         $$("img", phone.track).forEach((img, k) => { img.src = src(n, LOOKS[k]); });

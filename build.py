@@ -16,6 +16,8 @@ import subprocess
 from datetime import date
 from pathlib import Path
 
+import guides
+
 ROOT = Path(__file__).parent
 SRC = ROOT / "src"
 OUT = ROOT / "docs"
@@ -131,6 +133,7 @@ def credits_html():
 
 NAV = [
     ("how", "index.html#how", "How it works"),
+    ("ideas", "outfit-ideas.html", "Outfit ideas"),
     ("dna", "style-dna.html", "Style DNA"),
     ("tryon", "try-on.html", "Try-on"),
     ("plans", "plans.html", "Plans"),
@@ -177,6 +180,42 @@ def clean_links(html):
     return re.sub(r'href="([a-z0-9-]+)\.html(#[^"]*)?"', short, html)
 
 
+APP_DESCRIPTION = ("An AI stylist app: tell Peppi where you're going, when and how dressed up you want to be, "
+                   "and it checks the weather and gives you three complete outfits, each with a real photo. "
+                   "Style DNA learns your taste from the looks you save, and virtual try-on shows a look on your own photo.")
+
+
+def page_data(slug, body):
+    """Structured data particular to a hand-written page: the app on the
+    home page, the questions and answers on the FAQ page."""
+    if slug == "index":
+        return [{"@type": "MobileApplication", "name": "Peppi", "url": f"{SITE}/",
+                 "operatingSystem": "Android, iOS", "applicationCategory": "LifestyleApplication",
+                 "description": APP_DESCRIPTION, "image": f"{SITE}/assets/img/icon-512.png",
+                 "publisher": {"@id": f"{SITE}/#org"}}]
+    if slug == "faq":
+        plain = lambda t: re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", t)).strip()
+        pairs = re.findall(r"<summary>(.*?)</summary>\s*<div class=\"answer\">(.*?)</div>", body, re.S)
+        return [{"@type": "FAQPage", "mainEntity": [
+            {"@type": "Question", "name": plain(q), "acceptedAnswer": {"@type": "Answer", "text": plain(a)}} for q, a in pairs]}]
+    return []
+
+
+def structured_data(canonical, meta, extra):
+    """JSON-LD for search engines: Peppi and the site on every page, the
+    page itself, and what's particular to it."""
+    graph = [
+        {"@type": "Organization", "@id": f"{SITE}/#org", "name": "Peppi", "url": f"{SITE}/",
+         "logo": f"{SITE}/assets/img/icon-512.png"},
+        {"@type": "WebSite", "@id": f"{SITE}/#site", "name": "Peppi", "url": f"{SITE}/", "publisher": {"@id": f"{SITE}/#org"}},
+        {"@type": "WebPage", "@id": canonical, "url": canonical, "name": meta["title"], "description": meta["description"],
+         "isPartOf": {"@id": f"{SITE}/#site"}},
+        *extra,
+    ]
+    data = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False).replace("</", "<\\/")
+    return f'<script type="application/ld+json">{data}</script>'
+
+
 def build():
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -202,15 +241,25 @@ def build():
         photos.update(path.name.encode() + path.read_bytes())
     photos_v = photos.hexdigest()[:10]
     layout = layout.replace("{{photos_v}}", photos_v)
-    urls = []
+    # Every page: (slug, meta, body, structured data, source for its date).
+    pages = []
     for page in sorted((SRC / "pages").glob("*.html")):
         raw = page.read_text()
         meta_match = re.match(r"\s*<!--(\{.*?\})-->\s*", raw, re.S)
         if not meta_match:
             raise SystemExit(f"{page.name}: missing the JSON comment at the top")
-        meta = json.loads(meta_match.group(1))
         body = raw[meta_match.end():]
-        slug = page.stem
+        pages.append((page.stem, json.loads(meta_match.group(1)), body, page_data(page.stem, body), page))
+    # The what-to-wear guides, from src/guides.json (guides.py).
+    all_guides = guides.load(SRC)
+    users = dict(PHOTOGRAPHERS)
+    data_file = SRC / "guides.json"
+    pages.append(("outfit-ideas", *guides.hub_page(all_guides), data_file))
+    for g in all_guides:
+        pages.append((g["slug"], *guides.guide_page(g, users), data_file))
+
+    urls = []
+    for slug, meta, body, data, source in pages:
         path = "" if slug == "index" else slug
         canonical = f"{SITE}/{path}"
         html = layout
@@ -227,13 +276,14 @@ def build():
             "robots": meta.get("robots", "index, follow"),
             "credits": credits_html() if meta.get("credits") else "",
             "content": body,
+            "jsonld": structured_data(canonical, meta, data),
         }.items():
             html = html.replace("{{" + key + "}}", value)
         html = re.sub(r'(assets/img/(?:looks|ai)/[\w.-]+\.jpg)"', rf'\1?v={photos_v}"', html)
-        (OUT / page.name).write_text(clean_links(render(html)))
+        (OUT / f"{slug}.html").write_text(clean_links(render(html)))
         if meta.get("robots", "").startswith("noindex"):
             continue
-        urls.append((canonical, last_changed(page)))
+        urls.append((canonical, last_changed(source)))
 
     # Files served from the site's root as they are (search engines'
     # ownership checks, such as Bing's BingSiteAuth.xml).

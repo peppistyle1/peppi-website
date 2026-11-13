@@ -17,6 +17,8 @@ src/pages/*.html    one file per page; the first line is a JSON comment with
                     the title, description and active menu item
 src/assets/         stylesheet, script, fonts (with their licenses) and images
 src/root/           files served as they are from the site's root (BingSiteAuth.xml)
+src/guides.json     the what-to-wear guides' text (one per outfit-grid occasion)
+guides.py           renders the guides and the Outfit ideas page that lists them
 docs/               the built site that GitHub Pages serves (do not edit by hand)
 tools/og-image.html the source of the social-share picture
 tools/photo-record.md where each home page photo comes from
@@ -37,6 +39,19 @@ garment drawings from the app (`tshirt`, `dress`, `trousers`, `heel`, `handbag`,
 `sunglasses`); `{{logo}}` is Peppi's logo (the app icon), colored by the stylesheet.
 A page with `"credits": true` in its JSON comment gets the photo credits in its
 footer; see `build.py`. The home page follows the canvas's look B section by section.
+
+## Search engines
+
+Each page has a title (up to 60 characters) and a description (up to 155) worded
+the way people search, and JSON-LD structured data (`structured_data` in
+`build.py`): Peppi and the site on every page, the app on the home page, the
+questions on the FAQ page and the guides. The **Outfit ideas** page
+(`/outfit-ideas`) lists 20 guides, each at the address of its search
+(`/what-to-wear-to-a-job-interview`): the occasion's three looks from the home
+grid with why each works, tips, what to avoid and questions. Their text is in
+`src/guides.json` (drafted with Peppi's model, then reviewed); a new occasion in
+the grid needs a guide there too. The home grid links to the guide of the
+occasion it shows. No meta keywords tag: search engines ignore it.
 
 ## Design
 
