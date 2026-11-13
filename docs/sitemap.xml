@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://peppi.style/about</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://peppi.style/delete-account</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://peppi.style/faq</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://peppi.style/</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://peppi.style/about</loc><lastmod>2026-11-05</lastmod></url>
+  <url><loc>https://peppi.style/delete-account</loc><lastmod>2026-11-05</lastmod></url>
+  <url><loc>https://peppi.style/faq</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://peppi.style/plans</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://peppi.style/privacy</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://peppi.style/style-dna</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://peppi.style/support</loc><lastmod>2026-11-11</lastmod></url>
-  <url><loc>https://peppi.style/terms</loc><lastmod>2026-11-11</lastmod></url>
+  <url><loc>https://peppi.style/support</loc><lastmod>2026-11-05</lastmod></url>
+  <url><loc>https://peppi.style/terms</loc><lastmod>2026-11-05</lastmod></url>
   <url><loc>https://peppi.style/try-on</loc><lastmod>2026-11-11</lastmod></url>
 </urlset>

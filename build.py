@@ -12,6 +12,7 @@ import hashlib
 import json
 import re
 import shutil
+import subprocess
 from datetime import date
 from pathlib import Path
 
@@ -91,6 +92,21 @@ PHOTOGRAPHERS = [
     ("lhon karwan", "lhonkarwanhamasalih"), ("Allef Vinicius", "seteph"), ("darya kameneva", "kolbert02"),
     ("Elvis Kaiser", "rmndphoto"), ("Prescott Horn", "prescott3"), ("Good Faces", "goodfacesagency"),
 ]
+
+
+def last_changed(page):
+    """When a page last really changed, for the sitemap: today if its source
+    has uncommitted edits, else the date of the last commit touching it."""
+    path = str(page.relative_to(ROOT))
+    try:
+        if subprocess.run(["git", "status", "--porcelain", "--", path], cwd=ROOT,
+                          capture_output=True, text=True, check=True).stdout.strip():
+            return date.today().isoformat()
+        day = subprocess.run(["git", "log", "-1", "--format=%cs", "--", path], cwd=ROOT,
+                             capture_output=True, text=True, check=True).stdout.strip()
+        return day or date.today().isoformat()
+    except (OSError, subprocess.CalledProcessError):
+        return date.today().isoformat()
 
 
 def credits_html():
@@ -186,13 +202,14 @@ def build():
         (OUT / page.name).write_text(render(html))
         if meta.get("robots", "").startswith("noindex"):
             continue
-        urls.append(canonical)
+        urls.append((canonical, last_changed(page)))
 
     (OUT / "CNAME").write_text(DOMAIN + "\n")
     (OUT / ".nojekyll").write_text("")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
-    today = date.today().isoformat()
-    entries = "\n".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>" for u in urls)
+    # The home page first, then the rest by name.
+    urls.sort(key=lambda u: (u[0] != f"{SITE}/", u[0]))
+    entries = "\n".join(f"  <url><loc>{u}</loc><lastmod>{day}</lastmod></url>" for u, day in urls)
     (OUT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

@@ -64,6 +64,12 @@ with AI; captions are in the page's `ai-data`.
 Settings → Pages → Deploy from a branch → `main`, folder `/docs`. The build writes
 `docs/CNAME` (`peppi.style`) and `docs/.nojekyll`.
 
+The build also writes `docs/robots.txt` and `docs/sitemap.xml`: every page except
+those marked `noindex` (the 404 page), the home page first, each with the date its
+source page was last committed (today if it has uncommitted edits). Submit
+https://peppi.style/sitemap.xml once in Google Search Console and Bing Webmaster Tools;
+they re-read it by themselves after that.
+
 ## Before launch
 
 - The privacy policy and terms are in effect from November 4, 2026. Have them reviewed by a lawyer
