@@ -80,17 +80,28 @@ LOGO = ('<svg class="logo" viewBox="0 0 240 240" aria-hidden="true"><rect class=
                   for i, (kind, paths) in enumerate(LOGO_CELLS))
         + "</svg>")
 
-# The home page's outfit photos (free Unsplash photos, cropped below the
-# face), credited in the footer of the pages that show them.
+# The home page's outfit photos (free Unsplash photos, full length),
+# credited in the footer of the pages that show them.
 PHOTOGRAPHERS = [
-    ("McFollis", "thisismcfollis"), ("sammy swae", "sammyswae"), ("K Studios", "kstudios"),
+    ("McFollis", "thisismcfollis"), ("Shaikh Musaddik", "shaikhmusaddik_9420862_sink"), ("K Studios", "kstudios"),
     ("ALIREZA Pandkhahi", "kroba313"), ("Filip Rankovic Grobgaard", "filipgrobgaard"), ("Ramy Mamdouh", "romba100"),
-    ("Karl Joshua Bernal", "karljosh16"), ("aisvri", "aisvri"), ("Christopher Campbell", "chrisjoelcampbell"),
+    ("Salar Arif", "salararif28"), ("Look Studio", "lookphoto"), ("Anton Polidovets", "wrecker2281337"),
     ("Reza Shahriari", "officialthereza"), ("Jon Tyson", "jontyson"), ("Hong bz", "hongbz"),
-    ("David Suarez", "davidprspctive"), ("ST Mathew", "stev3shotit"), ("Sophie Paterson", "patersophie"),
+    ("David Suarez", "davidprspctive"), ("Dion Martins", "dionmartins"), ("Babak Eshaghian", "babak22ir"),
     ("Marcel Strauß", "martzzl"), ("Megan Ruth", "meganruthphoto"), ("Anton K Wibowo", "antonkwibowo"),
-    ("lhon karwan", "lhonkarwanhamasalih"), ("Allef Vinicius", "seteph"), ("darya kameneva", "kolbert02"),
-    ("Elvis Kaiser", "rmndphoto"), ("Prescott Horn", "prescott3"), ("Good Faces", "goodfacesagency"),
+    ("lhon karwan", "lhonkarwanhamasalih"), ("Allef Vinicius", "seteph"), ("avat fathiazar", "avatno"),
+    ("Frames For Your Heart", "framesforyourheart"), ("Oswald Elsaboath", "ozzzyphotos"), ("Good Faces", "goodfacesagency"),
+    ("Alekon pictures", "alekonpictures"), ("Brian Lundquist", "bwl667"), ("Olga Zhuravleva", "zabegina"),
+    ("Muhammad Numan", "numaninsari"), ("Atiyeh Fathi", "atiyehfathi"), ("M. Brauer", "mebradus"),
+    ("Khaled Ghareeb", "khaledkagii"), ("Hunter Moranville", "onehunna"), ("Fred Kloet", "5dworkspace"),
+    ("litoon dev", "litoondev"), ("AllGo - An App For Plus Size People", "canweallgo"), ("Vishal Kampani", "vishalkampani"),
+    ("Konstantin Mishchenko", "meduzakos"), ("MOHAMMAD AL JANNAT RAKIN", "aljannatrakin"), ("Filipp Romanovski", "filipp_roman_photography"),
+    ("nicola dowie", "nickynoodles13"), ("Abdulhameed Al-ameri", "hamedo_ka"), ("Sou Jest", "soujest"),
+    ("Oscar Omondi", "xodusdigitals"), ("Michael Kyule", "madness_leahcim_"), ("Devin Santiago", "ydcphotography"),
+    ("Christian Agbede", "chriscreations__"), ("Gufran Mansuri", "gufran2001"), ("Navid Sohrabi", "navidsohrabi"),
+    ("Rodrigo Rodrigues | WOLF Λ R T", "wolfart32"), ("Daria Trofimova", "da161"), ("Clem Onojeghuo", "clemono"),
+    ("IMANA", "imanaindia"), ("Nadeem Choudhary", "hyper_nawab"), ("Mohamad Khosravi", "mohamadkhosravi"),
+    ("Jason Tran", "jasonntran"), ("Asal Mshk", "asalmashkoori"), ("Юрий Баринов", "studentapk"),
 ]
 
 
@@ -172,6 +183,14 @@ def build():
     layout = (SRC / "layout.html").read_text()
     for rel in ("assets/css/site.css", "assets/js/site.js"):
         layout = layout.replace(f'"{rel}"', f'"{rel}?v={version(rel)}"')
+    # The outfit and AI photos too, by one version over all of them: their
+    # file names stay the same when a photo is replaced. The script builds
+    # the other sets' addresses, so it reads the version off <body>.
+    photos = hashlib.sha256()
+    for path in sorted([*(OUT / "assets/img/looks").glob("*.jpg"), *(OUT / "assets/img/ai").glob("*.jpg")]):
+        photos.update(path.name.encode() + path.read_bytes())
+    photos_v = photos.hexdigest()[:10]
+    layout = layout.replace("{{photos_v}}", photos_v)
     urls = []
     for page in sorted((SRC / "pages").glob("*.html")):
         raw = page.read_text()
@@ -199,6 +218,7 @@ def build():
             "content": body,
         }.items():
             html = html.replace("{{" + key + "}}", value)
+        html = re.sub(r'(assets/img/(?:looks|ai)/[\w.-]+\.jpg)"', rf'\1?v={photos_v}"', html)
         (OUT / page.name).write_text(render(html))
         if meta.get("robots", "").startswith("noindex"):
             continue

@@ -45,16 +45,17 @@ themes follow the visitor's device.
 
 ## Photos
 
-The home page's 24 outfit photos (`src/assets/img/looks/s<set>-<look>.jpg`) are free
-Unsplash photos (Unsplash License, not Unsplash+), downloaded by hand on
-November 5, 2026 and cropped below the face; one house number is blurred. Each
-photographer is credited in the home page's footer (`PHOTOGRAPHERS` in `build.py`);
-`tools/photo-record.md` lists each photo's Unsplash page.
+The home page's 60 outfit photos (`src/assets/img/looks/s<set>-<look>.jpg`: 20
+occasions of three looks, taking turns with previous / next and a "3 / 20" count)
+are free Unsplash photos (Unsplash License, not Unsplash+), full length (head to
+toe) at 600 x 900; one house number is blurred. Each photographer is credited in
+the home page's footer (`PHOTOGRAPHERS` in `build.py`); `tools/photo-record.md`
+lists each photo's Unsplash page and how it was framed.
 No brand logos, and never endorsement-style text next to a person.
 
-The Alternative & Expressive section (`#expressive`) shows 28 photos made with AI
-(`src/assets/img/ai/<style>-<set>.jpg`, four sets of seven, taking turns like the
-outfit grid): from Peppi's own AI library (the app's alternative-style examples,
+The Alternative & Expressive section (`#expressive`) shows 56 photos made with AI
+(`src/assets/img/ai/<style>-<set>.jpg`, eight sets of seven, 56 different people,
+taking turns like the outfit grid): from Peppi's own AI library (the app's alternative-style examples,
 approved by the owner), full length since the people aren't real, with no text in
 the background and no real event or venue. A note under the row says they're made
 with AI; captions are in the page's `ai-data`.

@@ -626,6 +626,9 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .looks-dot span { display: block; width: 10px; height: 3px; background: var(--line); transition: width 0.3s var(--ease), background 0.3s; }
 .looks-dot[aria-pressed="true"] span { width: 24px; background: var(--ink); }
 .looks-dot:hover span { background: var(--muted); }
+.looks-step { width: 44px; height: 44px; border: 0; background: transparent; color: var(--ink); cursor: pointer; font: 400 1.7rem/1 var(--display); padding: 0 0 5px; }
+.looks-step:hover { color: var(--muted); }
+.looks-count { min-width: 4.2em; text-align: center; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: 0.08em; }
 .looks-toggle { min-height: 44px; padding: 0 14px; margin-left: 8px; border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer; font: 600 0.75rem var(--body); letter-spacing: 0.12em; text-transform: uppercase; }
 .looks-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; list-style: none; }
 .look { margin: 0; display: grid; gap: 14px; align-content: start; }
@@ -675,7 +678,8 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .phone-top span { font-size: 0.75rem; }
 .phone-context { font-size: 0.7rem; line-height: 1.4; }
 .phone-photo { position: relative; aspect-ratio: 2 / 3; max-width: 100%; border-radius: 16px; overflow: hidden; background: #E4E1DA; }
-.phone-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.phone-track { display: flex; height: 100%; transition: transform 0.55s var(--ease); }
+.phone-track img { flex: none; width: 100%; height: 100%; object-fit: cover; }
 .phone-credit { font-size: 0.64rem; }
 .phone-credit u { text-decoration-thickness: 1px; }
 .phone-name { display: flex; justify-content: space-between; align-items: center; }
@@ -683,8 +687,8 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .phone-name svg { width: 22px; height: 22px; fill: none; stroke: #C8361B; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .phone-caption { font-size: 0.75rem; line-height: 1.45; }
 .phone-dots { display: flex; justify-content: center; gap: 6px; padding-top: 2px; }
-.phone-dots span { width: 6px; height: 4px; border-radius: 2px; background: #D9D6CF; }
-.phone-dots span:first-child { width: 18px; background: #111111; }
+.phone-dots span { width: 6px; height: 4px; border-radius: 2px; background: #D9D6CF; transition: width 0.3s var(--ease), background 0.3s; }
+.phone-dots span.is-on { width: 18px; background: #111111; }
 .app-note { max-width: 320px; font-size: 0.82rem; line-height: 1.5; color: var(--muted); text-align: center; }
 
 /* ---------- Home: the hangers' rail from the app's Saved looks ----------

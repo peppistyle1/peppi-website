@@ -99,9 +99,10 @@
     plot.addEventListener("pointerleave", hide);
   }
 
-  /* ---------- Home: Alternative & Expressive, four sets taking turns ----------
-     Like the outfit grid at the top: each photo crossfades to the next set's,
-     with its caption; dots pick a set, and play/pause. Still with reduced
+  /* ---------- Home: Alternative & Expressive, eight sets taking turns ----------
+     Like the outfit grid at the top: starts at a random set, each photo
+     crossfades to the next set's, with its caption; dots pick a set, and
+     play/pause. Still with reduced
      motion (the dots still work). */
   function initAiLooks() {
     const grid = $("#ai-looks");
@@ -121,7 +122,7 @@
         img.alt = sets[n].captions[i].replace(/\.$/, "");
         img.width = 600; img.height = 800;
         img.decoding = "async";
-        img.dataset.src = `assets/img/ai/${first.dataset.ai}-${n}.jpg`;
+        img.dataset.src = `assets/img/ai/${first.dataset.ai}-${n}.jpg?v=${document.body.dataset.photosV}`;
         img.setAttribute("aria-hidden", "true");
         first.parentElement.appendChild(img);
         stack.push(img);
@@ -176,7 +177,25 @@
       if (on) timer = setInterval(() => show((current + 1) % sets.length), 6000);
     }
     setPlaying(playing);
-    if (playing) ready(1);
+    startAtRandom(frames, sets.length, draw);
+    if (playing) ready((current + 1) % sets.length);
+  }
+
+  // Each visit starts both photo grids at a random set (the owner). The
+  // first set's photos are in the page; when another set starts, they are
+  // put back to load-on-demand (cancelling their download) and the chosen
+  // set loads instead.
+  function startAtRandom(frames, count, draw) {
+    const start = Math.floor(Math.random() * count);
+    if (start === 0) return;
+    frames.forEach((stack) => {
+      const first = stack[0];
+      first.dataset.src = first.getAttribute("src");
+      first.removeAttribute("src");
+      const img = stack[start];
+      if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
+    });
+    draw(start);
   }
 
   /* ---------- Segmented buttons ---------- */
@@ -191,12 +210,13 @@
     return value;
   }
 
-  /* ---------- Home: three looks, rotating through 8 occasions ---------- */
-  // The first occasion's photos are in the page; the other seven load in the
-  // background once the page has, and an occasion only shows once all three
-  // of its photos are ready, so a frame is never blank. They cross-fade every
-  // 6 seconds; a dot picks an occasion (and stops the rotation); with reduced
-  // motion nothing turns by itself.
+  /* ---------- Home: three looks, rotating through the occasions ---------- */
+  // Starts at a random occasion each visit (startAtRandom); the next one
+  // loads in the background (each one shown fetches the one after), and an occasion only
+  // shows once all three of its photos are ready, so a frame is never blank.
+  // They cross-fade every 6 seconds; previous and next step through the
+  // occasions (and stop the rotation); with reduced motion nothing turns by
+  // itself.
   function initLooks() {
     const grid = $("#looks");
     const dataEl = $("#looks-data");
@@ -206,8 +226,13 @@
     const looks = $$("img[data-look]", grid);
     const captions = $$(".look-caption", grid);
     const context = $("#looks-context");
-    const phone = { img: $("#phone-img"), context: $("#phone-context"), caption: $("#phone-caption"), credit: $("#phone-credit") };
-    const src = (n, look) => `assets/img/looks/s${n + 1}-${look}.jpg`;
+    const phone = {
+      track: $("#phone-track"), context: $("#phone-context"), caption: $("#phone-caption"), credit: $("#phone-credit"),
+      look: $("#phone-look"), count: $("#phone-count"), dots: $$("#phone-dots span"),
+    };
+    const LOOKS = ["classic", "bold", "relaxed"];
+    const LOOK_NAMES = ["Classic", "Bold", "Relaxed"];
+    const src = (n, look) => `assets/img/looks/s${n + 1}-${look}.jpg?v=${document.body.dataset.photosV}`;
     let current = 0;
     let playing = !reduceMotion;
     let timer = null;
@@ -218,7 +243,7 @@
       for (let n = 1; n < sets.length; n++) {
         const img = document.createElement("img");
         img.alt = sets[n].captions[looks.indexOf(first)];
-        img.width = 599; img.height = 900;
+        img.width = 600; img.height = 900;
         img.decoding = "async";
         img.dataset.src = src(n, first.dataset.look);
         img.setAttribute("aria-hidden", "true");
@@ -232,17 +257,22 @@
       if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
     });
 
-    const dots = sets.map((set, n) => {
+    // Previous, "3 / 20" and next: dots don't fit this many occasions.
+    const step = (label, delta) => {
       const b = document.createElement("button");
       b.type = "button";
-      b.className = "looks-dot";
-      b.setAttribute("aria-label", `Show outfits for ${set.context.split(" · ")[0].toLowerCase()} (${n + 1} of ${sets.length})`);
-      b.setAttribute("aria-pressed", String(n === 0));
-      b.innerHTML = "<span></span>";
-      b.addEventListener("click", () => { setPlaying(false); show(n); });
-      controls.appendChild(b);
+      b.className = "looks-step";
+      b.setAttribute("aria-label", label);
+      b.textContent = delta < 0 ? "‹" : "›";
+      b.addEventListener("click", () => { setPlaying(false); show((wanted + delta + sets.length) % sets.length); });
       return b;
-    });
+    };
+    const count = document.createElement("span");
+    count.className = "looks-count";
+    count.setAttribute("aria-live", "polite");
+    controls.append(step("Previous occasion", -1), count, step("Next occasion", 1));
+    const showCount = (n) => { count.textContent = `${n + 1} / ${sets.length}`; };
+    showCount(0);
     const toggle = document.createElement("button");
     toggle.type = "button";
     toggle.className = "looks-toggle";
@@ -275,30 +305,52 @@
         if (k === n) img.removeAttribute("aria-hidden"); else img.setAttribute("aria-hidden", "true");
         if (k === n) captions[i].textContent = set.captions[i];
       }));
-      dots.forEach((d, k) => d.setAttribute("aria-pressed", String(k === n)));
+      showCount(n);
       context.textContent = set.context;
-      if (phone.img) {
-        phone.img.src = src(n, "classic");
+      if (phone.track) {
+        // The new occasion's three photos, back on Classic without sliding.
+        $$("img", phone.track).forEach((img, k) => { img.src = src(n, LOOKS[k]); });
+        phone.track.style.transition = "none";
+        phoneShow(0);
+        void phone.track.offsetWidth;
+        phone.track.style.transition = "";
         phone.context.textContent = set.context;
-        phone.caption.textContent = set.captions[0];
-        phone.credit.textContent = set.credit;
+        phoneCycle();
       }
       load((n + 1) % sets.length);
     }
+
+    // The app screen in "The app" section swipes through the occasion's
+    // three outfits like the app does: Classic, Bold, Relaxed, 2 seconds
+    // each, so one pass takes as long as an occasion stays in the grid.
+    let phoneAt = 0;
+    let phoneTimer = null;
+    function phoneShow(k) {
+      phoneAt = k;
+      phone.track.style.transform = `translateX(${-100 * k}%)`;
+      phone.look.textContent = LOOK_NAMES[k];
+      phone.caption.textContent = sets[current].captions[k];
+      phone.credit.textContent = sets[current].credits[k];
+      phone.count.textContent = `${k + 1} / 3`;
+      phone.dots.forEach((d, i) => d.classList.toggle("is-on", i === k));
+    }
+    function phoneCycle() {
+      clearInterval(phoneTimer);
+      if (playing && phone.track) phoneTimer = setInterval(() => { if (!document.hidden && phoneAt < 2) phoneShow(phoneAt + 1); }, 2000);
+    }
+
     function setPlaying(on) {
       playing = on;
       toggle.textContent = on ? "Pause" : "Play";
       toggle.setAttribute("aria-label", on ? "Pause the rotating outfits" : "Play the rotating outfits");
       clearInterval(timer);
       if (on) timer = setInterval(() => { if (!document.hidden) show((current + 1) % sets.length); }, 6000);
+      phoneCycle();
     }
     setPlaying(playing);
-    // After the page: fetch the other occasions one after another.
-    window.addEventListener("load", () => {
-      let n = 1;
-      const next = () => { if (n < sets.length) ready(n++).then(next); };
-      next();
-    }, { once: true });
+    startAtRandom(frames, sets.length, (n) => { wanted = n; draw(n); });
+    // After the page: fetch the next occasion.
+    window.addEventListener("load", () => load((current + 1) % sets.length), { once: true });
   }
 
   /* ---------- Style DNA: how much each group of 10 looks counts ---------- */
