@@ -20,6 +20,7 @@ src/root/           files served as they are from the site's root (BingSiteAuth.
 docs/               the built site that GitHub Pages serves (do not edit by hand)
 tools/og-image.html the source of the social-share picture
 tools/photo-record.md where each home page photo comes from
+tools/serve.py      the local preview server
 ```
 
 ## Editing
@@ -27,8 +28,8 @@ tools/photo-record.md where each home page photo comes from
 1. Change a page in `src/pages/` (or the frame in `src/layout.html`, or
    `src/assets/`).
 2. Run `python3 build.py` (Python 3, standard library only).
-3. Preview: `cd docs && python3 -m http.server 8765`, then open
-   http://127.0.0.1:8765.
+3. Preview: `python3 tools/serve.py`, then open http://127.0.0.1:8765 (it serves
+   `/faq` from `faq.html`, as GitHub Pages does; links use those short addresses).
 4. Commit both `src/` and `docs/`.
 
 In pages, `{{icon:name}}` inserts a line icon and `{{garment:name}}` one of the six

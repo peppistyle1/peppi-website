@@ -166,6 +166,17 @@ def nav_html(active):
     return "\n          ".join(links)
 
 
+def clean_links(html):
+    """Links in their canonical form, as each page's canonical tag names it
+    ("faq.html" -> "/faq", "index.html#get" -> "/#get"), so search engines
+    find one address per page (Google listed the .html ones as alternates).
+    GitHub Pages serves /faq from faq.html; preview with tools/serve.py."""
+    def short(m):
+        name, frag = m.group(1), m.group(2) or ""
+        return f'href="/{"" if name == "index" else name}{frag}"'
+    return re.sub(r'href="([a-z0-9-]+)\.html(#[^"]*)?"', short, html)
+
+
 def build():
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -219,7 +230,7 @@ def build():
         }.items():
             html = html.replace("{{" + key + "}}", value)
         html = re.sub(r'(assets/img/(?:looks|ai)/[\w.-]+\.jpg)"', rf'\1?v={photos_v}"', html)
-        (OUT / page.name).write_text(render(html))
+        (OUT / page.name).write_text(clean_links(render(html)))
         if meta.get("robots", "").startswith("noindex"):
             continue
         urls.append((canonical, last_changed(page)))
