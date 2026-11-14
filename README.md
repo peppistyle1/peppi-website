@@ -70,12 +70,22 @@ the home page's footer (`PHOTOGRAPHERS` in `build.py`); `tools/photo-record.md`
 lists each photo's Unsplash page and how it was framed.
 No brand logos, and never endorsement-style text next to a person.
 
-The Alternative & Expressive section (`#expressive`) shows 56 photos made with AI
-(`src/assets/img/ai/<style>-<set>.jpg`, eight sets of seven, 56 different people,
-taking turns like the outfit grid): from Peppi's own AI library (the app's alternative-style examples,
-approved by the owner), full length since the people aren't real, with no text in
-the background and no real event or venue. A note under the row says they're made
-with AI; captions are in the page's `ai-data`.
+The Alternative & Expressive section (`#expressive`) draws on 56 photos made with AI
+(`src/assets/img/ai/<style>-<set>.jpg`, eight sets of seven, 56 different people)
+from Peppi's own AI library (the app's alternative-style examples, approved by the
+owner), full length since the people aren't real, with no text in the background and
+no real event or venue. They're shown as "Can't choose? Let Peppi pick." (`#pick`,
+`initPick` in `site.js`): a slot-machine strip of the seven styles, each with one of
+its photos picked per visit, its occasion and that photo's description (captions are
+in the page's `ai-data`), which spins, lands on one and gives its one-liner. The
+movement is Motion 11.11.13 (motion.dev, MIT), self-hosted in `src/assets/js/motion.js`
+and loaded on the home page only, so the site still makes no outside calls. A note
+under it says the photos are made with AI.
+
+Other animations are drawn in code (SVG with CSS, or a canvas): the hangers' rail on
+the home page, the Style DNA helix beside the sample card (`initHelix`) and the plans
+page's swing tags (`initTags`). Each starts when it's seen and rests finished with
+reduced motion or without a script.
 
 ## GitHub Pages
 
