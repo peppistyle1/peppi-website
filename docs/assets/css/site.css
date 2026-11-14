@@ -1067,3 +1067,37 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
   .js .film-frame.is-rest, .js .film-head { opacity: 1; }
   .js .film-ticks b { transform: none; }
 }
+
+/* ---------- Home: the occasions as a departure board (site.js, initBoard) ----------
+   The 40 occasions from the lists below, as departures on an airport board: a
+   row flips every 2.5 s, its letters rattling until they land, and one is always
+   "Dressing" in coral. The buttons above filter it to one category. Ink in both
+   themes. Without a script the six lists show instead. */
+.occ-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.occ-chip { font: 600 0.76rem var(--body); letter-spacing: 0.04em; padding: 8px 12px; min-height: 36px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
+.occ-chip b { font-weight: 600; color: var(--gold-text); margin-left: 5px; }
+.occ-chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.occ-chip[aria-pressed="true"] b { color: #F08A6E; }
+.board { --flap-font: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; background: #111111; color: #F7F6F3; padding: 16px clamp(12px, 2vw, 22px) 18px; font-family: var(--flap-font); }
+.board-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid #3A3833; padding-bottom: 10px; margin-bottom: 6px; }
+.board-title { font-family: var(--display); font-style: italic; font-size: 1.35rem; color: #F08A6E; }
+.board-clock { font-size: 0.9rem; color: #C9C5BD; font-variant-numeric: tabular-nums; }
+.board table { width: 100%; border-collapse: separate; border-spacing: 0 5px; table-layout: fixed; }
+.board th { text-align: left; font: 600 0.66rem var(--body); letter-spacing: 0.14em; text-transform: uppercase; color: #8E897F; padding: 4px 10px; }
+.board th:first-child { width: 86px; }
+.board th.cat { width: 34%; }
+.board th.status { width: 116px; }
+.board td { background: #1C1B19; padding: 9px 10px; font-size: 0.95rem; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; perspective: 300px; }
+.board td.when { color: #F08A6E; font-variant-numeric: tabular-nums; }
+.board td.cat { color: #C9C5BD; font-size: 0.78rem; }
+.board td.status { font-size: 0.74rem; }
+.board .flap { display: inline-block; transform-origin: 50% 50%; }
+.board td.status .flap { padding: 2px 8px; background: #2A2826; color: #F7F6F3; }
+.board td.status .flap.now { background: #F08A6E; color: #111111; }
+@media (max-width: 700px) {
+  /* Phones: time, occasion and status; the category shows in the buttons above. */
+  .board th.cat, .board td.cat { display: none; }
+  .board th:first-child { width: 62px; }
+  .board th.status { width: 92px; }
+  .board td { font-size: 0.82rem; padding: 8px 8px; }
+}

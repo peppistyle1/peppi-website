@@ -89,6 +89,10 @@ wedding), each four photos made with AI in `src/assets/img/film/<couple|man|her>
 from the last one (`localStorage` "peppi-film"); the note under it says the people aren't
 real. Without a script it shows the couple's last photo with the headline.
 
+The 40 occasions (`#occasions`) show as a departure board (`initBoard`, Motion): it reads
+them from the six lists in the page, which stay there for search engines and show without
+a script; a row flips every 2.5 s and buttons filter it by category.
+
 Other animations are drawn in code (SVG with CSS, or a canvas): the hangers' rail on
 the home page, the Style DNA helix beside the sample card (`initHelix`) and the plans
 page's swing tags (`initTags`). Each starts when it's seen and rests finished with

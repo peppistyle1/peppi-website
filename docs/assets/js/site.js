@@ -693,6 +693,105 @@
     play();
   }
 
+  /* ---------- Home: the occasions as a departure board ---------- */
+  // Reads the 40 occasions from the lists in the page (which stay there for
+  // search engines, and show without a script) and shows them as departures:
+  // every 2.5 s the next occasion flips into a row, its letters rattling until
+  // they land (Motion turns each flap), and the newest row is "Dressing" in
+  // coral. The category buttons flip the whole board to one category. Paused
+  // while off screen; with reduced motion the letters land at once and the
+  // rows don't change by themselves.
+  function initBoard() {
+    const box = $("#occ-board"), lists = $(".occasions"), tbody = $("#board-rows"), chips = $("#occ-chips");
+    if (!box || !lists || !tbody || !chips) return;
+    const cats = $$("section", lists).map((sec) => ({
+      name: $("h3", sec).firstChild.textContent.trim(),
+      items: $$("li", sec).map((li) => li.textContent.trim()),
+    }));
+    const all = cats.flatMap((c) => c.items.map((name) => ({ name, cat: c.name })));
+    if (!all.length) return;
+    const M = window.Motion, ROWS = 8, GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ&/";
+    let filter = null, cursor = 0, next = 0, timer = null;
+    const list = () => (filter ? all.filter((o) => o.cat === filter) : all);
+    // A made-up timetable: from 8:00, every 35 minutes.
+    const when = (k) => { const m = 8 * 60 + 35 * k; return `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`; };
+    function flap(el, text) {
+      if (!M || reduceMotion) { el.textContent = text; return; }
+      let n = 0;
+      const steps = 6 + Math.floor(Math.random() * 5);
+      const tick = () => {
+        if (n++ >= steps) { el.textContent = text; M.animate(el, { rotateX: [-80, 0] }, { duration: 0.18 }); return; }
+        el.textContent = text.split("").map((ch) => (ch === " " ? " " : GLYPHS[Math.floor(Math.random() * GLYPHS.length)])).join("");
+        M.animate(el, { rotateX: [-70, 0] }, { duration: 0.06 });
+        setTimeout(tick, 55);
+      };
+      tick();
+    }
+    const rows = [];
+    for (let r = 0; r < ROWS; r++) {
+      const tr = document.createElement("tr");
+      tr.innerHTML = '<td class="when"><span class="flap"></span></td><td><span class="flap"></span></td><td class="cat"><span class="flap"></span></td><td class="status"><span class="flap"></span></td>';
+      tbody.appendChild(tr);
+      rows.push({ tr, flaps: $$(".flap", tr) });
+    }
+    function setRow(r, o, k, now) {
+      const [w, n, c, s] = rows[r].flaps;
+      flap(w, when(k)); flap(n, o.name); flap(c, o.cat);
+      s.classList.toggle("now", now);
+      flap(s, now ? "Dressing" : "On time");
+    }
+    function fill() {
+      const l = list();
+      rows.forEach((row, r) => {
+        row.tr.hidden = r >= l.length;
+        if (r < l.length) setTimeout(() => setRow(r, l[r], r, r === 0), r * 90);
+      });
+      cursor = Math.min(ROWS, l.length);
+      next = 0;
+    }
+    function step() {
+      const l = list();
+      if (l.length <= ROWS) return;
+      rows.forEach((row) => row.flaps[3].classList.remove("now"));
+      setRow(next, l[cursor % l.length], cursor, true);
+      cursor++;
+      next = (next + 1) % ROWS;
+    }
+    // The buttons: All, then each category with its count.
+    const buttons = [{ label: "All", count: all.length, cat: null }, ...cats.map((c) => ({ label: c.name, count: c.items.length, cat: c.name }))].map((b, i) => {
+      const el = document.createElement("button");
+      el.type = "button";
+      el.className = "occ-chip";
+      el.setAttribute("aria-pressed", String(i === 0));
+      el.innerHTML = "<span></span><b></b>";
+      el.firstChild.textContent = b.label;
+      el.lastChild.textContent = String(b.count);
+      el.addEventListener("click", () => {
+        buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === el)));
+        filter = b.cat;
+        fill();
+      });
+      chips.appendChild(el);
+      return el;
+    });
+    const clock = $("#board-clock");
+    const showClock = () => {
+      const d = new Date();
+      clock.textContent = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+    };
+    showClock();
+    box.hidden = false;
+    lists.hidden = true;
+    fill();
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      const seen = entries.some((entry) => entry.isIntersecting);
+      if (seen && !timer) { showClock(); timer = setInterval(() => { step(); showClock(); }, 2500); }
+      else if (!seen && timer) { clearInterval(timer); timer = null; }
+    });
+    io.observe(box);
+  }
+
   /* ---------- Home: "Surprise me" under the AI looks ---------- */
   // A strip of the seven looks (each with one of its photos, picked per
   // visit) spins, slows with a spring and lands on one under the pointer;
@@ -804,6 +903,7 @@
     initHeader();
     initMore();
     initFilm();
+    initBoard();
     initReveal();
     initRail();
     initTaste();

@@ -149,6 +149,18 @@
           <p>From the office to the festival field. Alternative &amp; Expressive covers experimental, theatrical and fantasy looks, built from real garments and practical for the setting.</p>
           <p>Real photos of these looks are rare, so here Peppi also draws on its own library of outfit photos made with AI, each one full length and always marked as made with AI. Couture members get photos made just for them. The library will grow to more styles. <a href="#expressive">See some below.</a></p>
         </div>
+        <!-- The departure board (site.js, initBoard; Motion): the 40 occasions below, as departures whose
+             letters flip; the category buttons filter it. Shown only with a script, which then hides the lists. -->
+        <div class="occ-board" id="occ-board" hidden>
+          <div class="occ-chips" id="occ-chips" role="group" aria-label="Show one category"></div>
+          <div class="board">
+            <div class="board-top"><span class="board-title">Departures · what to wear</span><span class="board-clock" id="board-clock" aria-hidden="true"></span></div>
+            <table>
+              <thead><tr><th scope="col">When</th><th scope="col">Occasion</th><th scope="col" class="cat">Category</th><th scope="col" class="status">Status</th></tr></thead>
+              <tbody id="board-rows" aria-live="off"></tbody>
+            </table>
+          </div>
+        </div>
         <div class="occasions">
           <section>
             <h3>Professional <span>3</span></h3>
