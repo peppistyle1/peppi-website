@@ -1038,6 +1038,7 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
   /* On phones the line sits over the brighter part of the photo, where coral
      didn't read: ivory with a soft shadow instead (the owner's report). */
   .film-eyebrow { color: #F7F6F3; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55); }
+  .film-eyebrow-2 { display: block; margin-top: 4px; }   /* its own line on phones */
 }
 /* The script starts the film from its first photo; until then nothing jumps. */
 .js .film-frame.is-rest, .js .film-head { opacity: 0; }
