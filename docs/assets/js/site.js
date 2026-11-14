@@ -747,12 +747,20 @@
         if (r < l.length) setTimeout(() => setRow(r, l[r], r, r === 0), r * 90);
       });
       cursor = Math.min(ROWS, l.length);
-      next = 0;
+      // The first row is "Dressing" now; a category that fits flips the second one next.
+      next = l.length <= ROWS ? 1 % l.length : 0;
     }
     function step() {
       const l = list();
-      if (l.length <= ROWS) return;
       rows.forEach((row) => row.flaps[3].classList.remove("now"));
+      if (l.length <= ROWS) {
+        // A category that fits on the board: each row flips again in turn
+        // (same occasion, letters rattling) and becomes the one "Dressing".
+        const r = next % l.length;
+        setRow(r, l[r], r, true);
+        next = (r + 1) % l.length;
+        return;
+      }
       setRow(next, l[cursor % l.length], cursor, true);
       cursor++;
       next = (next + 1) % ROWS;
