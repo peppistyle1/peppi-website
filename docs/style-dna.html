@@ -23,9 +23,9 @@
   <link rel="preload" href="assets/fonts/bodoni-moda-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/bodoni-moda-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-tight-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=f677b5b335">
+  <link rel="stylesheet" href="assets/css/site.css?v=d5ab0e2d4e">
   <script>document.documentElement.classList.add("js");</script>
-  <script src="assets/js/site.js?v=f5270da3c5" defer></script>
+  <script src="assets/js/site.js?v=af288f6084" defer></script>
 </head>
 <body class="" data-photos-v="63b7469cac">
   <a class="skip" href="#main">Skip to content</a>
@@ -54,10 +54,14 @@
         <div>
           <span class="eyebrow">Peppi's Style DNA · Preview free</span>
           <h1 style="margin-top:20px">Your style, <span class="script">decoded.</span></h1>
-          <p class="lede">Every look you save tells Peppi a little more about you. After 10, it writes your Style DNA: what you lean towards, what you come back to, and how you dress for each kind of day.</p>
+          <p class="lede">Every look you save tells Peppi a little more about you. Your top directions appear from 3 saved looks, and your full Style DNA at 6: what you lean towards, what you come back to, and how you dress for each kind of day.</p>
         </div>
+        <div class="dna-stage">
+        <!-- The helix: saved looks fly in and the sample card's bars fill (site.js, initHelix). -->
+        <canvas class="dna-helix" aria-hidden="true"></canvas>
         <div class="dna-card" aria-label="Sample Style DNA">
           <h3>Style DNA <span>Confidence: Medium</span></h3>
+          <p class="dna-count" aria-live="polite">Your Style DNA is ready</p>
           <p class="dna-summary">Polished classics with a quiet-luxury finish, in navy, camel and cream.</p>
           <ul class="bars">
             <li class="bar"><div class="bar-top"><span>Classic <em>↑ was 74%</em></span><span class="num">82%</span></div><div class="bar-track"><div class="bar-fill" style="--w:82%"></div></div></li>
@@ -73,6 +77,7 @@
           </ul>
           <p class="sample-note">Sample</p>
         </div>
+        </div>
       </div>
     </section>
 
@@ -80,38 +85,39 @@
       <div class="wrap">
         <div class="section-head reveal">
           <span class="eyebrow">What's in it</span>
-          <h2>Four parts, one picture of you.</h2>
+          <h2>Six things your Style DNA tells you.</h2>
+          <p class="lede" style="margin-top:14px">Each one is a part of your Style DNA page in the app. The sample card at the top shows the first two: the bars are your style directions, the chips under them your preferences.</p>
         </div>
         <div class="features">
           <div class="feature reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="M19 16l.7 1.8 1.8.7-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7Z"/></svg></div>
-            <h3>Style directions</h3>
-            <p>How strongly your looks lean towards each of 10 directions, as percentages. A look can be both Classic and Quiet Luxury, so the scores don't need to add up to 100.</p>
+            <h3>1. Your style directions</h3>
+            <p>Which styles you lean towards, as a percentage for each of 10: Classic, Smart Casual, Quiet Luxury, Minimalist, Sport Elegant, Streetwear, Romantic, Bohemian, Edgy and Bold. For example, Classic 82%. A look can be both Classic and Quiet Luxury, so they don't add up to 100.</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.6-.9 1.3-1.8-.4-1.1.3-2.2 1.5-2.2H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg></div>
-            <h3>Preferences</h3>
-            <p>The colors, fit, patterns and layering you choose again and again, each marked High, Medium or Low.</p>
+            <h3>2. Your preferences</h3>
+            <p>The details you pick again and again: colors, fit, patterns and layering. Each is marked High, Medium or Low, for example "High: Navy" or "Medium: Layering".</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.5V6.2a2.2 2.2 0 1 1 2.2-2.2"/><path d="M12 7.5 2.8 14.6c-.8.6-.4 1.9.6 1.9h17.2c1 0 1.4-1.3.6-1.9Z"/></svg></div>
-            <h3>Behavior by occasion</h3>
-            <p>How your taste changes with the plan for the day: more formal for interviews, more relaxed at weekends.</p>
+            <h3>3. How you dress for each occasion</h3>
+            <p>Where your taste shifts with the plan for the day, for example "Job interview: more formal, leans Classic" or "Weekend with friends: more relaxed".</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01M8.5 15a5 5 0 0 0 7 0"/></svg></div>
-            <h3>What Peppi learned</h3>
-            <p>A short summary and a few observations in plain words, like "Prefers one statement piece with quiet basics".</p>
+            <h3>4. What Peppi learned about you</h3>
+            <p>A one-line summary of your style and a few observations in plain words, like "Prefers one statement piece with quiet basics". If one isn't you, tap Not me and Peppi leaves it out.</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-            <h3>Confidence</h3>
-            <p>How much the DNA rests on: Low under 15 looks, Medium from 15, High from 30. The page tells you how many more looks reach the next level.</p>
+            <h3>5. How sure Peppi is</h3>
+            <p>The more looks you save, the surer it gets: Low under 15 saved looks, Medium from 15, High from 30. The app tells you how many more looks reach the next level.</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 3v5h5"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 21v-5h-5"/></svg></div>
-            <h3>What changed</h3>
-            <p>After each update, every part shows where you moved: "↑ was 28%" on a direction, a level that changed, a new preference, occasion or insight, and a graph of your taste over time.</p>
+            <h3>6. What changed</h3>
+            <p>After each update, you see where your taste moved: "↑ was 28%" on a direction, a level that changed, a new preference, occasion or insight, and a graph of your taste over time.</p>
           </div>
         </div>
       </div>

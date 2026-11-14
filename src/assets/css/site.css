@@ -136,7 +136,7 @@ a:hover { color: var(--gold-text); }
 h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
 h1, h2 { font-family: var(--display); font-weight: 500; line-height: 1; letter-spacing: -0.02em; }
 h1 { font-size: var(--step-4); }
-h2 { font-size: var(--step-3); }
+h2 { font-size: var(--step-3); line-height: 1.12; } /* room between two lines: at 1 a descender (the g of "things") touched the capitals below */
 h3 { font-family: var(--body); font-size: var(--step-1); font-weight: 600; line-height: 1.25; letter-spacing: -0.005em; }
 p { margin: 0; }
 ul, ol { margin: 0; padding: 0; }
@@ -915,4 +915,61 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 @media (max-width: 760px) {
   .guide-cols, .guide-cta { grid-template-columns: 1fr; }
   .ideas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; }
+}
+
+
+/* ---------- Style DNA: the helix (site.js, initHelix) ----------
+   A double helix turns beside the sample card, its rungs in wardrobe colors.
+   Saved looks fly in as hearts, one at a time; the card's bars fill from 3
+   looks and the card is "ready" at 6, as in the app's free preview. At rest
+   (no script, reduced motion) the card is full and the helix stands still. */
+.dna-stage { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 18px; align-items: center; justify-self: center; width: 100%; max-width: 600px; }
+.dna-helix { width: 120px; height: 360px; display: block; }
+.dna-count { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #5A5650; margin-top: -8px; font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) {
+  .dna-stage { grid-template-columns: 1fr; gap: 10px; }
+  .dna-helix { width: 100%; height: 84px; }
+}
+
+/* ---------- Plans: three swing tags on a rail (site.js, initTags) ----------
+   They fall one after another, sway, and a needle sews a red line rising under
+   them to "grow". Without a script, or with reduced motion, they hang still
+   and the line is already sewn. */
+.plan-tags { width: 100%; max-width: 520px; height: auto; justify-self: center; overflow: visible; }
+.pt-rail { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+.pt-ring { fill: none; stroke: var(--ink); stroke-width: 1.4; }
+.pt-string { stroke: var(--muted); stroke-width: 1.1; fill: none; }
+.pt-tag { stroke: #111111; stroke-width: 1.5; stroke-linejoin: round; }
+.pt-tag--1 { fill: #FFFFFF; } .pt-tag--2 { fill: #FBE0D7; } .pt-tag--3 { fill: #111111; stroke: #3A3833; }
+.pt-hole { fill: var(--paper); stroke: #111111; stroke-width: 1.2; }
+.pt-name { font: 600 8.5px var(--body); letter-spacing: 0.16em; fill: #111111; }
+.pt-big { font: italic 500 17px var(--display); fill: #111111; }
+.pt-line { font: 400 7px var(--body); fill: #5A5650; }
+.pt-on-ink { fill: #F7F6F3; } .pt-on-ink-big { fill: #F08A6E; } .pt-on-ink-line { fill: #C9C5BD; }
+.pt-drop, .pt-sway { transform-box: fill-box; transform-origin: 50% 0; }
+.pt-thread { fill: none; stroke: var(--emph); stroke-width: 1.8; stroke-dasharray: 6 5; stroke-linecap: round; }
+.pt-thread-mask { fill: none; stroke: #FFFFFF; stroke-width: 8; stroke-dasharray: 420; stroke-dashoffset: 0; }
+.pt-needle { fill: var(--ink); opacity: 0; }
+.pt-grow { font: italic 500 13px var(--display); fill: var(--emph); }
+.js .plan-tags:not(.is-done) .pt-drop { opacity: 0; transform: translateY(-240px); }
+.js .plan-tags:not(.is-done) .pt-thread-mask { stroke-dashoffset: 420; }
+.js .plan-tags:not(.is-done) .pt-grow { opacity: 0; }
+.plan-tags.is-playing .pt-drop { animation: pt-drop 1.15s cubic-bezier(0.25, 1.35, 0.45, 1) both; }
+.plan-tags.is-playing .pt-drop--2 { animation-delay: 0.35s; }
+.plan-tags.is-playing .pt-drop--3 { animation-delay: 0.7s; }
+.plan-tags.is-playing .pt-thread-mask { animation: pt-sew 1.6s ease-in-out 1.6s forwards; }
+.plan-tags.is-playing .pt-grow { animation: pt-fade 0.6s ease 3.1s forwards; }
+.plan-tags.is-done .pt-sway { animation: pt-sway 3.4s ease-in-out infinite alternate; }
+.plan-tags.is-done .pt-sway--2 { animation-duration: 3.9s; animation-delay: -1.2s; }
+.plan-tags.is-done .pt-sway--3 { animation-duration: 3s; animation-delay: -2s; }
+@keyframes pt-drop { from { transform: translateY(-240px); opacity: 0; } 15% { opacity: 1; } to { transform: none; opacity: 1; } }
+@keyframes pt-sew { from { stroke-dashoffset: 420; } to { stroke-dashoffset: 0; } }
+@keyframes pt-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pt-sway { from { transform: rotate(-3.5deg); } to { transform: rotate(3.5deg); } }
+@media (max-width: 860px) { .plan-tags { max-width: 440px; } }
+@media (prefers-reduced-motion: reduce) {
+  .js .plan-tags:not(.is-done) .pt-drop { opacity: 1; transform: none; }
+  .js .plan-tags:not(.is-done) .pt-thread-mask { stroke-dashoffset: 0; }
+  .js .plan-tags:not(.is-done) .pt-grow { opacity: 1; }
+  .plan-tags.is-done .pt-sway, .plan-tags.is-playing .pt-drop, .plan-tags.is-playing .pt-thread-mask, .plan-tags.is-playing .pt-grow { animation: none; }
 }

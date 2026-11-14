@@ -4,10 +4,14 @@
         <div>
           <span class="eyebrow">Peppi's Style DNA · Preview free</span>
           <h1 style="margin-top:20px">Your style, <span class="script">decoded.</span></h1>
-          <p class="lede">Every look you save tells Peppi a little more about you. After 10, it writes your Style DNA: what you lean towards, what you come back to, and how you dress for each kind of day.</p>
+          <p class="lede">Every look you save tells Peppi a little more about you. Your top directions appear from 3 saved looks, and your full Style DNA at 6: what you lean towards, what you come back to, and how you dress for each kind of day.</p>
         </div>
+        <div class="dna-stage">
+        <!-- The helix: saved looks fly in and the sample card's bars fill (site.js, initHelix). -->
+        <canvas class="dna-helix" aria-hidden="true"></canvas>
         <div class="dna-card" aria-label="Sample Style DNA">
           <h3>Style DNA <span>Confidence: Medium</span></h3>
+          <p class="dna-count" aria-live="polite">Your Style DNA is ready</p>
           <p class="dna-summary">Polished classics with a quiet-luxury finish, in navy, camel and cream.</p>
           <ul class="bars">
             <li class="bar"><div class="bar-top"><span>Classic <em>↑ was 74%</em></span><span class="num">82%</span></div><div class="bar-track"><div class="bar-fill" style="--w:82%"></div></div></li>
@@ -23,6 +27,7 @@
           </ul>
           <p class="sample-note">Sample</p>
         </div>
+        </div>
       </div>
     </section>
 
@@ -30,38 +35,39 @@
       <div class="wrap">
         <div class="section-head reveal">
           <span class="eyebrow">What's in it</span>
-          <h2>Four parts, one picture of you.</h2>
+          <h2>Six things your Style DNA tells you.</h2>
+          <p class="lede" style="margin-top:14px">Each one is a part of your Style DNA page in the app. The sample card at the top shows the first two: the bars are your style directions, the chips under them your preferences.</p>
         </div>
         <div class="features">
           <div class="feature reveal">
             <div class="feature-icon">{{icon:sparkle}}</div>
-            <h3>Style directions</h3>
-            <p>How strongly your looks lean towards each of 10 directions, as percentages. A look can be both Classic and Quiet Luxury, so the scores don't need to add up to 100.</p>
+            <h3>1. Your style directions</h3>
+            <p>Which styles you lean towards, as a percentage for each of 10: Classic, Smart Casual, Quiet Luxury, Minimalist, Sport Elegant, Streetwear, Romantic, Bohemian, Edgy and Bold. For example, Classic 82%. A look can be both Classic and Quiet Luxury, so they don't add up to 100.</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon">{{icon:palette}}</div>
-            <h3>Preferences</h3>
-            <p>The colors, fit, patterns and layering you choose again and again, each marked High, Medium or Low.</p>
+            <h3>2. Your preferences</h3>
+            <p>The details you pick again and again: colors, fit, patterns and layering. Each is marked High, Medium or Low, for example "High: Navy" or "Medium: Layering".</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon">{{icon:hanger}}</div>
-            <h3>Behavior by occasion</h3>
-            <p>How your taste changes with the plan for the day: more formal for interviews, more relaxed at weekends.</p>
+            <h3>3. How you dress for each occasion</h3>
+            <p>Where your taste shifts with the plan for the day, for example "Job interview: more formal, leans Classic" or "Weekend with friends: more relaxed".</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon">{{icon:face}}</div>
-            <h3>What Peppi learned</h3>
-            <p>A short summary and a few observations in plain words, like "Prefers one statement piece with quiet basics".</p>
+            <h3>4. What Peppi learned about you</h3>
+            <p>A one-line summary of your style and a few observations in plain words, like "Prefers one statement piece with quiet basics". If one isn't you, tap Not me and Peppi leaves it out.</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon">{{icon:shield}}</div>
-            <h3>Confidence</h3>
-            <p>How much the DNA rests on: Low under 15 looks, Medium from 15, High from 30. The page tells you how many more looks reach the next level.</p>
+            <h3>5. How sure Peppi is</h3>
+            <p>The more looks you save, the surer it gets: Low under 15 saved looks, Medium from 15, High from 30. The app tells you how many more looks reach the next level.</p>
           </div>
           <div class="feature reveal">
             <div class="feature-icon">{{icon:refresh}}</div>
-            <h3>What changed</h3>
-            <p>After each update, every part shows where you moved: "↑ was 28%" on a direction, a level that changed, a new preference, occasion or insight, and a graph of your taste over time.</p>
+            <h3>6. What changed</h3>
+            <p>After each update, you see where your taste moved: "↑ was 28%" on a direction, a level that changed, a new preference, occasion or insight, and a graph of your taste over time.</p>
           </div>
         </div>
       </div>

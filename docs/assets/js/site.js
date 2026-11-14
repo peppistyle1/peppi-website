@@ -66,6 +66,160 @@
     io.observe(rail);
   }
 
+  /* ---------- Style DNA: the helix beside the sample card ---------- */
+  // Saved looks fly into a turning double helix one at a time; the card's
+  // bars fill from 3 looks and it's ready at 6 (the app's free preview).
+  // Drawn on a canvas, upright beside the card or lying across it on phones.
+  // Paused while off screen; with reduced motion it stands still, card full.
+  function initHelix() {
+    const cv = $(".dna-helix");
+    if (!cv || !cv.getContext) return;
+    const ctx = cv.getContext("2d");
+    const count = $(".dna-count");
+    const fills = $$(".dna-card .bar-fill"), nums = $$(".dna-card .bar-top .num");
+    const targets = fills.map((f) => parseFloat(f.style.getPropertyValue("--w")) || 0);
+    const rungs = ["#1F2A44", "#C8A27A", "#F7F6F3", "#111111", "#8A9A7B", "#F08A6E", "#E4E1DA", "#5A2A1E"];
+    const N = 16, READY = 6;
+    let saves = 0, t = 0, last = 0, nextSave = 0.8, running = false, raf = 0;
+    let flyers = [];
+    const lit = new Map();
+
+    function size() {
+      const r = cv.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1);
+      cv.width = Math.max(1, Math.round(r.width * d));
+      cv.height = Math.max(1, Math.round(r.height * d));
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+    }
+    function showCard() {
+      const share = saves < 3 ? 0 : Math.min(1, (saves - 2) / (READY - 2));
+      fills.forEach((f, k) => { f.style.width = `${targets[k] * share}%`; });
+      nums.forEach((n, k) => { n.textContent = `${Math.round(targets[k] * share)}%`; });
+      if (count) {
+        count.textContent = saves === 0 ? "Save the looks you love"
+          : saves < READY ? `${saves} ${saves === 1 ? "look" : "looks"} saved · ${READY - saves} more to go`
+          : "Your Style DNA is ready";
+      }
+    }
+    function heart(x, y, s) {
+      ctx.fillStyle = "#F7F6F3";
+      ctx.beginPath();
+      ctx.moveTo(x, y + s * 0.9);
+      ctx.bezierCurveTo(x - s * 1.6, y - s * 0.2, x - s * 0.6, y - s * 1.3, x, y - s * 0.4);
+      ctx.bezierCurveTo(x + s * 0.6, y - s * 1.3, x + s * 1.6, y - s * 0.2, x, y + s * 0.9);
+      ctx.fill();
+    }
+    // Points along the helix's axis: down the canvas, or across it when wide.
+    function draw(dt) {
+      const w = cv.clientWidth, h = cv.clientHeight, across = w > h;
+      const len = across ? w : h, mid = across ? h / 2 : w / 2, R = (across ? h : w) * 0.32;
+      const gap = (len - 24) / (N - 1);
+      const at = (along, off) => (across ? [along, mid + off] : [mid + off, along]);
+      ctx.clearRect(0, 0, w, h);
+      const pts = [];
+      for (let k = 0; k < N; k++) {
+        const ph = t * 0.9 + k * 0.5;
+        pts.push({ along: 12 + k * gap, off: R * Math.sin(ph), z: Math.cos(ph) });
+      }
+      pts.forEach((p, k) => {
+        const glow = lit.get(k) || 0;
+        ctx.globalAlpha = 0.45 + 0.45 * Math.abs(p.z);
+        ctx.strokeStyle = glow > 0 ? "#111111" : rungs[k % rungs.length];
+        ctx.lineWidth = 3 + glow * 2;
+        ctx.beginPath(); ctx.moveTo(...at(p.along, p.off)); ctx.lineTo(...at(p.along, -p.off)); ctx.stroke();
+      });
+      ctx.globalAlpha = 0.9; ctx.lineWidth = 1.6; ctx.strokeStyle = "#F7F6F3";
+      for (const sign of [1, -1]) {
+        ctx.beginPath();
+        pts.forEach((p, k) => (k ? ctx.lineTo(...at(p.along, sign * p.off)) : ctx.moveTo(...at(p.along, sign * p.off))));
+        ctx.stroke();
+      }
+      ctx.fillStyle = "#F7F6F3";
+      pts.forEach((p) => {
+        for (const sign of [1, -1]) {
+          const front = sign * p.z > 0;
+          ctx.globalAlpha = front ? 1 : 0.5;
+          ctx.beginPath(); ctx.arc(...at(p.along, sign * p.off), front ? 3.4 : 2.4, 0, Math.PI * 2); ctx.fill();
+        }
+      });
+      flyers = flyers.filter((f) => {
+        f.p += dt / 0.9;
+        const e = 1 - Math.pow(1 - Math.min(1, f.p), 3);
+        const [ex, ey] = at(pts[f.k].along, 0);
+        const x = f.sx + (ex - f.sx) * e, y = f.sy + (ey - f.sy) * e - Math.sin(e * Math.PI) * 26;
+        ctx.globalAlpha = Math.max(0, 1 - Math.max(0, f.p - 0.85) * 6);
+        heart(x, y, 6);
+        if (f.p >= 1) { lit.set(f.k, 1); return false; }
+        return true;
+      });
+      ctx.globalAlpha = 1;
+      lit.forEach((v, k) => { const nv = v - dt * 0.5; if (nv <= 0) lit.delete(k); else lit.set(k, nv); });
+    }
+    function frame(now) {
+      const dt = Math.min(0.05, (now - (last || now)) / 1000);
+      last = now; t += dt;
+      if (saves < READY) {
+        nextSave -= dt;
+        if (nextSave <= 0) {
+          nextSave = 1.25;
+          const across = cv.clientWidth > cv.clientHeight;
+          flyers.push({
+            k: Math.floor(Math.random() * N), p: 0,
+            sx: across ? Math.random() * cv.clientWidth : cv.clientWidth + 10,
+            sy: across ? -10 : Math.random() * cv.clientHeight,
+          });
+          setTimeout(() => { saves += 1; showCard(); }, 900);
+        }
+      }
+      draw(dt);
+      if (running) raf = requestAnimationFrame(frame);
+    }
+    size();
+    window.addEventListener("resize", () => { size(); if (!running) draw(0); });
+    if (reduceMotion || !("IntersectionObserver" in window)) { draw(0); return; }
+    // Empty the card at once (no shrinking transition), then fill as looks arrive.
+    fills.forEach((f) => { f.style.transition = "none"; });
+    showCard();
+    void cv.offsetWidth;
+    fills.forEach((f) => { f.style.transition = ""; });
+    const io = new IntersectionObserver((entries) => {
+      const seen = entries.some((entry) => entry.isIntersecting);
+      if (seen && !running) { running = true; last = 0; raf = requestAnimationFrame(frame); }
+      else if (!seen && running) { running = false; cancelAnimationFrame(raf); }
+    });
+    io.observe(cv);
+  }
+
+  /* ---------- Plans: the swing tags fall onto the rail ---------- */
+  // The CSS does the falling and the sewing (.is-playing); the needle follows
+  // the thread here. After that they sway (.is-done), which is also how they
+  // rest without a script or with reduced motion.
+  function initTags() {
+    const svg = $(".plan-tags");
+    if (!svg) return;
+    if (reduceMotion || !("IntersectionObserver" in window)) { svg.classList.add("is-done"); return; }
+    const thread = $(".pt-thread", svg), needle = $(".pt-needle", svg);
+    const play = () => {
+      svg.classList.add("is-playing");
+      const L = thread.getTotalLength();
+      const start = performance.now() + 1600, dur = 1600;
+      const tick = (now) => {
+        const p = Math.max(0, Math.min(1, (now - start) / dur));
+        const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+        const a = thread.getPointAtLength(e * L), b = thread.getPointAtLength(Math.min(L, e * L + 1));
+        const angle = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+        needle.setAttribute("transform", `translate(${a.x} ${a.y}) rotate(${angle})`);
+        needle.style.opacity = p > 0 && p < 1 ? "1" : "0";
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      setTimeout(() => { svg.classList.remove("is-playing"); svg.classList.add("is-done"); }, 3800);
+    };
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) { io.disconnect(); play(); }
+    }, { rootMargin: "0px 0px -10% 0px" });
+    io.observe(svg);
+  }
+
   /* ---------- Style DNA: the taste graph's tooltip ---------- */
   function initTaste() {
     const svg = $(".taste-svg");
@@ -507,6 +661,8 @@
     initReveal();
     initRail();
     initTaste();
+    initHelix();
+    initTags();
     initAiLooks();
     initLooks();
     initWeights();
