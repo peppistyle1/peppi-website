@@ -973,3 +973,28 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
   .js .plan-tags:not(.is-done) .pt-grow { opacity: 1; }
   .plan-tags.is-done .pt-sway, .plan-tags.is-playing .pt-drop, .plan-tags.is-playing .pt-thread-mask, .plan-tags.is-playing .pt-grow { animation: none; }
 }
+
+
+/* ---------- Home: "Surprise me" under the AI looks (site.js, initPick) ----------
+   A strip of the seven looks spins, slows with a spring and lands on one under
+   the pointer; the winner jumps and says a line about itself. Each look shows
+   one of its photos, picked at random per visit. Motion does the movement. */
+.pick { margin-top: clamp(24px, 4vw, 40px); }
+.pick-title { font-family: var(--display); font-weight: 500; font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); line-height: 1.12; text-align: center; }
+.pick-title em { font-style: italic; color: var(--emph); }
+.pick-slot { position: relative; overflow-x: auto; padding-block: 34px 8px; margin-top: 8px; }
+.js .pick-slot { overflow: hidden; }
+.pick-strip { display: flex; gap: 14px; will-change: transform; }
+.pick-card { flex: 0 0 clamp(160px, 19vw, 210px); margin: 0; background: var(--card); border: 1px solid var(--line); }
+.pick-card .ai-look-photo img { opacity: 1; }
+.pick-card figcaption { padding: 10px 12px 12px; display: grid; gap: 4px; align-content: start; }
+.pick-card strong { font-family: var(--display); font-weight: 500; font-size: 1.08rem; line-height: 1.2; }
+.pick-slot::before, .pick-slot::after { content: ""; position: absolute; top: 0; bottom: 0; width: 16%; z-index: 2; pointer-events: none; }
+.pick-slot::before { left: 0; background: linear-gradient(90deg, var(--paper-2), transparent); }
+.pick-slot::after { right: 0; background: linear-gradient(-90deg, var(--paper-2), transparent); }
+.pick-pointer { position: absolute; left: 50%; top: 6px; margin-left: -10px; border: 10px solid transparent; border-top: 14px solid var(--emph); z-index: 3; }
+.pick-bubble { position: relative; margin: 18px auto 0; max-width: 440px; background: #111111; color: #F7F6F3; border: 1px solid var(--line); padding: 14px 18px; text-align: center; font-family: var(--display); font-style: italic; font-weight: 500; font-size: 1.25rem; line-height: 1.3; transform-origin: 50% 0; }
+.pick-bubble::before { content: ""; position: absolute; top: -10px; left: 50%; margin-left: -10px; border: 10px solid transparent; border-bottom-color: #111111; border-top: 0; }
+.pick-bubble small { display: block; font-family: var(--body); font-style: normal; font-weight: 600; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: #F08A6E; margin-bottom: 4px; }
+.pick-bubble:empty, .pick-bubble.is-empty { visibility: hidden; }
+.pick-row { display: flex; justify-content: center; margin-top: 18px; }

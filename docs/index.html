@@ -23,9 +23,9 @@
   <link rel="preload" href="assets/fonts/bodoni-moda-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/bodoni-moda-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-tight-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=d5ab0e2d4e">
+  <link rel="stylesheet" href="assets/css/site.css?v=5351f4a864">
   <script>document.documentElement.classList.add("js");</script>
-  <script src="assets/js/site.js?v=af288f6084" defer></script>
+  <script src="assets/js/site.js?v=6916e525e0" defer></script>
 </head>
 <body class="" data-photos-v="63b7469cac">
   <a class="skip" href="#main">Skip to content</a>
@@ -212,52 +212,45 @@
           <h2 id="expressive-title">Dressed for the <em>extraordinary.</em></h2>
           <p>Real photos of these looks are rare, so Peppi draws them. Every photo here comes from Peppi's AI library: full-length looks for each Alternative &amp; Expressive style, on people of every age. In the app each one is marked "Photo created with AI", and Couture members get photos made just for their outfit.</p>
         </div>
-        <div class="ai-looks-bar"><div class="looks-controls" id="ai-controls" hidden></div></div>
-        <ul class="ai-looks" id="ai-looks">
-          <li>
-            <figure class="ai-look">
-              <div class="ai-look-photo"><img class="is-on" src="assets/img/ai/desert-burner-0.jpg?v=63b7469cac" alt="Faux-fur vest over a scarf-draped top, loose linen trousers, worn leather boots" width="600" height="800" loading="lazy" data-ai="desert-burner"></div>
+        <script type="application/json" id="ai-data">[{"captions": ["Faux-fur vest over a scarf-draped top, loose linen trousers, worn leather boots.", "A velvet cape, black waistcoat and lace jabot, slim trousers, polished boots.", "Black tactical jacket with glowing cuffs, cargo trousers, a visor, combat boots.", "A long tweed coat, buckled waistcoat, top hat with goggles, lace-up boots.", "A laced leather bodice, green hooded cloak, belt pouch, sturdy boots.", "Studded leather jacket, tartan trousers, a mohawk, combat boots.", "A folded sculptural headpiece, asymmetric black and red layers, chunky boots."]}, {"captions": ["Fringed suede jacket, a desert scarf, utility belt, dusty cargo trousers, goggles.", "Black velvet jacket, lace blouse, a long teal skirt, heeled boots.", "Hooded techwear jacket with light strips, strapped cargo trousers, chunky boots.", "A long leather coat, brocade corset vest, top hat with goggles, a pocket watch.", "A green hooded cloak over a leather jerkin, a walking staff, tall boots.", "Leather jacket with patches, a tartan mini skirt, ripped tights, combat boots.", "A quilted asymmetric jacket, a folded metallic mask, wide purple trousers."]}, {"captions": ["A layered fringed shawl, harness belt, suede trousers, goggles and boots.", "A brocade frock coat, black shirt, slim trousers, buckled boots.", "Reflective-trim techwear jacket, strapped trousers, glowing glasses, platform boots.", "Top hat, tweed coat, a leather waistcoat with a chain, high boots.", "A blue gown with leather bracers, a green hooded cloak, laced boots.", "Studded leather jacket, a worn tee, black jeans with chains, boots.", "A sculpted wire headpiece, layered black drapes with clear panels, platform boots."]}, {"captions": ["A long dark duster, a desert scarf, a layered vest, sturdy boots.", "A velvet coat, lace-up corset, long black skirt, platform boots.", "A black shell jacket with light trim, round goggles, cargo trousers, combat boots.", "A bowler with goggles, olive frock coat, leather vest, buttoned boots.", "A green hooded cloak, leather jerkin and bracers, a walking staff.", "A patched leather jacket, tartan trousers, spiked purple hair, combat boots.", "A wire-frame headpiece, a black cutaway jacket, voluminous cream trousers."]}, {"captions": ["Beige fringed tunic, olive utility vest, fur-trimmed shoulder wrap, tan keffiyeh.", "Dark green velvet coat with gold brocade lapels, forest green corset top.", "A black hooded utility jacket with glowing blue piping, black cargo trousers.", "A brown wool greatcoat, burgundy corset with brass gears, maroon trousers.", "A forest-green wool cloak, brown linen tunic, dark leather vest, brown bracers.", "Studded black leather biker jacket, graphic band tee.", "Black draped wool coat, grey layered tunic, black drop-crotch trousers."]}, {"captions": ["Fur-trimmed tan fringed poncho, faded denim vest, khaki cargo trousers.", "Black velvet cape, charcoal brocade coat, black ruffled jabot, black waistcoat.", "A black hooded jacket with glowing blue trim, black cargo trousers.", "A brown tweed frock coat, grey waistcoat, black trousers.", "A forest-green wool cloak, brown leather bodice, tan suede bag, dark brown trousers.", "A black leather biker jacket with studs, graphic tee, brown tartan trousers.", "Charcoal and mustard colour-block sweater, cobalt and charcoal layered skirt."]}, {"captions": ["Shaggy tan fur cape, khaki utility vest, beige linen shirt, tan trousers.", "Black velvet cape, burgundy corset over cream blouse, burgundy maxi skirt.", "Black hooded jacket with blue piping, black utility vest, black cargo trousers.", "Brown top hat with goggles, brown wool coat, burgundy skirt, leather corset vest.", "A forest-green hooded cloak, brown embossed leather tunic, dark trousers.", "Black studded leather jacket, graphic band tee, red tartan mini skirt.", "Black wool coat with oversized sleeves, black leather wide-leg trousers."]}, {"captions": ["Tan fringed suede vest, silver halter top, patterned scarf.", "Black velvet frock coat, grey brocade waistcoat, cream ruffled jabot, black trousers.", "Black utility jacket with reflective trim, black cargo trousers.", "Black top hat with goggles, dark wool greatcoat, brown leather waistcoat.", "Forest green velvet cloak with fur trim, rust brocade bodice, brown skirt.", "Distressed black leather jacket with studded collar, plaid shirt, black ripped jeans.", "Black and cream blazer with metallic silver panels, pleated ivory midi skirt."]}]</script>
+        <!-- Surprise me: a slot-machine strip of the seven AI looks, each with its occasion and description
+             (site.js, initPick; Motion). Without a script it's a row of the seven looks to scroll. -->
+        <div class="pick" id="pick">
+          <h3 class="pick-title">Can't choose? <em>Let Peppi pick.</em></h3>
+          <div class="pick-slot" id="pick-slot"><span class="pick-pointer" aria-hidden="true"></span><div class="pick-strip" id="pick-strip">
+            <figure class="pick-card">
+              <div class="ai-look-photo"><img src="assets/img/ai/desert-burner-0.jpg?v=63b7469cac" alt="Faux-fur vest over a scarf-draped top, loose linen trousers, worn leather boots" width="600" height="800" loading="lazy" data-ai="desert-burner"></div>
               <figcaption><strong>Desert Burner</strong><span class="ai-occasion">Burning Man &amp; Burns</span><span class="ai-caption">Faux-fur vest over a scarf-draped top, loose linen trousers, worn leather boots.</span></figcaption>
             </figure>
-          </li>
-          <li>
-            <figure class="ai-look">
-              <div class="ai-look-photo"><img class="is-on" src="assets/img/ai/romantic-goth-0.jpg?v=63b7469cac" alt="A velvet cape, black waistcoat and lace jabot, slim trousers, polished boots" width="600" height="800" loading="lazy" data-ai="romantic-goth"></div>
+            <figure class="pick-card">
+              <div class="ai-look-photo"><img src="assets/img/ai/romantic-goth-0.jpg?v=63b7469cac" alt="A velvet cape, black waistcoat and lace jabot, slim trousers, polished boots" width="600" height="800" loading="lazy" data-ai="romantic-goth"></div>
               <figcaption><strong>Romantic Goth</strong><span class="ai-occasion">Goth &amp; Darkwave</span><span class="ai-caption">A velvet cape, black waistcoat and lace jabot, slim trousers, polished boots.</span></figcaption>
             </figure>
-          </li>
-          <li>
-            <figure class="ai-look">
-              <div class="ai-look-photo"><img class="is-on" src="assets/img/ai/cyberpunk-techwear-0.jpg?v=63b7469cac" alt="Black tactical jacket with glowing cuffs, cargo trousers, a visor, combat boots" width="600" height="800" loading="lazy" data-ai="cyberpunk-techwear"></div>
+            <figure class="pick-card">
+              <div class="ai-look-photo"><img src="assets/img/ai/cyberpunk-techwear-0.jpg?v=63b7469cac" alt="Black tactical jacket with glowing cuffs, cargo trousers, a visor, combat boots" width="600" height="800" loading="lazy" data-ai="cyberpunk-techwear"></div>
               <figcaption><strong>Cyberpunk Techwear</strong><span class="ai-occasion">Cyberpunk Raves</span><span class="ai-caption">Black tactical jacket with glowing cuffs, cargo trousers, a visor, combat boots.</span></figcaption>
             </figure>
-          </li>
-          <li>
-            <figure class="ai-look">
-              <div class="ai-look-photo"><img class="is-on" src="assets/img/ai/steampunk-explorer-0.jpg?v=63b7469cac" alt="A long tweed coat, buckled waistcoat, top hat with goggles, lace-up boots" width="600" height="800" loading="lazy" data-ai="steampunk-explorer"></div>
+            <figure class="pick-card">
+              <div class="ai-look-photo"><img src="assets/img/ai/steampunk-explorer-0.jpg?v=63b7469cac" alt="A long tweed coat, buckled waistcoat, top hat with goggles, lace-up boots" width="600" height="800" loading="lazy" data-ai="steampunk-explorer"></div>
               <figcaption><strong>Steampunk Explorer</strong><span class="ai-occasion">Steampunk &amp; Victorian</span><span class="ai-caption">A long tweed coat, buckled waistcoat, top hat with goggles, lace-up boots.</span></figcaption>
             </figure>
-          </li>
-          <li>
-            <figure class="ai-look">
-              <div class="ai-look-photo"><img class="is-on" src="assets/img/ai/fantasy-cosplay-0.jpg?v=63b7469cac" alt="A laced leather bodice, green hooded cloak, belt pouch, sturdy boots" width="600" height="800" loading="lazy" data-ai="fantasy-cosplay"></div>
+            <figure class="pick-card">
+              <div class="ai-look-photo"><img src="assets/img/ai/fantasy-cosplay-0.jpg?v=63b7469cac" alt="A laced leather bodice, green hooded cloak, belt pouch, sturdy boots" width="600" height="800" loading="lazy" data-ai="fantasy-cosplay"></div>
               <figcaption><strong>Fantasy &amp; Cosplay</strong><span class="ai-occasion">Renaissance &amp; Medieval</span><span class="ai-caption">A laced leather bodice, green hooded cloak, belt pouch, sturdy boots.</span></figcaption>
             </figure>
-          </li>
-          <li>
-            <figure class="ai-look">
-              <div class="ai-look-photo"><img class="is-on" src="assets/img/ai/punk-industrial-0.jpg?v=63b7469cac" alt="Studded leather jacket, tartan trousers, a mohawk, combat boots" width="600" height="800" loading="lazy" data-ai="punk-industrial"></div>
+            <figure class="pick-card">
+              <div class="ai-look-photo"><img src="assets/img/ai/punk-industrial-0.jpg?v=63b7469cac" alt="Studded leather jacket, tartan trousers, a mohawk, combat boots" width="600" height="800" loading="lazy" data-ai="punk-industrial"></div>
               <figcaption><strong>Punk &amp; Industrial</strong><span class="ai-occasion">Industrial &amp; Punk</span><span class="ai-caption">Studded leather jacket, tartan trousers, a mohawk, combat boots.</span></figcaption>
             </figure>
-          </li>
-          <li>
-            <figure class="ai-look">
-              <div class="ai-look-photo"><img class="is-on" src="assets/img/ai/avant-garde-art-0.jpg?v=63b7469cac" alt="A folded sculptural headpiece, asymmetric black and red layers, chunky boots" width="600" height="800" loading="lazy" data-ai="avant-garde-art"></div>
+            <figure class="pick-card">
+              <div class="ai-look-photo"><img src="assets/img/ai/avant-garde-art-0.jpg?v=63b7469cac" alt="A folded sculptural headpiece, asymmetric black and red layers, chunky boots" width="600" height="800" loading="lazy" data-ai="avant-garde-art"></div>
               <figcaption><strong>Avant-Garde Art</strong><span class="ai-occasion">Avant-Garde &amp; Wearable Art</span><span class="ai-caption">A folded sculptural headpiece, asymmetric black and red layers, chunky boots.</span></figcaption>
             </figure>
-          </li>
-        </ul>
-        <script type="application/json" id="ai-data">[{"captions": ["Faux-fur vest over a scarf-draped top, loose linen trousers, worn leather boots.", "A velvet cape, black waistcoat and lace jabot, slim trousers, polished boots.", "Black tactical jacket with glowing cuffs, cargo trousers, a visor, combat boots.", "A long tweed coat, buckled waistcoat, top hat with goggles, lace-up boots.", "A laced leather bodice, green hooded cloak, belt pouch, sturdy boots.", "Studded leather jacket, tartan trousers, a mohawk, combat boots.", "A folded sculptural headpiece, asymmetric black and red layers, chunky boots."]}, {"captions": ["Fringed suede jacket, a desert scarf, utility belt, dusty cargo trousers, goggles.", "Black velvet jacket, lace blouse, a long teal skirt, heeled boots.", "Hooded techwear jacket with light strips, strapped cargo trousers, chunky boots.", "A long leather coat, brocade corset vest, top hat with goggles, a pocket watch.", "A green hooded cloak over a leather jerkin, a walking staff, tall boots.", "Leather jacket with patches, a tartan mini skirt, ripped tights, combat boots.", "A quilted asymmetric jacket, a folded metallic mask, wide purple trousers."]}, {"captions": ["A layered fringed shawl, harness belt, suede trousers, goggles and boots.", "A brocade frock coat, black shirt, slim trousers, buckled boots.", "Reflective-trim techwear jacket, strapped trousers, glowing glasses, platform boots.", "Top hat, tweed coat, a leather waistcoat with a chain, high boots.", "A blue gown with leather bracers, a green hooded cloak, laced boots.", "Studded leather jacket, a worn tee, black jeans with chains, boots.", "A sculpted wire headpiece, layered black drapes with clear panels, platform boots."]}, {"captions": ["A long dark duster, a desert scarf, a layered vest, sturdy boots.", "A velvet coat, lace-up corset, long black skirt, platform boots.", "A black shell jacket with light trim, round goggles, cargo trousers, combat boots.", "A bowler with goggles, olive frock coat, leather vest, buttoned boots.", "A green hooded cloak, leather jerkin and bracers, a walking staff.", "A patched leather jacket, tartan trousers, spiked purple hair, combat boots.", "A wire-frame headpiece, a black cutaway jacket, voluminous cream trousers."]}, {"captions": ["Beige fringed tunic, olive utility vest, fur-trimmed shoulder wrap, tan keffiyeh.", "Dark green velvet coat with gold brocade lapels, forest green corset top.", "A black hooded utility jacket with glowing blue piping, black cargo trousers.", "A brown wool greatcoat, burgundy corset with brass gears, maroon trousers.", "A forest-green wool cloak, brown linen tunic, dark leather vest, brown bracers.", "Studded black leather biker jacket, graphic band tee.", "Black draped wool coat, grey layered tunic, black drop-crotch trousers."]}, {"captions": ["Fur-trimmed tan fringed poncho, faded denim vest, khaki cargo trousers.", "Black velvet cape, charcoal brocade coat, black ruffled jabot, black waistcoat.", "A black hooded jacket with glowing blue trim, black cargo trousers.", "A brown tweed frock coat, grey waistcoat, black trousers.", "A forest-green wool cloak, brown leather bodice, tan suede bag, dark brown trousers.", "A black leather biker jacket with studs, graphic tee, brown tartan trousers.", "Charcoal and mustard colour-block sweater, cobalt and charcoal layered skirt."]}, {"captions": ["Shaggy tan fur cape, khaki utility vest, beige linen shirt, tan trousers.", "Black velvet cape, burgundy corset over cream blouse, burgundy maxi skirt.", "Black hooded jacket with blue piping, black utility vest, black cargo trousers.", "Brown top hat with goggles, brown wool coat, burgundy skirt, leather corset vest.", "A forest-green hooded cloak, brown embossed leather tunic, dark trousers.", "Black studded leather jacket, graphic band tee, red tartan mini skirt.", "Black wool coat with oversized sleeves, black leather wide-leg trousers."]}, {"captions": ["Tan fringed suede vest, silver halter top, patterned scarf.", "Black velvet frock coat, grey brocade waistcoat, cream ruffled jabot, black trousers.", "Black utility jacket with reflective trim, black cargo trousers.", "Black top hat with goggles, dark wool greatcoat, brown leather waistcoat.", "Forest green velvet cloak with fur trim, rust brocade bodice, brown skirt.", "Distressed black leather jacket with studded collar, plaid shirt, black ripped jeans.", "Black and cream blazer with metallic silver panels, pleated ivory midi skirt."]}]</script>
+          </div></div>
+          <p class="pick-bubble is-empty" id="pick-bubble" aria-live="polite"><small id="pick-name"></small><span id="pick-line"></span></p>
+          <div class="pick-row" id="pick-row" hidden><button type="button" class="btn" id="pick-spin">Surprise me</button></div>
+        </div>
+        <script src="assets/js/motion.js?v=11.11.13" defer></script>
         <p class="small muted ai-note">Created with AI. The people shown aren't real, and the settings aren't real events or places.</p>
       </div>
     </section>

@@ -253,88 +253,6 @@
     plot.addEventListener("pointerleave", hide);
   }
 
-  /* ---------- Home: Alternative & Expressive, eight sets taking turns ----------
-     Like the outfit grid at the top: starts at a random set, each photo
-     crossfades to the next set's, with its caption; dots pick a set, and
-     play/pause. Still with reduced
-     motion (the dots still work). */
-  function initAiLooks() {
-    const grid = $("#ai-looks");
-    const dataEl = $("#ai-data");
-    const controls = $("#ai-controls");
-    if (!grid || !dataEl || !controls) return;
-    const sets = JSON.parse(dataEl.textContent);
-    const firsts = $$("img[data-ai]", grid);
-    const captions = $$(".ai-caption", grid);
-    let playing = !reduceMotion;
-    let timer = null;
-    let current = 0;
-    const frames = firsts.map((first, i) => {
-      const stack = [first];
-      for (let n = 1; n < sets.length; n++) {
-        const img = document.createElement("img");
-        img.alt = sets[n].captions[i].replace(/\.$/, "");
-        img.width = 600; img.height = 800;
-        img.decoding = "async";
-        img.dataset.src = `assets/img/ai/${first.dataset.ai}-${n}.jpg?v=${document.body.dataset.photosV}`;
-        img.setAttribute("aria-hidden", "true");
-        first.parentElement.appendChild(img);
-        stack.push(img);
-      }
-      return stack;
-    });
-    const ready = (n) => Promise.all(frames.map((stack) => {
-      const img = stack[n];
-      if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
-      if (img.complete && img.naturalWidth) return null;
-      return new Promise((done) => {
-        img.addEventListener("load", done, { once: true });
-        img.addEventListener("error", done, { once: true });
-      });
-    }));
-    const dots = sets.map((_, n) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "looks-dot";
-      b.setAttribute("aria-label", `Show looks set ${n + 1} of ${sets.length}`);
-      b.setAttribute("aria-pressed", String(n === 0));
-      b.innerHTML = "<span></span>";
-      b.addEventListener("click", () => { setPlaying(false); show(n); });
-      controls.appendChild(b);
-      return b;
-    });
-    const toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "looks-toggle";
-    toggle.addEventListener("click", () => setPlaying(!playing));
-    controls.appendChild(toggle);
-    controls.hidden = false;
-    let wanted = 0;
-    function show(n) {
-      wanted = n;
-      ready(n).then(() => { if (wanted === n) draw(n); });
-    }
-    function draw(n) {
-      current = n;
-      frames.forEach((stack) => stack.forEach((img, k) => {
-        img.classList.toggle("is-on", k === n);
-        if (k === n) img.removeAttribute("aria-hidden"); else img.setAttribute("aria-hidden", "true");
-      }));
-      captions.forEach((c, i) => { c.textContent = sets[n].captions[i]; });
-      dots.forEach((d, k) => d.setAttribute("aria-pressed", String(k === n)));
-    }
-    function setPlaying(on) {
-      playing = on;
-      toggle.textContent = on ? "Pause" : "Play";
-      toggle.setAttribute("aria-label", on ? "Pause the looks" : "Play the looks");
-      clearInterval(timer);
-      if (on) timer = setInterval(() => show((current + 1) % sets.length), 6000);
-    }
-    setPlaying(playing);
-    startAtRandom(frames, sets.length, draw);
-    if (playing) ready((current + 1) % sets.length);
-  }
-
   // Each visit starts both photo grids at a random set (the owner). The
   // first set's photos are in the page; when another set starts, they are
   // put back to load-on-demand (cancelling their download) and the chosen
@@ -513,9 +431,10 @@
   /* ---------- Style DNA: how much each group of 10 looks counts ---------- */
   function initWeights() {
     const slider = $("#looks");
-    if (!slider) return;
     const out = $("#weights-out");
     const label = $("#looks-out");
+    // The home page's outfit grid is also #looks: only the Style DNA slider has its labels.
+    if (!slider || !label || !out) return;
     const confLabel = $("#conf-label");
     const confNext = $("#conf-next");
     const scale = $$("#conf-scale span");
@@ -643,6 +562,101 @@
     }));
   }
 
+  /* ---------- Home: "Surprise me" under the AI looks ---------- */
+  // A strip of the seven looks (each with one of its photos, picked per
+  // visit) spins, slows with a spring and lands on one under the pointer;
+  // the winner jumps and says its line. Motion (motion.js, self-hosted) does
+  // the movement; without it, or with reduced motion, the pick is instant.
+  // It spins once by itself the first time it's seen.
+  function initPick() {
+    const box = $("#pick"), strip = $("#pick-strip"), slot = $("#pick-slot"), dataEl = $("#ai-data");
+    if (!box || !strip || !slot || !dataEl) return;
+    const sets = JSON.parse(dataEl.textContent);
+    // The seven looks as written in the page (set 0); each gets one of its sets at random.
+    const looks = $$(".pick-card", strip).map((fig, i) => ({
+      id: $("img[data-ai]", fig).dataset.ai,
+      name: $("strong", fig).textContent,
+      occasion: $(".ai-occasion", fig).textContent,
+      set: Math.floor(Math.random() * sets.length),
+      i,
+    }));
+    if (!looks.length) return;
+    const LINES = {
+      "desert-burner": "Dust is an accessory.",
+      "romantic-goth": "It's not black. It's midnight velvet.",
+      "cyberpunk-techwear": "My jacket has better Wi-Fi than me.",
+      "steampunk-explorer": "The goggles are mostly decorative.",
+      "fantasy-cosplay": "Yes, the cloak has pockets.",
+      "punk-industrial": "The mohawk was not optional.",
+      "avant-garde-art": "It's a hat. Probably.",
+    };
+    const REPS = 7;
+    strip.textContent = "";
+    for (let r = 0; r < REPS; r++) {
+      looks.forEach((l) => {
+        const caption = sets[l.set].captions[l.i];
+        const fig = document.createElement("figure");
+        fig.className = "pick-card";
+        if (r !== 1) fig.setAttribute("aria-hidden", "true");
+        fig.innerHTML = `<div class="ai-look-photo"><img src="assets/img/ai/${l.id}-${l.set}.jpg?v=${document.body.dataset.photosV}" alt="" width="600" height="800" loading="lazy" decoding="async"></div><figcaption><strong></strong><span class="ai-occasion"></span><span class="ai-caption"></span></figcaption>`;
+        if (r === 1) $("img", fig).alt = caption.replace(/\.$/, "");
+        $("strong", fig).textContent = l.name;
+        $(".ai-occasion", fig).textContent = l.occasion;
+        $(".ai-caption", fig).textContent = caption;
+        strip.appendChild(fig);
+      });
+    }
+    $("#pick-row").hidden = false;
+    const M = window.Motion;
+    const bubble = $("#pick-bubble"), nameEl = $("#pick-name"), lineEl = $("#pick-line");
+    const n = looks.length;
+    let at = n + Math.floor(Math.random() * n), x = 0, spinning = false;
+    const offsetFor = (k) => {
+      const c = strip.children[k];
+      return slot.clientWidth / 2 - (c.offsetLeft + c.offsetWidth / 2);
+    };
+    const place = (k) => { x = offsetFor(k); strip.style.transform = `translateX(${x}px)`; };
+    const say = (k) => {
+      const l = looks[k % n];
+      nameEl.textContent = l.name;
+      lineEl.textContent = LINES[l.id] || "";
+      bubble.classList.remove("is-empty");
+    };
+    place(at);
+    window.addEventListener("resize", () => place(at));
+    async function spin() {
+      if (spinning) return;
+      spinning = true;
+      place((at % n) + n);                           // the same look, back in the second set
+      const target = (REPS - 2) * n + Math.floor(Math.random() * n);
+      const to = offsetFor(target);
+      if (!M || reduceMotion) {
+        place(target);
+      } else {
+        M.animate(bubble, { opacity: 0, scale: 0.85 }, { duration: 0.2 });
+        await M.animate(strip, { x: [x, to - 30] }, { duration: 2.6, ease: [0.12, 0.7, 0.2, 1] });
+        await M.animate(strip, { x: [to - 30, to] }, { type: "spring", stiffness: 220, damping: 9 });
+        x = to;
+        strip.style.transform = `translateX(${to}px)`;
+      }
+      at = target;
+      say(target);
+      if (M && !reduceMotion) {
+        M.animate(strip.children[target], { y: [0, -30, 0, -12, 0], rotate: [0, -6, 4, -2, 0], scale: [1, 1.07, 1] }, { duration: 0.9 });
+        M.animate(bubble, { opacity: [0, 1], scale: [0.4, 1.06, 1] }, { type: "spring", stiffness: 260, damping: 13 });
+      } else {
+        bubble.style.opacity = "1";
+      }
+      spinning = false;
+    }
+    $("#pick-spin").addEventListener("click", spin);
+    if (!("IntersectionObserver" in window)) { say(at); return; }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) { io.disconnect(); setTimeout(spin, 300); }
+    }, { threshold: 0.5 });
+    io.observe(slot);
+  }
+
   /* ---------- Home: "More great values" ---------- */
   // Open in the page so the text is there without JavaScript; on phones it
   // starts folded, and it opens again when the window widens past phone size.
@@ -663,7 +677,7 @@
     initTaste();
     initHelix();
     initTags();
-    initAiLooks();
+    initPick();
     initLooks();
     initWeights();
     initMeasurements();
