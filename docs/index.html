@@ -23,9 +23,9 @@
   <link rel="preload" href="assets/fonts/bodoni-moda-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/bodoni-moda-italic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-tight-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/site.css?v=5351f4a864">
+  <link rel="stylesheet" href="assets/css/site.css?v=cdb488bff1">
   <script>document.documentElement.classList.add("js");</script>
-  <script src="assets/js/site.js?v=6916e525e0" defer></script>
+  <script src="assets/js/site.js?v=e9b1c582e4" defer></script>
 </head>
 <body class="" data-photos-v="63b7469cac">
   <a class="skip" href="#main">Skip to content</a>
@@ -49,12 +49,35 @@
   </header>
 
   <main id="main">
-<section class="masthead">
-      <div class="wrap">
-        <div class="masthead-bar">
-          <span>Your personal stylist, in your hand</span>
+<!-- The film: one of three short stories in four photos made with AI (site.js, initFilm; Motion): a couple
+         before a wedding, a man before a dinner date, a woman before a wedding. Each visit shows a different one.
+         Without a script it rests on the couple's last photo with the headline. -->
+    <section class="masthead masthead--film">
+      <div class="film" id="film">
+        <img class="film-frame" data-k="doubt" sizes="100vw" width="1600" height="893" alt="" decoding="async">
+        <img class="film-frame" data-k="sigh" sizes="100vw" width="1600" height="893" alt="" decoding="async">
+        <img class="film-frame" data-k="phone" sizes="100vw" width="1600" height="893" alt="" decoding="async">
+        <img class="film-frame is-rest" data-k="ready" sizes="100vw" width="1600" height="893" alt="" decoding="async">
+        <noscript><img class="film-frame is-rest" src="assets/img/film/couple/ready-1600.jpg" srcset="assets/img/film/couple/ready-900.jpg 900w, assets/img/film/couple/ready-1600.jpg 1600w" sizes="100vw" width="1600" height="893" alt=""></noscript>
+        <div class="film-shade" aria-hidden="true"></div>
+        <div class="film-ticks" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+        <div class="film-time" aria-hidden="true"></div>
+        <p class="film-sub" aria-hidden="true"></p>
+        <div class="film-app" aria-hidden="true">
+          <div class="film-app-bar"><span class="film-app-occ"></span><span class="film-app-temp"></span></div>
+          <div class="film-app-row">
+            <figure><img alt="" class="film-app-classic" data-k="classic"><svg class="film-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.3-9-8.6C1.6 8.2 3.6 4.8 7 4.8c2 0 3.3 1.1 5 2.9 1.7-1.8 3-2.9 5-2.9 3.4 0 5.4 3.4 4 6.6C19 15.7 12 20 12 20z"/></svg><figcaption>Classic</figcaption></figure>
+            <figure><img alt="" data-k="bold"><figcaption>Bold</figcaption></figure>
+            <figure><img alt="" data-k="relaxed"><figcaption>Relaxed</figcaption></figure>
+          </div>
         </div>
-        <h1>What to wear, <span class="script">decided.</span></h1>
+        <div class="film-head">
+          <span class="film-eyebrow">Your wardrobe. Perfected, it is in your hand</span>
+          <h1><span class="w"><span>What</span></span> <span class="w"><span>to</span></span> <span class="w"><span>wear,</span></span> <span class="script"><span class="w"><span>decided.</span></span></span></h1>
+        </div>
+        <button type="button" class="film-replay" id="film-replay" hidden>Replay</button>
+      </div>
+      <div class="wrap">
         <div class="masthead-foot">
           <p>Tell Peppi where you're going, when, and how dressed up you want to be. It checks the weather where you'll be and gives you three complete outfits, each with a real photo, then helps you find similar pieces in your own closet.</p>
           <details class="more" open>
@@ -62,6 +85,7 @@
             <p>Every look you save teaches your <a href="/style-dna">Style DNA</a> what you love. Your taste isn't fixed, and neither is your Style DNA: Peppi keeps learning your style as you change, so each new outfit is more you, <em>as you are now</em>. And with <a href="/try-on">virtual try-on</a>, you see a look on your own photo, all the way around, before you get dressed.</p>
           </details>
         </div>
+        <p class="small muted film-note" id="film-note">The photos in the film are made with AI; the people in it aren't real.</p>
       </div>
     </section>
 

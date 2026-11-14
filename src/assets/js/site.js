@@ -562,6 +562,137 @@
     }));
   }
 
+  /* ---------- Home: the film at the top ---------- */
+  // Three short stories, each four photos made with AI: a couple before a
+  // wedding, a man before a dinner date, a woman before a wedding. Each visit
+  // shows a different one from the visit before (remembered on this browser
+  // only; without storage it's a random one). The photos drift towards the
+  // people while the story bars fill, the clock moves on and a subtitle says
+  // the moment; in the third, Peppi's three outfits appear beside them, with a
+  // heart on Classic, the one they wear in the last. Then "What to wear,
+  // decided." rises over it and the film rests there (Replay plays it again).
+  // Motion (motion.js, on the home page) does the movement; without it, or
+  // with reduced motion, the film shows its last photo and the headline.
+  const FILMS = {
+    couple: {
+      subs: ["2:30 pm. Wedding at four.", "We have nothing to wear.", "Ask Peppi."],
+      times: ["2:30 PM", "2:34 PM", "2:37 PM", "2:41 PM"],
+      occasion: "Wedding guests", temp: "22°C", app: "right",
+      // Each photo drifts: [scale from, scale to, towards x %, y %].
+      drift: [[1.05, 1.0, 50, 45], [1.0, 1.08, 45, 45], [1.08, 1.0, 55, 45], [1.05, 1.22, 72, 40]],
+      them: "72% 50%",
+      note: "The photos in the film are made with AI; the couple aren't real people.",
+    },
+    man: {
+      subs: ["6:58 pm. Dinner at eight.", "Nothing works.", "Okay, Peppi."],
+      times: ["6:58 PM", "7:01 PM", "7:04 PM", "7:07 PM"],
+      occasion: "Date night", temp: "18°C", app: "left",
+      drift: [[1.12, 1.02, 30, 40], [1.02, 1.14, 45, 35], [1.1, 1.0, 58, 45], [1.05, 1.32, 86, 40]],
+      them: "86% 50%",
+      note: "The photos in the film are made with AI; the man isn't a real person.",
+    },
+    her: {
+      subs: ["7:42. Nothing to wear.", "Again.", "Okay, Peppi."],
+      times: ["7:42 AM", "7:44 AM", "7:46 AM", "7:48 AM"],
+      occasion: "Wedding guest", temp: "13°C", app: "right",
+      drift: [[1.12, 1.02, 28, 45], [1.02, 1.12, 58, 40], [1.1, 1.0, 30, 45], [1.05, 1.2, 62, 40]],
+      them: "62% 50%",
+      // Her three outfits are the home page's wedding-guest looks (Unsplash, credited below).
+      looks: { classic: "assets/img/looks/s1-classic.jpg", bold: "assets/img/looks/s1-bold.jpg", relaxed: "assets/img/looks/s1-relaxed.jpg" },
+      note: "The photos in the film are made with AI; the woman isn't a real person.",
+    },
+  };
+  function pickFilm() {
+    const names = Object.keys(FILMS);
+    let last = null;
+    try { last = localStorage.getItem("peppi-film"); } catch (e) { /* no storage: any film */ }
+    const choices = names.filter((n) => n !== last);
+    const name = choices[Math.floor(Math.random() * choices.length)];
+    try { localStorage.setItem("peppi-film", name); } catch (e) { /* fine */ }
+    return name;
+  }
+  function initFilm() {
+    const film = $("#film");
+    if (!film) return;
+    const name = pickFilm(), cfg = FILMS[name], dir = `assets/img/film/${name}`;
+    const frames = $$(".film-frame", film), bars = $$(".film-ticks b", film);
+    const time = $(".film-time", film), sub = $(".film-sub", film), app = $(".film-app", film);
+    const figs = $$(".film-app figure", film), heart = $(".film-heart", film), head = $(".film-head", film);
+    const eyebrow = $(".film-eyebrow", film), words = $$(".film-head .w > span", film), replay = $("#film-replay");
+    frames.forEach((f, i) => {
+      const k = f.dataset.k;
+      f.srcset = `${dir}/${k}-900.jpg 900w, ${dir}/${k}-1600.jpg 1600w`;
+      f.src = `${dir}/${k}-1600.jpg`;
+      f.style.transformOrigin = `${cfg.drift[i][2]}% ${cfg.drift[i][3]}%`;
+    });
+    frames[frames.length - 1].style.objectPosition = cfg.them;
+    $$(".film-app img", film).forEach((img) => {
+      const k = img.dataset.k;
+      img.src = cfg.looks ? `${cfg.looks[k]}?v=${document.body.dataset.photosV}` : k === "classic" ? `${dir}/ready-900.jpg` : `${dir}/${k}.jpg`;
+      if (k === "classic" && !cfg.looks) img.style.objectPosition = cfg.them;
+    });
+    $(".film-app-occ", film).textContent = cfg.occasion;
+    $(".film-app-temp", film).textContent = cfg.temp;
+    app.classList.toggle("film-app--left", cfg.app === "left");
+    const note = $("#film-note");
+    if (note) note.textContent = cfg.note;
+    const M = window.Motion;
+    const rest = () => {
+      frames.forEach((f, i) => { f.style.opacity = i === frames.length - 1 ? "1" : "0"; f.style.transform = ""; });
+      bars.forEach((b) => { b.style.transform = "scaleX(1)"; });
+      head.style.opacity = "1";
+      words.forEach((w) => { w.style.transform = "none"; });
+      time.textContent = cfg.times[3];
+    };
+    if (!M || reduceMotion) { rest(); return; }
+    const DUR = [3.0, 2.4, 3.6, 3.2];
+    const wait = (ms) => new Promise((done) => setTimeout(done, ms));
+    let run = 0;
+    async function say(text) {
+      await M.animate(sub, { opacity: [1, 0] }, { duration: 0.25 });
+      sub.textContent = text || "";
+      if (text) M.animate(sub, { opacity: [0, 1], y: [10, 0] }, { duration: 0.6, ease: "easeOut" });
+    }
+    async function play() {
+      const id = ++run;
+      const live = () => id === run;
+      frames.forEach((f) => { f.style.opacity = "0"; f.style.transform = ""; });
+      bars.forEach((b) => { b.style.transform = "scaleX(0)"; });
+      sub.textContent = ""; app.style.opacity = "0"; app.style.transform = "";
+      figs.forEach((f) => { f.style.opacity = "0"; }); heart.style.opacity = "0";
+      head.style.opacity = "0"; words.forEach((w) => { w.style.transform = "translateY(110%)"; });
+      for (let i = 0; i < frames.length; i++) {
+        if (!live()) return;
+        const f = frames[i];
+        time.textContent = cfg.times[i];
+        M.animate(time, { opacity: [0.3, 1] }, { duration: 0.5 });
+        M.animate(f, { opacity: [0, 1] }, { duration: i ? 1.1 : 0.8, ease: "easeInOut" });
+        if (i) M.animate(frames[i - 1], { opacity: [1, 0] }, { duration: 1.1, ease: "easeInOut" });
+        M.animate(f, { scale: [cfg.drift[i][0], cfg.drift[i][1]] }, { duration: DUR[i] + 1.4, ease: "linear" });
+        M.animate(bars[i], { scaleX: [0, 1] }, { duration: DUR[i], ease: "linear" });
+        say(cfg.subs[i]);
+        if (i === 2) {
+          await wait(900); if (!live()) return;
+          M.animate(app, { opacity: [0, 1], y: [30, 0], scale: [0.92, 1] }, { type: "spring", stiffness: 160, damping: 18 });
+          figs.forEach((fig, k) => M.animate(fig, { opacity: [0, 1], y: [16, 0] }, { duration: 0.5, delay: 0.3 + k * 0.15 }));
+          await wait(1400); if (!live()) return;
+          M.animate(heart, { opacity: [0, 1], scale: [0.3, 1.4, 1] }, { duration: 0.5 });
+          await wait(DUR[i] * 1000 - 2300); if (!live()) return;
+          M.animate(app, { opacity: 0, x: cfg.app === "left" ? -40 : 40 }, { duration: 0.6, delay: 0.2 });
+        } else {
+          await wait(DUR[i] * 1000);
+        }
+      }
+      if (!live()) return;
+      head.style.opacity = "1";
+      M.animate(eyebrow, { opacity: [0, 1], y: [8, 0] }, { duration: 0.6 });
+      words.forEach((w, k) => M.animate(w, { y: ["110%", "0%"] }, { type: "spring", stiffness: 160, damping: 18, delay: 0.2 + k * 0.12 }));
+      replay.hidden = false;
+    }
+    replay.addEventListener("click", play);
+    play();
+  }
+
   /* ---------- Home: "Surprise me" under the AI looks ---------- */
   // A strip of the seven looks (each with one of its photos, picked per
   // visit) spins, slows with a spring and lands on one under the pointer;
@@ -672,6 +803,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     initHeader();
     initMore();
+    initFilm();
     initReveal();
     initRail();
     initTaste();

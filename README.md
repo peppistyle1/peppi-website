@@ -82,6 +82,13 @@ movement is Motion 11.11.13 (motion.dev, MIT), self-hosted in `src/assets/js/mot
 and loaded on the home page only, so the site still makes no outside calls. A note
 under it says the photos are made with AI.
 
+The home page opens with a short film (`#film`, `initFilm` in `site.js`, Motion): one of
+three stories (a couple before a wedding, a man before a dinner date, a woman before a
+wedding), each four photos made with AI in `src/assets/img/film/<couple|man|her>/`
+(900 and 1600 px), kept in Peppi's AI library as "held". Each visit shows a different film
+from the last one (`localStorage` "peppi-film"); the note under it says the people aren't
+real. Without a script it shows the couple's last photo with the headline.
+
 Other animations are drawn in code (SVG with CSS, or a canvas): the hangers' rail on
 the home page, the Style DNA helix beside the sample card (`initHelix`) and the plans
 page's swing tags (`initTags`). Each starts when it's seen and rests finished with
