@@ -1060,6 +1060,9 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 @media (max-width: 760px) {
   .film-app { top: auto; bottom: 30%; right: 4%; }
   .film-app--left { right: auto; left: 4%; }
+  /* On phones the line sits over the brighter part of the photo, where coral
+     didn't read: ivory with a soft shadow instead (the owner's report). */
+  .film-eyebrow { color: #F7F6F3; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55); }
 }
 /* The script starts the film from its first photo; until then nothing jumps. */
 .js .film-frame.is-rest, .js .film-head { opacity: 0; }
