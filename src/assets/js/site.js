@@ -566,7 +566,7 @@
   // Three short stories, each four photos made with AI: a couple before a
   // wedding, a man before a dinner date, a woman before a wedding. Each visit
   // shows a different one from the visit before (remembered on this browser
-  // only; without storage it's a random one). The photos drift towards the
+  // only, in turn; without storage it's a random one). Each photo zooms out slowly around the
   // people while the story bars fill, the clock moves on and a subtitle says
   // the moment; in the third, Peppi's three outfits appear beside them, with a
   // heart on Classic, the one they wear in the last. Then "What to wear,
@@ -578,33 +578,46 @@
       subs: ["2:30 pm. Wedding at four.", "We have nothing to wear.", "Ask Peppi."],
       times: ["2:30 PM", "2:34 PM", "2:37 PM", "2:41 PM"],
       occasion: "Wedding guests", temp: "22°C", app: "right",
-      // Each photo drifts: [scale from, scale to, towards x %, y %].
-      drift: [[1.05, 1.0, 50, 45], [1.0, 1.08, 45, 45], [1.08, 1.0, 55, 45], [1.05, 1.22, 72, 40]],
       them: "72% 50%",
+      phone: [0.533, 0.57], // the phone in photo 3 (0-1 of the image)
+      // Where the people are in each photo (0-1 of the image, [x0, y0, x1, y1]):
+      // all their heads, their faces, their whole bodies (read by Gemini).
+      heads: [[0.149, 0.045, 0.796, 0.532], [0.165, 0.159, 0.718, 0.597], [0.417, 0.078, 0.726, 0.55], [0.361, 0.048, 0.568, 0.333]],
+      faces: [[0.263, 0.121, 0.747, 0.375], [0.195, 0.193, 0.7, 0.549], [0.483, 0.184, 0.695, 0.395], [0.397, 0.081, 0.555, 0.234]],
+      bodies: [[0.137, 0.045, 0.874, 1.0], [0.15, 0.159, 0.916, 1.0], [0.345, 0.077, 0.853, 1.0], [0.323, 0.048, 0.622, 0.977]],
     },
     man: {
       subs: ["6:58 pm. Dinner at eight.", "Nothing works.", "Okay, Peppi."],
       times: ["6:58 PM", "7:01 PM", "7:04 PM", "7:07 PM"],
       occasion: "Date night", temp: "18°C", app: "left",
-      drift: [[1.12, 1.02, 30, 40], [1.02, 1.14, 45, 35], [1.1, 1.0, 58, 45], [1.05, 1.32, 86, 40]],
       them: "86% 50%",
+      phone: [0.677, 0.73],
+      heads: [[0.477, 0.053, 0.582, 0.297], [0.489, 0.058, 0.608, 0.332], [0.469, 0.031, 0.627, 0.426], [0.524, 0.047, 0.586, 0.185]],
+      faces: [[0.49, 0.146, 0.564, 0.292], [0.497, 0.162, 0.587, 0.33], [0.497, 0.18, 0.61, 0.424], [0.529, 0.095, 0.58, 0.187]],
+      bodies: [[0.319, 0.053, 0.702, 1.0], [0.357, 0.058, 0.647, 1.0], [0.28, 0.031, 0.707, 1.0], [0.5, 0.047, 0.657, 0.989]],
     },
     her: {
       subs: ["7:42. Nothing to wear.", "Again.", "Okay, Peppi."],
       times: ["7:42 AM", "7:44 AM", "7:46 AM", "7:48 AM"],
       occasion: "Wedding guest", temp: "13°C", app: "right",
-      drift: [[1.12, 1.02, 28, 45], [1.02, 1.12, 58, 40], [1.1, 1.0, 30, 45], [1.05, 1.2, 62, 40]],
       them: "62% 50%",
+      phone: [0.613, 0.48],
+      heads: [[0.369, 0.084, 0.505, 0.335], [0.442, 0.089, 0.584, 0.345], [0.375, 0.048, 0.574, 0.439], [0.49, 0.042, 0.572, 0.238]],
+      faces: [[0.444, 0.153, 0.497, 0.286], [0.497, 0.14, 0.562, 0.29], [0.463, 0.153, 0.55, 0.361], [0.526, 0.083, 0.569, 0.18]],
+      bodies: [[0.367, 0.084, 0.645, 1.0], [0.401, 0.089, 0.659, 0.996], [0.332, 0.048, 0.649, 1.0], [0.458, 0.042, 0.617, 0.987]],
       // Her three outfits are the home page's wedding-guest looks (Unsplash, credited below).
       looks: { classic: "assets/img/looks/s1-classic.jpg", bold: "assets/img/looks/s1-bold.jpg", relaxed: "assets/img/looks/s1-relaxed.jpg" },
     },
   };
   function pickFilm() {
     const names = Object.keys(FILMS);
+    // ?film=couple|man|her shows that one (for checking each film).
+    const asked = new URLSearchParams(location.search).get("film");
+    if (names.includes(asked)) return asked;
     let last = null;
     try { last = localStorage.getItem("peppi-film"); } catch (e) { /* no storage: any film */ }
-    const choices = names.filter((n) => n !== last);
-    const name = choices[Math.floor(Math.random() * choices.length)];
+    // In turn, so three visits show all three (the owner); without storage, any one.
+    const name = names.includes(last) ? names[(names.indexOf(last) + 1) % names.length] : names[Math.floor(Math.random() * names.length)];
     try { localStorage.setItem("peppi-film", name); } catch (e) { /* fine */ }
     return name;
   }
@@ -617,13 +630,85 @@
     const figs = $$(".film-app figure", film), heart = $(".film-heart", film), head = $(".film-head", film);
     const eyebrow = $(".film-eyebrow", film), words = $$(".film-head .w > span", film), replay = $("#film-replay");
     const kicker = $(".film-kicker", film);
-    frames.forEach((f, i) => {
+    frames.forEach((f) => {
       const k = f.dataset.k;
       f.srcset = `${dir}/${k}-900.jpg 900w, ${dir}/${k}-1600.jpg 1600w`;
       f.src = `${dir}/${k}-1600.jpg`;
-      f.style.transformOrigin = `${cfg.drift[i][2]}% ${cfg.drift[i][3]}%`;
     });
-    frames[frames.length - 1].style.objectPosition = cfg.them;
+    // Each photo starts a little closer and zooms out slowly to the full
+    // picture the screen allows, always filling the film (the owner: the
+    // phone in their hands and the outfit they end in must be seen; a photo
+    // smaller than the film over a blurred copy of itself wasn't
+    // professional). No face is ever cut, on any screen. From the phone on,
+    // each photo is centred on the people, whole; earlier ones on their
+    // heads (the faces at least, if the heads can't all fit), which stay
+    // inside the film all the way. Returns the scales it runs between.
+    const ZOOM = 1.14;
+    function place(i) {
+      const f = frames[i], W = film.clientWidth, H = film.clientHeight;
+      const s0 = Math.max(W / 1600, H / 893), Dw = 1600 * s0, Dh = 893 * s0;
+      const pad = 0.012, edge = 6, top = 10;
+      let box = cfg.heads[i];
+      if ((box[2] - box[0] + 2 * pad) * Dw > W) box = cfg.faces[i];
+      const x0 = box[0] - pad, y0 = box[1] - pad, x1 = box[2] + pad, y1 = box[3] + pad;
+      const need = i >= 2 ? cfg.bodies[i] : [x0, y0, x1, y1];
+      const cx = (need[0] + need[2]) / 2, cy = (need[1] + need[3]) / 2;
+      const tx = Math.min(0, Math.max(W - Dw, W / 2 - cx * Dw));
+      let ty = H / 2 - cy * Dh;
+      if (y0 * Dh + ty < top) ty = top - y0 * Dh;
+      ty = Math.min(0, Math.max(H - Dh, ty));
+      // The whole photo, placed in the film (which clips it), so zooming out
+      // shows more of it rather than shrinking a cropped view.
+      Object.assign(f.style, { width: `${Dw}px`, height: `${Dh}px`, left: `${tx}px`, top: `${ty}px` });
+      // It zooms out about the people's middle, ending at the full picture.
+      const end = 1;
+      const ox = cx * Dw + tx, oy = Math.min(H - edge, Math.max(top, cy * Dh + ty));
+      f.style.transformOrigin = `${ox - tx}px ${oy - ty}px`;
+      // How close it may start about that point before a head reaches an edge.
+      const room = (o, p, lo, hi) => (p < o ? (o - lo) / (o - p) : p > o ? (hi - o) / (p - o) : Infinity);
+      const px0 = x0 * Dw + tx, px1 = x1 * Dw + tx, py0 = y0 * Dh + ty, py1 = y1 * Dh + ty;
+      const most = Math.min(room(ox, px0, edge, W - edge), room(ox, px1, edge, W - edge),
+        room(oy, py0, top, H - edge), room(oy, py1, top, H - edge));
+      placed[i] = { tx, ty, Dw, Dh };
+      return [Math.max(end, Math.min(ZOOM, most)), end];
+    }
+    const placed = [];
+    // On phones the outfits card goes in the corner of photo 3 that hides
+    // least of the heads and the phone in their hands (the owner: the phone
+    // must be seen); on wider screens it keeps its side, clear of them.
+    function placeCard() {
+      ["top", "bottom", "left", "right"].forEach((k) => { app.style[k] = ""; });
+      const W = film.clientWidth, H = film.clientHeight;
+      if (W / H >= 1.2 || !placed[2]) return;
+      const { tx, ty, Dw, Dh } = placed[2];
+      const rect = (b) => [b[0] * Dw + tx, b[1] * Dh + ty, b[2] * Dw + tx, b[3] * Dh + ty];
+      const px = cfg.phone[0] * Dw + tx, py = cfg.phone[1] * Dh + ty;
+      const avoid = [[rect(cfg.heads[2]), 3], [[px - 36, py - 36, px + 36, py + 36], 6]];
+      const cw = app.offsetWidth || 150, ch = app.offsetHeight || 120;
+      const spots = [
+        { top: 34, left: 12 }, { top: 34, right: 12 },
+        { bottom: Math.round(H * 0.2), left: 12 }, { bottom: Math.round(H * 0.2), right: 12 },
+      ];
+      const area = (a, b) => Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1]));
+      let best = spots[0], bestCost = Infinity;
+      for (const s of spots) {
+        const x = s.left != null ? s.left : W - s.right - cw, y = s.top != null ? s.top : H - s.bottom - ch;
+        const r = [x, y, x + cw, y + ch];
+        const cost = avoid.reduce((sum, [b, w]) => sum + w * area(r, b), 0);
+        if (cost < bestCost) { best = s; bestCost = cost; }
+      }
+      app.style.top = best.top != null ? `${best.top}px` : "auto";
+      app.style.bottom = best.bottom != null ? `${best.bottom}px` : "auto";
+      app.style.left = best.left != null ? `${best.left}px` : "auto";
+      app.style.right = best.right != null ? `${best.right}px` : "auto";
+    }
+    let scales = frames.map((f, i) => place(i));
+    placeCard();
+    // Placed again whenever the film's size changes (a resize, the page
+    // settling after it first lays out).
+    const replace = () => { scales = frames.map((f, i) => place(i)); placeCard(); };
+    if ("ResizeObserver" in window) new ResizeObserver(replace).observe(film);
+    else window.addEventListener("resize", replace);
     $$(".film-app img", film).forEach((img) => {
       const k = img.dataset.k;
       img.src = cfg.looks ? `${cfg.looks[k]}?v=${document.body.dataset.photosV}` : k === "classic" ? `${dir}/ready-900.jpg` : `${dir}/${k}.jpg`;
@@ -664,7 +749,8 @@
         M.animate(time, { opacity: [0.3, 1] }, { duration: 0.5 });
         M.animate(f, { opacity: [0, 1] }, { duration: i ? 1.1 : 0.8, ease: "easeInOut" });
         if (i) M.animate(frames[i - 1], { opacity: [1, 0] }, { duration: 1.1, ease: "easeInOut" });
-        M.animate(f, { scale: [cfg.drift[i][0], cfg.drift[i][1]] }, { duration: DUR[i] + 1.4, ease: "linear" });
+        scales[i] = place(i);
+        M.animate(f, { scale: scales[i] }, { duration: DUR[i] + 1.4, ease: "linear" });
         M.animate(bars[i], { scaleX: [0, 1] }, { duration: DUR[i], ease: "linear" });
         say(cfg.subs[i]);
         if (i === 2) {

@@ -1003,8 +1003,8 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
    the couple's last photo (a noscript image). */
 .masthead--film { padding-block: 0 clamp(36px, 5vw, 56px); }
 .masthead--film .wrap { padding-top: clamp(24px, 3.5vw, 36px); }
-.film { position: relative; height: clamp(440px, 58vw, 720px); overflow: hidden; background: #111111; color: #F7F6F3; }
-.film-frame { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; will-change: transform, opacity; }
+.film { position: relative; height: clamp(440px, 55.9vw, max(440px, calc(100svh - 76px))); overflow: hidden; background: #111111; color: #F7F6F3; }
+.film-frame { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; opacity: 0; will-change: transform, opacity; }
 .film-frame.is-rest { opacity: 1; object-position: 72% 50%; }
 .film-shade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(10, 10, 9, 0.72) 0%, rgba(10, 10, 9, 0.25) 45%, rgba(10, 10, 9, 0) 70%), linear-gradient(0deg, rgba(10, 10, 9, 0.6), rgba(10, 10, 9, 0) 40%); }
 .film-ticks { position: absolute; top: 16px; left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px)); display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; z-index: 3; }
@@ -1033,12 +1033,17 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .film-replay { position: absolute; z-index: 4; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 16px; min-height: 36px; padding: 6px 14px; font: 600 0.8rem var(--body); color: #F7F6F3; background: rgba(17, 17, 17, 0.35); border: 1px solid rgba(247, 246, 243, 0.6); cursor: pointer; }
 .film-replay:hover { background: #F7F6F3; color: #111111; }
 @media (max-width: 760px) {
-  .film-app { top: auto; bottom: 30%; right: 4%; }
+  .film-app { top: auto; bottom: 30%; right: 4%; width: 150px; padding: 8px; }   /* site.js picks its corner */
   .film-app--left { right: auto; left: 4%; }
   /* On phones the line sits over the brighter part of the photo, where coral
      didn't read: ivory with a soft shadow instead (the owner's report). */
   .film-eyebrow { color: #F7F6F3; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55); }
   .film-eyebrow-2 { display: block; margin-top: 4px; }   /* its own line on phones */
+  /* Square-ish, so more of each photo's width shows and no face is cut
+     (site.js places each photo), and shaded from the bottom only: the side
+     shade left the man faded at the edge (the owner's report). */
+  .film { height: max(340px, min(100vw, 520px)); }
+  .film-shade { background: linear-gradient(0deg, rgba(10, 10, 9, 0.78) 0%, rgba(10, 10, 9, 0.35) 42%, rgba(10, 10, 9, 0) 62%); }
 }
 /* The script starts the film from its first photo; until then nothing jumps. */
 .js .film-frame.is-rest, .js .film-head { opacity: 0; }
