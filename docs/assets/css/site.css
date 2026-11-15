@@ -897,7 +897,6 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .ai-look strong { font-family: var(--display); font-weight: 500; font-size: 1.15rem; line-height: 1.15; }
 .ai-occasion { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-text); }
 .ai-caption { font-size: 0.82rem; line-height: 1.45; color: var(--muted); }
-.ai-note { margin-top: 18px; }
 @media (max-width: 1100px) { .ai-looks { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 760px) {
   .ai-looks { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 62%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; scrollbar-width: none; }
@@ -1056,7 +1055,6 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .film-heart { position: absolute; right: 3px; top: 3px; width: 16px; height: 16px; fill: #C8361B; opacity: 0; }
 .film-replay { position: absolute; z-index: 4; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 16px; min-height: 36px; padding: 6px 14px; font: 600 0.8rem var(--body); color: #F7F6F3; background: rgba(17, 17, 17, 0.35); border: 1px solid rgba(247, 246, 243, 0.6); cursor: pointer; }
 .film-replay:hover { background: #F7F6F3; color: #111111; }
-.film-note { margin-top: 4px; }
 @media (max-width: 760px) {
   .film-app { top: auto; bottom: 30%; right: 4%; }
   .film-app--left { right: auto; left: 4%; }

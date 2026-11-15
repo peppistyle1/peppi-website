@@ -127,6 +127,9 @@ def credits_html():
     names = ", ".join(links[:-1]) + " and " + links[-1]
     return ('<details class="credits"><summary>Photo credits</summary>'
             f'<p>Outfit photos by {names} on <a href="https://unsplash.com">Unsplash</a>.</p>'
+            '<p>Some pictures on this website were generated with AI, including the short films on the home page '
+            'and the Alternative &amp; Expressive looks. The people in them aren\'t real, and the settings aren\'t '
+            'real events or places.</p>'
             '<p>The people shown in photos on this website and in the Peppi app are not affiliated with Peppi '
             'and do not endorse it. Their photos are used only to show examples of outfits.</p></details>')
 

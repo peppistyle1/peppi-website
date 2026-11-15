@@ -581,7 +581,6 @@
       // Each photo drifts: [scale from, scale to, towards x %, y %].
       drift: [[1.05, 1.0, 50, 45], [1.0, 1.08, 45, 45], [1.08, 1.0, 55, 45], [1.05, 1.22, 72, 40]],
       them: "72% 50%",
-      note: "The photos in the film are made with AI; the couple aren't real people.",
     },
     man: {
       subs: ["6:58 pm. Dinner at eight.", "Nothing works.", "Okay, Peppi."],
@@ -589,7 +588,6 @@
       occasion: "Date night", temp: "18°C", app: "left",
       drift: [[1.12, 1.02, 30, 40], [1.02, 1.14, 45, 35], [1.1, 1.0, 58, 45], [1.05, 1.32, 86, 40]],
       them: "86% 50%",
-      note: "The photos in the film are made with AI; the man isn't a real person.",
     },
     her: {
       subs: ["7:42. Nothing to wear.", "Again.", "Okay, Peppi."],
@@ -599,7 +597,6 @@
       them: "62% 50%",
       // Her three outfits are the home page's wedding-guest looks (Unsplash, credited below).
       looks: { classic: "assets/img/looks/s1-classic.jpg", bold: "assets/img/looks/s1-bold.jpg", relaxed: "assets/img/looks/s1-relaxed.jpg" },
-      note: "The photos in the film are made with AI; the woman isn't a real person.",
     },
   };
   function pickFilm() {
@@ -634,8 +631,6 @@
     $(".film-app-occ", film).textContent = cfg.occasion;
     $(".film-app-temp", film).textContent = cfg.temp;
     app.classList.toggle("film-app--left", cfg.app === "left");
-    const note = $("#film-note");
-    if (note) note.textContent = cfg.note;
     const M = window.Motion;
     const rest = () => {
       frames.forEach((f, i) => { f.style.opacity = i === frames.length - 1 ? "1" : "0"; f.style.transform = ""; });
