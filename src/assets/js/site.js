@@ -616,6 +616,7 @@
     const time = $(".film-time", film), sub = $(".film-sub", film), app = $(".film-app", film);
     const figs = $$(".film-app figure", film), heart = $(".film-heart", film), head = $(".film-head", film);
     const eyebrow = $(".film-eyebrow", film), words = $$(".film-head .w > span", film), replay = $("#film-replay");
+    const kicker = $(".film-kicker", film);
     frames.forEach((f, i) => {
       const k = f.dataset.k;
       f.srcset = `${dir}/${k}-900.jpg 900w, ${dir}/${k}-1600.jpg 1600w`;
@@ -682,6 +683,7 @@
       head.style.opacity = "1";
       M.animate(eyebrow, { opacity: [0, 1], y: [8, 0] }, { duration: 0.6 });
       words.forEach((w, k) => M.animate(w, { y: ["110%", "0%"] }, { type: "spring", stiffness: 160, damping: 18, delay: 0.2 + k * 0.12 }));
+      if (kicker) M.animate(kicker, { opacity: [0, 1], y: [8, 0] }, { duration: 0.6, delay: 0.4 + words.length * 0.12 });
       replay.hidden = false;
     }
     replay.addEventListener("click", play);
