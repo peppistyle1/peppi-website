@@ -1110,3 +1110,9 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
   .board th.status { width: 92px; }
   .board td { font-size: 0.82rem; padding: 8px 8px; }
 }
+
+/* The slot machine's copies show their words from data-t (site.js, initPick). */
+.pick-card [data-t]::after { content: attr(data-t); }
+/* Links on to the app's features, under a guide's closing line. */
+.guide-more { margin-top: 12px; font-size: 0.95rem; color: rgba(247, 246, 243, 0.78); }
+.guide-more a { color: #F7F6F3; }

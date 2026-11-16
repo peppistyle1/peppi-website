@@ -95,6 +95,7 @@ def guide_page(g, users):
         <div>
           <h2>Your three outfits, for <span class="script">your</span> day.</h2>
           <p class="lede">Tell Peppi where you're going, when, and how dressed up you want to be. It checks the weather there and gives you three complete outfits, each with an example photo.</p>
+          <p class="guide-more">Save the looks you love and Peppi learns your taste with its <a href="style-dna.html">Style DNA</a>. With <a href="try-on.html">virtual try-on</a>, see a look on you before you get dressed. Compare the <a href="plans.html">plans</a>, or read the <a href="faq.html">FAQ</a>.</p>
         </div>
         <div class="btns"><a class="btn" href="index.html#get">Get the app</a><a class="btn btn--ghost" href="outfit-ideas.html">More outfit ideas</a></div>
       </div>

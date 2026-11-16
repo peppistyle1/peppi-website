@@ -921,9 +921,13 @@
         if (r !== 1) fig.setAttribute("aria-hidden", "true");
         fig.innerHTML = `<div class="ai-look-photo"><img src="assets/img/ai/${l.id}-${l.set}.jpg?v=${document.body.dataset.photosV}" alt="" width="600" height="800" loading="lazy" decoding="async"></div><figcaption><strong></strong><span class="ai-occasion"></span><span class="ai-caption"></span></figcaption>`;
         if (r === 1) $("img", fig).alt = caption.replace(/\.$/, "");
-        $("strong", fig).textContent = l.name;
-        $(".ai-occasion", fig).textContent = l.occasion;
-        $(".ai-caption", fig).textContent = caption;
+        // Only one set carries the words as text: the other six show them
+        // through CSS (data-t), so search engines read each look once, not
+        // seven times (they read repeated text as stuffing).
+        const put = (sel, text) => { const el = $(sel, fig); if (r === 1) el.textContent = text; else el.dataset.t = text; };
+        put("strong", l.name);
+        put(".ai-occasion", l.occasion);
+        put(".ai-caption", caption);
         strip.appendChild(fig);
       });
     }
