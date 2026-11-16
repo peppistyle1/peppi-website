@@ -94,7 +94,7 @@ def guide_page(g, users):
       <div class="wrap guide-cta">
         <div>
           <h2>Your three outfits, for <span class="script">your</span> day.</h2>
-          <p class="lede">Tell Peppi where you're going, when, and how dressed up you want to be. It checks the weather there and gives you three complete outfits, each with a real photo.</p>
+          <p class="lede">Tell Peppi where you're going, when, and how dressed up you want to be. It checks the weather there and gives you three complete outfits, each with an example photo.</p>
         </div>
         <div class="btns"><a class="btn" href="index.html#get">Get the app</a><a class="btn btn--ghost" href="outfit-ideas.html">More outfit ideas</a></div>
       </div>
@@ -125,7 +125,7 @@ def hub_page(guides):
       <div class="wrap">
         <span class="eyebrow">Outfit ideas</span>
         <h1 style="margin-top:20px">What to wear, for <span class="script">every</span> occasion.</h1>
-        <p class="lede">{len(guides)} occasions, three complete outfits each: a classic choice, a bold one and a relaxed one, with real photos, tips for the dress code and the weather, and what to avoid.</p>
+        <p class="lede">{len(guides)} popular occasions (Peppi covers 40 in the app), three complete outfits each: a classic choice, a bold one and a relaxed one, with example photos, tips for the dress code and the weather, and what to avoid.</p>
       </div>
     </section>
 
@@ -138,7 +138,7 @@ def hub_page(guides):
     </section>
 '''
     meta = {"title": "Outfit ideas for every occasion: what to wear · Peppi",
-            "description": "What to wear to a wedding, a job interview, a date, a concert and more: three complete outfits for each occasion, with real photos and tips.",
+            "description": "What to wear to a wedding, a job interview, a date, a concert and more: three complete outfits for each occasion, with example photos and tips.",
             "nav": "ideas"}
     data = [{"@type": "CollectionPage", "name": "Outfit ideas for every occasion", "url": "https://peppi.style/outfit-ideas",
              "hasPart": [{"@type": "WebPage", "name": g["h1"], "url": f"https://peppi.style/{g['slug']}"} for g in guides]}]

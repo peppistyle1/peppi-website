@@ -5,7 +5,7 @@
   "occasion": "Wedding guest",
   "h1": "What to wear to a wedding as a guest",
   "title": "What to wear to a wedding as a guest · Peppi",
-  "description": "Not sure what to wear to a wedding? See three complete guest outfits for your time, weather and dress code, each with a real photo.",
+  "description": "Not sure what to wear to a wedding? See three complete guest outfits for your time, weather and dress code, each with an example photo.",
   "context": "Wedding guest · Evening · 13°C · Formality 8 · Dressy",
   "intro": "For an evening wedding, aim for dressy but not formal: a polished outfit in a fabric that suits the season, with nothing that competes with the couple. When in doubt, choose something that looks finished from head to toe and avoid white, ivory and anything that looks like bridal wear. The example here is an evening wedding at 13°C, which calls for a substantial fabric or a layer you can keep on.",
   "looks": [
@@ -323,7 +323,7 @@
   "occasion": "School trip",
   "h1": "What to wear on a school trip",
   "title": "What to wear on a school trip · Peppi",
-  "description": "Not sure what to wear on a school trip? Get three complete outfit ideas for the weather and your plans, each with a real photo, on Peppi.",
+  "description": "Not sure what to wear on a school trip? Get three complete outfit ideas for the weather and your plans, each with an example photo, on Peppi.",
   "context": "School trip · Morning · 16°C · Formality 2 · Very casual",
   "intro": "For a school trip, dress for comfort first: you'll likely be walking, sitting on a bus, and possibly standing around outdoors. Choose relaxed, easy-to-move clothes with a layer you can add or remove, and shoes you can walk in all day. Peppi builds outfits around the weather at your destination and how casual you want to be.",
   "looks": [
@@ -430,7 +430,7 @@
   "h1": "What to wear to a job interview",
   "title": "What to wear to a job interview · Peppi",
   "description": "Not sure what to wear to a job interview? Get three complete outfit ideas matched to the weather and dress code. See the looks on Peppi.",
-  "context": "Job interview · Morning · 18°C · Formality 8 · Business formal",
+  "context": "Job interview · Morning · 18°C · Formality 7 · Business",
   "intro": "For most job interviews, wear business formal: a well-fitted suit or a tailored blazer with matching trousers, in a neutral or dark color. Choose clothes that are a step more polished than the job's everyday dress, since that shows you took the meeting seriously. Make sure everything fits well and is clean and pressed.",
   "looks": [
    {
@@ -483,7 +483,7 @@
   "h1": "Date night outfit ideas",
   "title": "Date night outfit ideas · Peppi",
   "description": "Not sure what to wear on a date? See three complete smart-casual outfits matched to the weather and your plans. Try them on Peppi.",
-  "context": "Date night · Evening · 19°C · Formality 6 · Smart casual",
+  "context": "Date night · Evening · 19°C · Formality 5 · Smart casual",
   "intro": "For a date night, smart casual is the safest target: dressed up enough to look like you made an effort, relaxed enough to feel like yourself. At around 19°C in the evening, a shirt or top with trousers or dark jeans and one layer you can take off works for almost anyone. Peppi builds three complete outfits for your exact evening, so you can pick the one that fits your mood.",
   "looks": [
    {
@@ -588,7 +588,7 @@
   "occasion": "Office day",
   "h1": "Business casual outfits for the office",
   "title": "Business casual outfits for the office · Peppi",
-  "description": "Wondering what to wear to the office? See three business casual outfits for a 12°C morning, styled for your dress code, with real photos.",
+  "description": "Wondering what to wear to the office? See three business casual outfits for a 12°C morning, styled for your dress code, with example photos.",
   "context": "Office day · Morning · 12°C · Formality 6 · Business casual",
   "intro": "Business casual means polished but not formal: pieces that look intentional, fit well, and let you move comfortably through a workday. The safest approach is to choose tailored basics in neutral colors and add one considered detail, so you look put together whether the office is relaxed or more traditional.",
   "looks": [
@@ -642,7 +642,7 @@
   "h1": "What to wear to the theater",
   "title": "What to wear to the theater · Peppi",
   "description": "Not sure what to wear to the theater? See three complete outfit ideas, checked for the weather and your formality level, on Peppi.",
-  "context": "Theatre night · Evening · 11°C · Formality 7 · Dressy",
+  "context": "Theatre night · Evening · 11°C · Formality 8 · Dressy",
   "intro": "For the theater, aim for smart and polished: dressy, not formal. Think tailored pieces and good shoes rather than anything costume-like. When in doubt, choose one sharp focal point, such as a rich color or a statement texture, and keep everything else clean and simple.",
   "looks": [
    {
@@ -748,7 +748,7 @@
   "h1": "What to wear to a graduation",
   "title": "What to wear to a graduation · Peppi",
   "description": "What to wear to a graduation: smart casual outfits for a midday ceremony. See three complete looks with photos, tailored to the weather.",
-  "context": "Graduation · Midday · 21°C · Formality 6 · Smart casual",
+  "context": "Graduation · Midday · 21°C · Formality 5 · Smart casual",
   "intro": "For a graduation, smart casual is the safest choice: polished enough for a formal ceremony and photos, comfortable enough for a long, often warm midday event. Aim for clean, well-fitted pieces in solid or subtle colors, and let your shoes and fit do the work of making the outfit look considered.",
   "looks": [
    {
@@ -801,7 +801,7 @@
   "h1": "What to wear to a cocktail party",
   "title": "What to wear to a cocktail party · Peppi",
   "description": "Not sure what to wear to a cocktail party? Get the dress code, the weather-smart layers, and three complete outfits in one place.",
-  "context": "Cocktail party · Evening · 16°C · Formality 7 · Dressy",
+  "context": "Cocktail party · Evening · 16°C · Formality 8 · Dressy",
   "intro": "A cocktail party calls for polished, dressed-up clothing that still feels relaxed enough to move around and chat. For most people the safest choice is a fitted or structured outfit in a rich color, finished with clean, elegant shoes. Dress up one notch more than you think you need, then adjust for the venue and the evening's temperature.",
   "looks": [
    {
@@ -854,7 +854,7 @@
   "h1": "Comfortable travel day outfits",
   "title": "Comfortable travel day outfits · Peppi",
   "description": "Comfortable travel day outfits that layer well, handle changing temperatures and still look put together. See three complete looks in Peppi.",
-  "context": "Travel day · Morning · 14°C · Formality 2 · Casual",
+  "context": "Travel day · Morning · 14°C · Formality 3 · Casual",
   "intro": "For a travel day, the safest choice is comfortable clothes that layer easily: soft fabrics, a light outer layer and shoes you can walk in all day. Airports and planes often run cool, and destinations can be warmer or colder than where you started, so plan for flexibility. Peppi shows three complete outfits for your trip, each checked against the weather where you'll be.",
   "looks": [
    {
@@ -907,7 +907,7 @@
   "h1": "Brunch outfit ideas",
   "title": "Brunch outfit ideas · Peppi",
   "description": "What to wear to brunch: the safest casual-chic choices, plus three complete outfits for your weather and time. See Peppi's picks.",
-  "context": "Weekend brunch · Late morning · 17°C · Formality 3 · Casual chic",
+  "context": "Weekend brunch · Late morning · 17°C · Formality 4 · Casual chic",
   "intro": "For weekend brunch, aim for casual chic: relaxed enough to sit on a patio, put together enough to feel intentional. A little more polish than you'd wear to run errands, but nothing stiff. At around 17°C, layers and one clean statement piece do most of the work.",
   "looks": [
    {
@@ -960,7 +960,7 @@
   "h1": "What to wear to a concert",
   "title": "What to wear to a concert · Peppi",
   "description": "Not sure what to wear to a concert? Get three complete outfit ideas for your night, matched to the weather and how dressed up you want to be.",
-  "context": "Concert night · Evening · 22°C · Formality 3 · Casual",
+  "context": "Concert night · Evening · 14°C · Formality 3 · Casual",
   "intro": "For most concerts, smart casual is the safest choice: comfortable shoes, clothes you can move in, and a layer for when the venue gets cold or sweaty. Aim for an outfit that looks put together without feeling stiff, since you'll likely be standing, dancing, or squeezed into a crowd for hours.",
   "looks": [
    {
@@ -1012,7 +1012,7 @@
   "occasion": "Winter city walk",
   "h1": "Winter outfits for a day in the city",
   "title": "Winter outfits for a day in the city · Peppi",
-  "description": "What to wear for a winter day in the city: three complete outfits matched to the cold, with real photos. See Classic, Bold and Relaxed looks.",
+  "description": "What to wear for a winter day in the city: three complete outfits matched to the cold, with example photos. See Classic, Bold and Relaxed looks.",
   "context": "Winter city walk · Afternoon · 2°C · Formality 4 · Casual chic",
   "intro": "For a winter day in the city, aim for casual chic: warm layers, clean lines and one considered detail. A structured coat over a knit or turtleneck, with comfortable boots and well-fitted trousers, works for walking, cafes and an afternoon out, even at around freezing.",
   "looks": [
