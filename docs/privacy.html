@@ -86,7 +86,7 @@
           <ul>
             <li>We collect what Peppi needs to style you: your answers, your profile, the looks you save and, if you choose virtual try-on, your photos.</li>
             <li>We don't sell your data, show ads or share your data for advertising.</li>
-            <li>Your location is used on your phone to get the weather. It isn't sent to our servers.</li>
+            <li>Your location is used only to get the weather. Our servers receive a position rounded to about 1 km, only to look up the weather, and don't link it to you.</li>
             <li>AI services from Anthropic and Google process some data to create your outfits, Style DNA and try-ons.</li>
             <li>Everything has a time limit, and you can delete your account and data at any time.</li>
           </ul>
@@ -102,7 +102,7 @@
           <h3>Your outfit requests</h3>
           <p>The occasion, day and time, formality, the temperature and weather conditions, and anything you add in Refine further (notes, a style inspiration, color rules). We use them to create your outfits, and keep the results briefly in memory so that asking again with the same answers is quick and free.</p>
           <h3>Your location</h3>
-          <p>With your permission, your phone uses your location to ask OpenWeatherMap for the weather and the name of your city. Only the temperature and conditions are sent to our servers, never your location. The city name is kept on your phone to show with your last outfits. You can also type a city instead.</p>
+          <p>With your permission, your phone uses your location to get the weather and the name of your city. It sends a position rounded to about 1 km to our servers, which ask OpenWeatherMap. Your position isn't saved to a database, linked to your account or written to our logs; the weather and city name for that area are kept in our servers' memory for a short time (up to a day for the city name), so people nearby get them faster. The city name is kept on your phone to show with your last outfits. You can also type a city instead.</p>
           <h3>Your saved looks</h3>
           <p>A saved look holds the outfit's text, the link to its photo (the photo itself is never copied) and what you asked for. Without an account, looks stay on your phone. With an account, they're kept on your phone and in our cloud database. For your Style DNA we also keep a short copy of each saved look (garments, colors, fit, formality and occasion, without the photo).</p>
           <h3>Your Style DNA</h3>
@@ -147,7 +147,7 @@
                 <tr><td>Anthropic</td><td>AI for outfits, photos, Style DNA and photo checks</td><td>Outfit requests and profile, saved looks, try-on photos for checking</td></tr>
                 <tr><td>Google (Gemini API)</td><td>AI for virtual try-on, measurements and outfit photos made with AI</td><td>Try-on photos, height, saved look photos; outfit descriptions with an age and gender</td></tr>
                 <tr><td>Unsplash</td><td>The outfit and style photos</td><td>When your phone shows a photo, Unsplash receives your IP address and device information</td></tr>
-                <tr><td>OpenWeatherMap</td><td>Weather and city name</td><td>Your location, sent directly from your phone</td></tr>
+                <tr><td>OpenWeatherMap</td><td>Weather and city name</td><td>A position rounded to about 1 km, or the city you type, sent by our servers without anything that identifies you</td></tr>
                 <tr><td>RevenueCat</td><td>Managing purchases across stores</td><td>An account ID and your purchases</td></tr>
                 <tr><td>Brevo</td><td>The launch email list on this website</td><td>The email address you sign up with, and when you confirmed it</td></tr>
                 <tr><td>Google Play and Apple App Store</td><td>Payments</td><td>Handled under their own privacy policies</td></tr>
