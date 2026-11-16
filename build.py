@@ -67,6 +67,26 @@ ICONS = {
 PLAY_URL = "index.html#get"
 APP_STORE_URL = "index.html#get"
 
+# The launch sign-up: Brevo's subscription form (list "Peppi launch", double
+# opt-in), sent by site.js with fetch so the visitor stays on the page; without
+# JavaScript it posts as a plain form. email_address_check is Brevo's bot trap.
+SIGNUP_URL = ("https://2c6b7a1a.sibforms.com/serve/MUIFAMsmIzZuRpb6InByKUFx8zRR9E_yAZD1WT4AFIygPHtLMCBeG9sN4zh5tjE_"
+              "iMlz4D17W4FN_W4oOO_57lYlqs6gGUhC3IW6k2VEBeobauJseaUTfGw8Q9StB34ExTMlMHWNMcdYKQ54Fr9QjGyTop3cboBBHmN"
+              "tvodMD3K4n9qJEXkbYcpfsi0YS49Vv96llzS092cy_aJv4Q==")
+
+
+def signup(where):
+    return (f'<form class="signup signup--{where}" action="{SIGNUP_URL}" method="post" data-signup>'
+            f'<label class="signup-label" for="signup-{where}">Be the first to know when Peppi launches</label>'
+            f'<div class="signup-row"><input id="signup-{where}" type="email" name="EMAIL" required autocomplete="email" '
+            f'inputmode="email" placeholder="Your email">'
+            f'<button class="btn" type="submit">Notify me</button></div>'
+            f'<input class="signup-trap" type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true">'
+            f'<input type="hidden" name="locale" value="en">'
+            f'<p class="signup-note" role="status" data-signup-note>One email when the app is out, nothing else. '
+            f'<a href="privacy.html#signup">Privacy</a></p></form>')
+
+
 # The logo (the app icon): six garments on a rounded tile, the dress as the
 # accent. Its colors come from the stylesheet (.logo), so it can be inverted.
 LOGO_CELLS = [
@@ -158,6 +178,7 @@ def render(text):
     text = re.sub(r"\{\{garment-draw:(\w+)\}\}", lambda m: garment(m.group(1), "garment draw"), text)
     text = re.sub(r"\{\{icon:(\w+)\}\}", lambda m: icon(m.group(1)), text)
     text = text.replace("{{logo}}", LOGO)
+    text = re.sub(r"\{\{signup:(\w+)\}\}", lambda m: signup(m.group(1)), text)
     text = text.replace("{{play_url}}", PLAY_URL).replace("{{appstore_url}}", APP_STORE_URL)
     text = text.replace("{{year}}", str(date.today().year))
     return text

@@ -994,7 +994,35 @@
     phone.addEventListener("change", sync);
   }
 
+  // The launch sign-up: sends the form to Brevo with fetch (isAjax gives a JSON
+  // answer) and shows the result in the note, so the visitor stays on the page.
+  function initSignup() {
+    document.querySelectorAll("form[data-signup]").forEach((form) => {
+      const note = form.querySelector("[data-signup-note]");
+      const button = form.querySelector("button");
+      const original = note.innerHTML;
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        button.disabled = true;
+        form.classList.remove("is-error");
+        try {
+          const url = form.action + (form.action.includes("?") ? "&" : "?") + "isAjax=1";
+          const res = await fetch(url, { method: "POST", body: new URLSearchParams(new FormData(form)) });
+          const data = await res.json();
+          if (!res.ok || !data.success) throw new Error("not saved");
+          form.classList.add("is-done");
+          note.textContent = "Almost there. We've sent you an email: tap the link in it to confirm.";
+        } catch (err) {
+          form.classList.add("is-error");
+          note.innerHTML = "That didn't go through. Please check your email address and try again. " + original.slice(original.indexOf("<a"));
+          button.disabled = false;
+        }
+      });
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
+    initSignup();
     initHeader();
     initMore();
     initFilm();

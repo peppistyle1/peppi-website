@@ -687,6 +687,38 @@ input[type="range"] { width: 100%; accent-color: var(--red); height: 28px; }
 .store b { font-family: var(--display); font-weight: 500; font-size: 1.3rem; line-height: 1.1; }
 .store--solid { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .store:hover { background: var(--red); border-color: var(--red); color: #F7F6F3; }
+.app-soon { font-family: var(--display); font-style: italic; font-size: 1.15rem; }
+/* The launch sign-up: one email field and a button on one line, the note under them */
+.signup { display: grid; gap: 10px; max-width: 520px; }
+.signup-label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+.signup-row { display: flex; gap: 0; }
+.signup-row input {
+  flex: 1 1 auto; min-width: 0; min-height: 52px; padding: 0 16px;
+  font: 400 1rem var(--body); color: var(--ink); background: var(--card);
+  border: 1px solid var(--rule); border-right: 0; border-radius: 0;
+}
+.signup-row input:focus { outline: 2px solid var(--red); outline-offset: -2px; }
+.signup-row .btn { flex: none; }
+.signup-note { font-size: 0.85rem; color: var(--muted); }
+.signup-note a { color: inherit; }
+.signup.is-done .signup-row, .signup.is-done .signup-label { display: none; }
+.signup.is-done .signup-note { font-size: 1rem; color: var(--ink); }
+.signup.is-error .signup-note { color: var(--gold-text); }
+.signup-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.signup--footer { padding-block: 28px; border-bottom: 1px solid var(--night-line); max-width: none; }
+.signup--footer .signup-label { color: var(--on-night); }
+.signup--footer .signup-row { max-width: 520px; }
+.signup--footer .signup-row input { background: var(--night-2); color: var(--on-night); border-color: var(--night-line); }
+.signup--footer .signup-row input::placeholder { color: var(--on-night-muted); }
+.signup--footer .btn { --b: #F7F6F3; --t: #111111; }
+.signup--footer .btn:hover { --b: var(--red); color: #F7F6F3; }
+.signup--footer .signup-note, .signup--footer.is-done .signup-note { color: var(--on-night-muted); }
+.signup--footer.is-error .signup-note { color: var(--gold); }
+@media (max-width: 420px) {
+  .signup-row { flex-direction: column; gap: 10px; }
+  .signup-row input { border-right: 1px solid var(--rule); }
+  .signup--footer .signup-row input { border-right-color: var(--night-line); }
+}
 .app-phone { flex: 0 1 340px; min-width: 0; margin: 0 auto; display: grid; justify-items: center; gap: 16px; }
 .phone { width: 100%; max-width: 320px; background: #111111; border-radius: 46px; padding: 12px; box-shadow: 0 40px 60px -30px rgba(17, 17, 17, 0.45), inset 0 0 0 1.5px rgba(247, 246, 243, 0.08); }
 .phone-screen { background: #FFFFFF; color: #111111; border-radius: 36px; overflow: hidden; padding: 18px 16px 20px; display: grid; gap: 10px; }
